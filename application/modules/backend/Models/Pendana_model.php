@@ -78,55 +78,55 @@ class Pendana_model extends MY_Model{
 
     function get_detail_model($id)
     {
-      return $this->db->query("SELECT
-                                master_pendana.id_pendana,
-                                master_pendana.id_reg,
-                                master_pendana.no_ktp,
-                                master_pendana.no_npwp,
-                                master_pendana.nama,
-                                master_pendana.tempat_lahir,
-                                master_pendana.tgl_lahir,
-                                master_pendana.jenis_kelamin,
-                                master_pendana.status_perkawinan,
-                                master_pendana.telepon,
-                                master_pendana.email,
-                                master_pendana.nama_ibu_kandung,
-                                master_pendana.id_pendidikan,
-                                master_pendana.id_pekerjaan,
-                                master_pendana.id_pendapatan,
-                                master_pendana.alamat,
-                                master_pendana.provinsi,
-                                master_pendana.kabupaten,
-                                master_pendana.kecamatan,
-                                master_pendana.kelurahan,
-                                master_pendana.kode_pos,
-                                master_pendana.no_rekening,
-                                master_pendana.nama_rekening,
-                                master_pendana.id_bank,
-                                master_pendana.foto_diri,
-                                master_pendana.foto_ktp,
-                                master_pendana.foto_diri_ktp,
-                                master_pendana.foto_buku_rekening,
-                                master_pendana.password,
-                                master_pendana.token_password,
-                                master_pendana.pin,
-                                master_pendana.token_pin,
-                                master_pendana.is_verifikasi,
-                                master_pendana.is_active,
-                                master_pendana.created_at,
-                                master_pendana.update_at,
-                                master_pendana.verifikasi_at,
-                                trans_pendidikan.pendidikan,
-                                trans_pekerjaan.pekerjaan,
-                                trans_pendapatan.pendapatan,
-                                trans_bank.nama_bank
-                                FROM
-                                master_pendana
-                                LEFT JOIN trans_pendidikan ON trans_pendidikan.id_pendidikan = master_pendana.id_pendidikan
-                                LEFT JOIN trans_pekerjaan ON trans_pekerjaan.id_pekerjaan = master_pendana.id_pekerjaan
-                                LEFT JOIN trans_pendapatan ON trans_pendapatan.id_pendapatan = master_pendana.id_pendapatan
-                                LEFT JOIN trans_bank ON trans_bank.id_bank = master_pendana.id_bank
-                                WHERE master_pendana.id_pendana = $id")->row();
+      return $this->db->select("master_pendana.id_pendana,
+                        master_pendana.id_reg,
+                        master_pendana.no_ktp,
+                        master_pendana.no_npwp,
+                        master_pendana.nama,
+                        master_pendana.tempat_lahir,
+                        master_pendana.tgl_lahir,
+                        master_pendana.jenis_kelamin,
+                        master_pendana.status_perkawinan,
+                        master_pendana.telepon,
+                        master_pendana.email,
+                        master_pendana.nama_ibu_kandung,
+                        master_pendana.id_pendidikan,
+                        master_pendana.id_pekerjaan,
+                        master_pendana.id_pendapatan,
+                        master_pendana.alamat,
+                        master_pendana.provinsi,
+                        master_pendana.kabupaten,
+                        master_pendana.kecamatan,
+                        master_pendana.kelurahan,
+                        master_pendana.kode_pos,
+                        master_pendana.no_rekening,
+                        master_pendana.nama_rekening,
+                        master_pendana.id_bank,
+                        master_pendana.foto_diri,
+                        master_pendana.foto_ktp,
+                        master_pendana.foto_diri_ktp,
+                        master_pendana.foto_buku_rekening,
+                        master_pendana.password,
+                        master_pendana.token_password,
+                        master_pendana.pin,
+                        master_pendana.token_pin,
+                        master_pendana.is_verifikasi,
+                        master_pendana.is_active,
+                        master_pendana.created_at,
+                        master_pendana.update_at,
+                        master_pendana.verifikasi_at,
+                        trans_pendidikan.pendidikan,
+                        trans_pekerjaan.pekerjaan,
+                        trans_pendapatan.pendapatan,
+                        trans_bank.nama_bank")
+                ->from("master_pendana")
+                ->join("trans_pendidikan","trans_pendidikan.id_pendidikan = master_pendana.id_pendidikan","left")
+                ->join("trans_pekerjaan","trans_pekerjaan.id_pekerjaan = master_pendana.id_pekerjaan","left")
+                ->join("trans_pendapatan","trans_pendapatan.id_pendapatan = master_pendana.id_pendapatan","left")
+                ->join("trans_bank","trans_bank.id_bank = master_pendana.id_bank","left")
+                ->where("master_pendana.id_pendana",$id)
+                ->get()
+                ->row();
     }
 
 }
