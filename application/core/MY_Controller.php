@@ -16,7 +16,7 @@ class Backend extends CI_Controller{
         redirect(site_url("backend/login"),"refresh");
     }else {
       $this->load->library(array("backend/Template","backend/Userize","form_validation","security","user_agent"));
-      $this->load->helper(array("backend/backend","sct","main_menu"));
+      $this->load->helper(array("backend/backend","sct","main_menu","public"));
     }
   }
 
