@@ -35,14 +35,14 @@
 
               <!-- <h4 class="mt-0 header-title"><?=ucfirst($title)?></h4> -->
               <table class="table table-bordered" id="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                <thead>
+                <thead style="background:#dadada">
                   <tr>
                     <th>DATE REQUEST</th>
                     <th>CODE-TRANSAKSI</th>
                     <th>PENDANA</th>
                     <th>STATUS</th>
                     <th>AMOUNT REQUEST</th>
-                    <th>AMOUNT ACC</th>
+                    <th>KODE-UNIK</th>
                     <th>###</th>
                   </tr>
                 </thead>
@@ -70,6 +70,7 @@ var table;
       "searching": false,
       // "info": false,
       "bLengthChange": false,
+      "pageLength": 25,
       oLanguage: {
           sProcessing: '<i class="fa fa-spinner fa-spin fa-fw"></i> Loading...'
       },
@@ -103,7 +104,7 @@ var table;
   $("#reload").click(function(){
       $("#status_view").removeAttr('selected').val("").attr('selected', 'selected');
       $("#id_reg").val("");
-      $("#nik").val("");
+      $("#code").val("");
       $("#nama").val("");
       $("#email").val("");
       $("#telepon").val("");

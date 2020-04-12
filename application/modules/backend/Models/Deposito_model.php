@@ -3,13 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Deposito_model extends MY_Model{
 
-  var $column_order = array('deposito.created_at','deposito.code','master_pendana.nama','deposito.status','deposito.nominal','deposito.nominal_acc');
+  var $column_order = array('deposito.created_at','deposito.code','master_pendana.nama','deposito.status','deposito.nominal','deposito.kode_unik');
   var $order = array('deposito.id_deposito'=>"DESC");
   var $select = " deposito.id_deposito,
                   deposito.code,
                   deposito.id_pendana,
                   deposito.nominal,
-                  deposito.nominal_acc,
+                  deposito.kode_unik,
                   deposito.status,
                   deposito.created_at,
                   deposito.acc_at,
@@ -88,11 +88,15 @@ class Deposito_model extends MY_Model{
                                 deposito.code,
                                 deposito.id_pendana,
                                 deposito.nominal,
+                                deposito.kode_unik,
                                 deposito.nominal_acc,
                                 deposito.status,
                                 deposito.created_at,
                                 deposito.keterangan,
+                                deposito.id_rekening,
                                 deposito.acc_at,
+                                deposito.acc_by,
+                                deposito.acc_by_id,
                                 master_pendana.id_reg,
                                 master_pendana.nama,
                                 master_pendana.email")

@@ -7,7 +7,7 @@
             <div class="col-lg-12">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-info">Rp.289.000.000</h3>
+                    <h3 class="text-info">Rp.<?=format_rupiah(balance_user($dt->id_pendana))?></h3>
                     Total Saldo
                 </div>
               </div>

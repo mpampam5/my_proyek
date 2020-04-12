@@ -46,6 +46,57 @@ function profile($field)
     return $qry->$field;
 }
 
+
+function profile_where_id($id,$field)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->select("user_level.id_user_level AS id_user_level,
+                          user_level.id_user AS id_user,
+                          user_level.id_level AS id_level,
+                          user.email AS email,
+                          user.password AS password,
+                          user.token AS token,
+                          user.is_active AS is_active,
+                          user.is_delete AS is_delete,
+                          user.nama AS nama,
+                          user.created AS created,
+                          user.modified AS modified,
+                          level.level AS level,
+                          level.slug AS slug_level")
+                  ->from("user_level")
+                  ->join("user","user.id_user = user_level.id_user")
+                  ->join("level","level.id_level = user_level.id_level")
+                  ->where("user_level.id_user",$id)
+                  ->get()
+                  ->row();
+    return $qry->$field;
+}
+
+
+function rekening($id,$field)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->select("trans_rekening.id_rekening AS id_rekening,
+                          trans_rekening.id_bank AS id_bank,
+                          trans_rekening.nama_rekening AS nama_rekening,
+                          trans_rekening.no_rekening AS no_rekening,
+                          trans_bank.nama_bank AS nama_bank")
+                  ->from("trans_rekening")
+                  ->join("trans_bank","trans_bank.id_bank = trans_rekening.id_bank")
+                  ->where("trans_rekening.id_rekening",$id)
+                  ->get()
+                  ->row();
+    return $qry->$field;
+}
+
+
+//balance user
+function balance_user($id_pendana)
+{
+  $ci=& get_instance();
+  return $ci->balance->init($id_pendana);
+}
+
 //pass hash
 function pass_encrypt($token,$str)
 {
