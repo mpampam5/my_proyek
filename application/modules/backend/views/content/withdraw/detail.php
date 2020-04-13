@@ -17,12 +17,6 @@
 
                             <input type="hidden" name="id_act" id="id_act" value="<?=enc_url($dt->id_withdraw)?>">
 
-
-                            <div class="form-group">
-                              <label for="">Amount Acc</label>
-                              <input type="text" class="form-control" readonly value="<?=format_rupiah($dt->nominal)?>">
-                            </div>
-
                             <div class="form-group">
                               <label for="">Status</label>
                               <select class="form-control" name="status_approved" id="status_approved">
@@ -47,10 +41,10 @@
                           </form>
                         <?php }else { ?>
                           <h6>Execution :</h6>
-                          <ul style="list-style:none;padding-left:0!important">
+                          <ul style="list-style:none;padding-left:0!important;font-size:12px;">
                             <li>
-                              <i class="fa fa-user"></i> <?=$dt->acc_by?>
-                              <?=$dt->acc_by == "admin" ? "[".profile_where_id($dt->acc_by_id,"nama")."]":""?>
+                              <i class="fa fa-user"></i> <?=strtoupper($dt->acc_by)?>
+                              <?=$dt->acc_by == "admin" ? "[ ".profile_where_id($dt->acc_by_id,"nama")." ]":""?>
                             </li>
                             <li><i class="fa fa-calendar"></i> <?=date("d/m/Y H:i",strtotime($dt->acc_at))?></li>
                           </ul>

@@ -98,9 +98,9 @@ function action()
                               'type' => "withdraw",
                               'id_transaksi' => $row->id_withdraw,
                               'kd_transaksi' => $row->code ,
-                              'kredit' => $row->nominal,
+                              'debit' => $row->nominal,
                               'saldo' => $this->balance->init($row->id_pendana),
-                              'deskripsi' => "withdraw [".$row->code."] ke BANK ".rekening($row->id_rekening,"nama_bank")." - ".rekening($row->id_rekening,"no_rekening"),
+                              'deskripsi' => "Withdraw [".$row->code."] berhasil",
                               'created_at' => date('Y-m-d H:i:s'),
                               );
               $this->model->get_insert("report_mutasi",$report);

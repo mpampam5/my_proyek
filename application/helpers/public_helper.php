@@ -15,3 +15,22 @@ if ( ! function_exists('replace_rupiah'))
     return str_replace(".","","$int");
   }
 }
+
+
+function selisih_hari($tanggal)
+{
+
+  // $tanggal = new DateTime($tanggal);
+  //
+  // $sekarang = new DateTime();
+  //
+  // $perbedaan = $tanggal->diff($sekarang);
+  //
+  // return $perbedaan->d;
+
+  $tanggall  = strtotime($tanggal);
+  $sekarang    = time(); // Waktu sekarang
+  $diff   = $sekarang - $tanggall;
+  $hsl = floor($diff / (60 * 60 * 24));
+  return abs($hsl)+1;
+}

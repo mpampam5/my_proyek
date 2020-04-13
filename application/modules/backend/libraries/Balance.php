@@ -30,9 +30,12 @@
                               ->where("id_pendana",$id_pendana)
                               ->where("status","approved")
                               ->group_by('id_pendana')
-                              ->get()
-                              ->row();
-          return $qry->nominal;
+                              ->get();
+          if ($qry->num_rows() > 0 ) {
+            return $qry->row()->nominal;
+          }else {
+            return 0;
+          }
         }
 
 
@@ -43,9 +46,12 @@
                               ->where("id_pendana",$id_pendana)
                               ->where("status","approved")
                               ->group_by('id_pendana')
-                              ->get()
-                              ->row();
-          return $qry->nominal;
+                              ->get();
+          if ($qry->num_rows() > 0 ) {
+            return $qry->row()->nominal;
+          }else {
+            return 0;
+          }
         }
 
 

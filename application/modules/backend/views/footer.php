@@ -27,15 +27,23 @@
         </div>
 
         <!-- <script src="<?=base_url()?>_template/backend/pages/dashboard.js"></script> -->
-
+        <!-- Bootstrap inputmask js -->
+        <script src="<?=base_url()?>_template/backend/plugins/bootstrap-inputmask/jquery.mask.min.js" type="text/javascript"></script>
         <!-- App js -->
         <script src="<?=base_url()?>_template/backend/js/app.js"></script>
         <script type="text/javascript">
+        $(document).ready(function(){
+          $('.rupiah').mask('00.000.000.000', {reverse: true});
+        });
+
+
           $('#modalGue').on('hide.bs.modal', function () {
               setTimeout(function(){
                   $('#modalTitle, #modalContent , #modalFooter').html('');
                 }, 500);
              });
         </script>
+
+
     </body>
 </html>
