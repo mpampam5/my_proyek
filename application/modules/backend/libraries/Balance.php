@@ -17,7 +17,8 @@
         //heleper methode "balance_user($id_pendana)"
         function init($id_pendana){
           $deposito = $this->get_deposito($id_pendana);
-          $nominal = $deposito;
+          $withdraw = $this->get_withdraw($id_pendana);
+          $nominal = $deposito-$withdraw;
           return $nominal;
         }
 
@@ -26,6 +27,19 @@
         {
           $qry = $this->CI->db->select("id_deposito,id_pendana,SUM(nominal) AS nominal,status")
                               ->from("deposito")
+                              ->where("id_pendana",$id_pendana)
+                              ->where("status","approved")
+                              ->group_by('id_pendana')
+                              ->get()
+                              ->row();
+          return $qry->nominal;
+        }
+
+
+        function get_withdraw($id_pendana)
+        {
+          $qry = $this->CI->db->select("id_withdraw,id_pendana,SUM(nominal) AS nominal,status")
+                              ->from("withdraw")
                               ->where("id_pendana",$id_pendana)
                               ->where("status","approved")
                               ->group_by('id_pendana')
