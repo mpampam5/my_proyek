@@ -20,17 +20,14 @@ if ( ! function_exists('replace_rupiah'))
 function selisih_hari($tanggal)
 {
 
-  // $tanggal = new DateTime($tanggal);
-  //
-  // $sekarang = new DateTime();
-  //
-  // $perbedaan = $tanggal->diff($sekarang);
-  //
-  // return $perbedaan->d;
-
-  $tanggall  = strtotime($tanggal);
-  $sekarang    = time(); // Waktu sekarang
-  $diff   = $sekarang - $tanggall;
-  $hsl = floor($diff / (60 * 60 * 24));
-  return abs($hsl)+1;
+  $datetime1 = date_create(date("Y-m-d"));
+  $datetime2 = date_create("$tanggal");
+  $interval = date_diff($datetime1, $datetime2);
+  $hsls = $interval->format('%R');
+  $hsl = $interval->format('%d');
+  if ($hsls=="+") {
+    return $hsl+1;
+  }else {
+    return 0;
+  }
 }

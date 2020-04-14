@@ -17,7 +17,7 @@
                     <select class="form-control form-control-sm" id="status_publish" name="status_publish">
                       <option value="">-- Status Publish --</option>
                       <option value="process">Menunggu Verifikasi</option>
-                      <option value="Publish">Terverifikasi</option>
+                      <option value="publish">Terverifikasi</option>
                       <option value="cancel">Cancel</option>
                     </select>
                   </div>
@@ -102,8 +102,11 @@ var table;
           "url": "<?php echo site_url("backend/master_proyek/json")?>",
           "type": "POST",
           "data": function(data){
+            data.status_publish = $("#status_publish option:selected").val();
+            data.status_penggalangan = $("#status_penggalangan option:selected").val();
             data.code = $("#code").val();
             data.title = $("#title").val();
+            data.id_reg = $("#id_reg").val();
             data.nama = $("#nama").val();
           }
       },
@@ -137,9 +140,12 @@ var table;
   });
 
   $("#reload").click(function(){
+    $("#status_publish").removeAttr('selected').val("").attr('selected', 'selected');
+    $("#status_penggalangan").removeAttr('selected').val("").attr('selected', 'selected');
       $("#code").val("");
       $("#title").val("");
       $("#nama").val("");
+      $("#id_reg").val("");
       table.ajax.reload();  //just reload table
   });
 
