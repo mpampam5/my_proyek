@@ -15,9 +15,10 @@
                 <div class="row">
                   <div class="col-sm-2 pr-0 form-group">
                     <select class="form-control form-control-sm" id="status_publish" name="status_publish">
-                      <option value="">-- Status Publish --</option>
+                      <option value="">-- Status --</option>
                       <option value="process">Menunggu Verifikasi</option>
-                      <option value="publish">Terverifikasi</option>
+                      <option value="publish">Publish</option>
+                      <option value="done">Selesai</option>
                       <option value="cancel">Cancel</option>
                     </select>
                   </div>
@@ -64,7 +65,7 @@
                     <th>PEMILIK PROYEK</th>
                     <th>PROYEK</th>
                     <th>STATUS PENGGALANGAN</th>
-                    <th>STATUS PUBLISH</th>
+                    <th>STATUS</th>
                     <th>###</th>
                   </tr>
                 </thead>

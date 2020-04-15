@@ -6,6 +6,8 @@ class Master_proyek extends Backend{
   public function __construct()
   {
     parent::__construct();
+    $this->load->library("proyek");
+    $this->load->helper("proyek");
     $this->load->model("Master_proyek_model","model");
   }
 
@@ -52,13 +54,20 @@ class Master_proyek extends Backend{
           }elseif ($dt->status=="cancel") {
             $row[] = "-";
             $row[] = "<span class='badge badge-danger'>Cancel</span>";
+          }elseif ($dt->status=="done") {
+            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
+            <p class='font-12 mt-2'>
+              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
+            "</br>";
           }
 
 
           if ($dt->status=="process") {
             $row[] = "<span class='badge badge-warning text-white'>Menunggu Verifikasi</span>";
           }elseif ($dt->status=="publish") {
-            $row[] = "<span class='badge badge-success'>Terverifikasi</span>";
+            $row[] = "<span class='badge badge-success'>Publish</span>";
+          }elseif ($dt->status=="done") {
+            $row[] = "<span class='badge badge-success'>Proyek Selesai</span>";
           }
 
 
