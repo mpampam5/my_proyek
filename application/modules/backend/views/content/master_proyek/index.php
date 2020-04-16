@@ -50,7 +50,8 @@
                   <div class="col-sm-12">
                     <button class="btn btn-primary btn-sm" id="btn-search" type="button"><i class="fa fa-search"></i> Filter Search</button>
                     <button type="button" id="reload"  name="button" class="btn btn-warning btn-sm"><i class="fa fa-refresh"></i> Reload</button>
-                    <button type="button" class="btn btn-success btn-sm">Export Excell</button>
+                    <button type="button" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> Export Excell</button>
+                    <button type="button" class="btn btn-info btn-sm"><i class="fa fa-file"></i> Tambah Proyek</button>
                   </div>
                 </div>
               </div>

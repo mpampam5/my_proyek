@@ -26,7 +26,7 @@ class Master_proyek_model extends MY_Model{
                   master_proyek.status_penggalangan,
                   master_proyek.created_at,
                   master_penerima_dana.id_reg,
-                  master_penerima_dana.nama,
+                  master_penerima_dana.nama_perusahaan,
                   master_penerima_dana.email";
 
   private function _get_datatables_query()
@@ -129,7 +129,8 @@ class Master_proyek_model extends MY_Model{
                                 master_proyek.keterangan,
                                 master_proyek.status_penggalangan,
                                 master_penerima_dana.id_reg,
-                                master_penerima_dana.nama,
+                                master_penerima_dana.nama_perusahaan,
+                                master_penerima_dana.nama_penanggung_jawab,
                                 master_penerima_dana.email")
                       ->from("master_proyek")
                       ->join("master_penerima_dana","master_penerima_dana.id_penerima_dana = master_proyek.id_penerima_dana")

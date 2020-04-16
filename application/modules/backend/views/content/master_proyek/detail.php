@@ -126,14 +126,22 @@
               <div class="col-md-4 animated zoomIn delay-3s">
                 <div class="card m-b-10">
                   <div class="mb-2 card-body text-muted">
-                    <a href="<?=site_url("backend/master_proyek")?>" class="btn btn-md btn-secondary btn-block"><i class="fa fa-file"></i> Lihat Daftar Proyek</a>
+                    <!-- <a href="<?=site_url("backend/master_proyek")?>" class="btn btn-md btn-secondary btn-block"><i class="fa fa-file"></i> Lihat Daftar Proyek</a> -->
+                    <ul class="list-group list-group-flush mb-4">
+                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek")?>"><i class="fa fa-star"></i> Lihat Daftar Proyek</a></li>
+                      <?php if ($dt->status=="publish" OR $dt->status=="done"): ?>
+                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_pemberi_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Daftar Pemberi Dana</a></li>
+                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_progres_proyek/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Progres Proyek</a></li>
+                      <li class="list-group-item"><a href="" target="_blank"><i class="fa fa-star"></i> Lihat Akumulasi Imbal Hasil</a></li>
+                      <?php endif; ?>
+                    </ul>
 
-                    <hr>
                     <?php if ($dt->status=="process"): ?>
                       <h4 class="header-title">FORM APPROVED</h4>
                       <div class="mt-2">
-                        <form action="<?=site_url("backend/master_proyek/action/".enc_url($dt->id_proyek))?>" id="form">
+                        <form autocomplete="off" action="<?=site_url("backend/master_proyek/action/".enc_url($dt->id_proyek))?>" id="form">
                           <div class="form-group">
+                            <label for="">Status Approved</label>
                             <select class="form-control" name="status_publish" id="status_publish">
                               <option value=""> -- pilih -- </option>
                               <option value="cancel">Cancel</option>
@@ -141,7 +149,21 @@
                             </select>
                           </div>
 
+
                           <div class="form-group">
+                                <label>Tanggal Mulai Penggalangan </label>
+                                <div>
+                                    <div class="input-daterange input-group" id="date-range">
+                                        <input type="text"  class="form-control" name="start_proyek" placeholder="Tgl Mulai">
+                                        <input type="text" class="form-control" name="end_proyek" placeholder="Tgl Berakhir">
+                                    </div>
+                                </div>
+                                <div id="start_proyek"></div>
+                                <div id="end_proyek"></div>
+                            </div>
+
+                          <div class="form-group">
+                            <label for="">Keterangan</label>
                             <textarea name="keterangan" id="keterangan" class="form-control" rows="3" cols="80" placeholder="Keterangan publish/cancel"></textarea>
                           </div>
 
@@ -156,6 +178,10 @@
 
 
                       <script type="text/javascript">
+                      jQuery('#date-range').datepicker({
+                          toggleActive: true
+                      });
+
                       $("#form").submit(function(e){
                       e.preventDefault();
                       var me = $(this);
@@ -281,7 +307,7 @@
                         <td>: <?=$dt->lama_penggalangan?> Hari</td>
                       </tr>
 
-                      <?php if ($dt->status=="publish"): ?>
+                      <?php if ($dt->status=="publish" OR $dt->status=="done"): ?>
                         <tr>
                           <th>Waktu Penggalangan</th>
                           <td>: <?=date("d-m-Y",strtotime($dt->mulai_penggalangan))?> s/d <?=date("d-m-Y",strtotime($dt->akhir_penggalangan))?> (<?=selisih_hari($dt->akhir_penggalangan)?> Hari lagi)</td>
@@ -324,8 +350,13 @@
                       </tr>
 
                       <tr>
-                        <th>Nama</th>
-                        <td>: <?=$dt->nama?></td>
+                        <th>Perusahaan</th>
+                        <td>: <?=$dt->nama_perusahaan?></td>
+                      </tr>
+
+                      <tr>
+                        <th>Penanggung Jawab</th>
+                        <td>: <?=$dt->nama_penanggung_jawab?></td>
                       </tr>
 
                       <tr>

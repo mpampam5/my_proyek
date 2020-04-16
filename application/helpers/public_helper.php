@@ -17,10 +17,14 @@ if ( ! function_exists('replace_rupiah'))
 }
 
 
-function selisih_hari($tanggal)
+function selisih_hari($tanggal,$tanggal_ditentukan = null)
 {
 
-  $datetime1 = date_create(date("Y-m-d"));
+  if ($tanggal_ditentukan==null) {
+    $datetime1 = date_create(date("Y-m-d"));
+  }else {
+    $datetime1 = date_create("$tanggal_ditentukan");
+  }
   $datetime2 = date_create("$tanggal");
   $interval = date_diff($datetime1, $datetime2);
   $hsls = $interval->format('%R');
