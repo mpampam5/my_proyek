@@ -36,5 +36,16 @@ function _cek_password($str)
   }
 }
 
+}
+
+
+//usrp class
+class Usrp extends CI_Controller{
+  public function __construct()
+  {
+    parent::__construct();
+      $this->load->library(array("usrp/Template","form_validation","security","user_agent"));
+      $this->load->helper(array("public"));
+  }
 
 }

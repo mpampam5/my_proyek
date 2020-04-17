@@ -6,7 +6,7 @@ class Setting_umum extends backend{
   public function __construct()
   {
     parent::__construct();
-    //Codeigniter : Write Less Do More
+    $this->load->helper("sct")
   }
 
   function index()
