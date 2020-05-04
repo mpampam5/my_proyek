@@ -6,7 +6,7 @@ class Login extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    $this->load->helper(array("backend/backend","sct"));
+    $this->load->helper(array("backend/backend","public","sct"));
   }
 
   function index()

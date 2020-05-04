@@ -4,13 +4,24 @@
       <div class="container-fluid">
           <div class="row">
               <div class="col-12 mb-4 pt-5">
-                  <h4 class="text-center">Hi, Muhammad irfan ibnu</h4>
+                  <h4 class="text-center">Hi, <?=profile("nama")?></h4>
+                  <p class="text-center" style="color:#555555;font-size:16px"><?=profile("email")?></p>
+                  <?php if (!complate_data()): ?>
+                    <div class="col-md-6 mx-auto text-center alert alert-info">
+                      <p style="font-size:18px">
+                        <strong>DATA ANDA BELUM LENGKAP!</strong><br>
+                         Mungkin beberapa fitur belum bisa anda gunakan. mohon untuk melengkapi data anda terlebih dahulu.
+                      </p>
+                      <a href="<?=site_url("usrp/wizard")?>" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i> Lengkapi Data</a>
+                    </div>
+                    <?php else: ?>
+                      <div class="mt-4 text-center">
+                          <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Mulai Penggalangan Dana</button>
+                          <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Deposit</button>
+                          <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Withdraw</button>
+                      </div>
+                  <?php endif; ?>
 
-                  <div class="mt-4 text-center">
-                      <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Mulai Penggalangan Dana</button>
-                      <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Tambah Saldo</button>
-                      <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Tarik Saldo</button>
-                  </div>
               </div>
           </div>
       </div>

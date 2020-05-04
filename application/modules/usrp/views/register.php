@@ -68,7 +68,7 @@
                             <div class="form-group m-t-10 mb-0 row">
                                 <div class="col-12 m-t-20">
                                     <p class="font-14 text-muted mb-1">Baca <a href="#" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
-                                    <p class="font-14 text-muted">Sudah punya akun ? <a href="pages-login.html" class="font-500 font-14 text-primary font-secondary"> Login </a> </p>
+                                    <p class="font-14 text-muted">Sudah punya akun ? <a href="<?=site_url("usrp/login")?>" class="font-500 font-14 text-primary font-secondary"> Login </a> </p>
                                 </div>
                             </div>
                         </form>

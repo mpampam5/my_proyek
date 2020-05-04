@@ -21,6 +21,15 @@
         <link href="<?=base_url()?>_template/usrp/css/icons.css" rel="stylesheet" type="text/css">
         <link href="<?=base_url()?>_template/usrp/css/style.css" rel="stylesheet" type="text/css">
 
+
+        <!-- jQuery  -->
+        <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/modernizr.min.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/jquery.slimscroll.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/waves.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/jquery.nicescroll.js"></script>
+        <script src="<?=base_url()?>_template/usrp/js/jquery.scrollTo.min.js"></script>
     </head>
 
 
@@ -163,7 +172,7 @@
                                     </button>
                                 </li>
                                 <li class="hide-phone list-inline-item app-search">
-                                    <h3 class="page-title">Dashboard</h3>
+                                    <h3 class="page-title"><?=$title?></h3>
                                 </li>
                             </ul>
 

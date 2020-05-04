@@ -17,7 +17,7 @@
         <link href="<?=base_url()?>_template/usrp/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="<?=base_url()?>_template/usrp/css/icons.css" rel="stylesheet" type="text/css" />
         <link href="<?=base_url()?>_template/usrp/css/style.css" rel="stylesheet" type="text/css" />
-
+        <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
     </head>
 
 
@@ -34,11 +34,11 @@
 
                     <div class="p-3">
                         <h4 class="text-muted font-18 m-b-5 text-center">LOGIN PENERIMA MODAL</h4>
-                        <p class="text-muted text-center">Silakan login.</p>
+                        <p class="text-muted text-center">Silahkan login.</p>
 
                         <div id="alert"></div>
 
-                        <form class="form-horizontal m-t-30" id="form" action="<?=site_url("register/usrp/action")?>" autocomplete="off">
+                        <form class="form-horizontal m-t-30" id="form" action="<?=site_url("usrp/login/action")?>">
                             <div class="form-group">
                                 <label for="email">Email</label><span id="email"></span>
                                 <input type="text" class="form-control"  name="email" placeholder="Email">
@@ -58,7 +58,7 @@
                             <div class="form-group m-t-10 mb-0 row">
                                 <div class="col-12 m-t-20">
                                     <p class="font-14 text-muted mb-1">Baca <a href="#" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
-                                    <p class="font-14 text-muted">Belum punya akun ? <a href="pages-login.html" class="font-500 font-14 text-primary font-secondary"> Register </a> </p>
+                                    <p class="font-14 text-muted">Belum punya akun ? <a href="<?=site_url("usrp/register")?>" class="font-500 font-14 text-primary font-secondary"> Register </a> </p>
                                 </div>
                             </div>
                         </form>
@@ -76,11 +76,13 @@
         <!-- jQuery  -->
         <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
+        <script src="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/modernizr.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/waves.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.slimscroll.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.nicescroll.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.scrollTo.min.js"></script>
+        <!-- jQuery  -->
 
         <!-- App js -->
         <script src="<?=base_url()?>_template/usrp/js/app.js"></script>
@@ -88,42 +90,49 @@
 
         <script type="text/javascript">
         $("#form").submit(function(e){
-          e.preventDefault();
-          var me = $(this);
-          $("#submit").prop('disabled',true).html('Loading...');
-          $.ajax({
-                url             : me.attr('action'),
-                type            : 'post',
-                data            :  new FormData(this),
-                contentType     : false,
-                cache           : false,
-                dataType        : 'JSON',
-                processData     :false,
-                success:function(json){
-                  if (json.success==true) {
-                    $("#alert").hide().fadeIn(1000).html(`
-                                        <div class="alert alert-success bg-success text-white" role="alert">
-                                            `+json.alert+`
-                                        </div>
-                                    `);
-                    $(".form-group").find('.text-danger').remove();
-                    me.trigger("reset");
-                    $("#submit").prop('disabled',false)
-                                .html('Register');
+        e.preventDefault();
+        var me = $(this);
+        $("#submit").prop('disabled',true).html('Loading...');
+        $(".form-group").find('.text-danger').remove();
+        $.ajax({
+              url             : me.attr('action'),
+              type            : 'post',
+              data            :  new FormData(this),
+              contentType     : false,
+              cache           : false,
+              dataType        : 'JSON',
+              processData     :false,
+              success:function(json){
+                if (json.success==true) {
+                  if (json.valid==true) {
+                    window.location.href = json.url;
                   }else {
                     $("#submit").prop('disabled',false)
-                                .html('Register');
-                    $.each(json.alert, function(key, value) {
-                      var element = $('#' + key);
-                      $(element)
-                      .closest('.form-group')
-                      .find('.text-danger').remove();
-                      $(element).after(value);
+                                .html('Login');
+                    $("input[type=password]").val("");
+                    $.toast({
+                      text: json.alert,
+                      showHideTransition: 'slide',
+                      icon: 'error',
+                      loaderBg: '#f7c800',
+                      position: 'top-center',
+        							hideAfter: 3000
                     });
                   }
+                }else {
+                  $("#submit").prop('disabled',false)
+                              .html('Login');
+                  $.each(json.alert, function(key, value) {
+                    var element = $('#' + key);
+                    $(element)
+                    .closest('.form-group')
+                    .find('.text-danger').remove();
+                    $(element).after(value);
+                  });
                 }
-              });
-          });
+              }
+            });
+        });
         </script>
     </body>
 </html>

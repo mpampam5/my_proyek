@@ -1,5 +1,13 @@
 <?php if (!defined("BASEPATH")) exit("No direct script access allowed");
 
+function sess($str)
+{
+  $ci=& get_instance();
+  return $ci->session->userdata($str);
+}
+
+
+
 if ( ! function_exists('format_rupiah'))
 {
   function format_rupiah($int)
@@ -34,4 +42,22 @@ function selisih_hari($tanggal,$tanggal_ditentukan = null)
   }else {
     return 0;
   }
+}
+
+
+//pass hash
+function pass_encrypt($token,$str)
+{
+    $ecrypt = password_hash($str."".$token,PASSWORD_DEFAULT);
+    return $ecrypt;
+}
+
+
+function pass_decrypt($token,$str,$hash)
+{
+    if (password_verify($str."".$token, $hash)) {
+        return true;
+    }else {
+        return false;
+    }
 }

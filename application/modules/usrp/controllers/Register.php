@@ -7,7 +7,7 @@ class Register extends CI_Controller{
   {
     parent::__construct();
     //Codeigniter : Write Less Do More
-    $this->load->helper(array("usrp"));
+    $this->load->helper(array("usrp","public"));
   }
 
   function index()

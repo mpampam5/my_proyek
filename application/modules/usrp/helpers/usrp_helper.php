@@ -1,19 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-//pass hash
-function pass_encrypt($token,$str)
+function profile($field)
 {
-    $ecrypt = password_hash($str."".$token,PASSWORD_DEFAULT);
-    return $ecrypt;
+  $ci=& get_instance();
+  $qry = $ci->db->select("id_reg,
+                          no_ktp,
+                          nama,
+                          telepon,
+                          email,
+                          complate")
+                  ->from("master_penerima_dana")
+                  ->where("id_penerima_dana",sess("id_user"))
+                  ->get()
+                  ->row();
+    return $qry->$field;
 }
 
 
-function pass_decrypt($token,$str,$hash)
+function complate_data()
 {
-    if (password_verify($str."".$token, $hash)) {
-        return true;
-    }else {
-        return false;
-    }
+  if (profile("complate")!="1") {
+    return false;
+  }
+  return true;
 }

@@ -27,7 +27,7 @@ class Master_proyek_model extends MY_Model{
                   master_proyek.created_at,
                   master_penerima_dana.id_reg,
                   master_penerima_dana.nama_perusahaan,
-                  master_penerima_dana.email";
+                  master_penerima_dana.nama";
 
   private function _get_datatables_query()
     {
