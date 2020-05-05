@@ -36,7 +36,7 @@ class Login extends CI_Controller{
               $token = $row->token_password;
               $password_account = $row->password;
               if (pass_decrypt($token,$password,$password_account)) {
-                $session = array('id_user' => $row->id_penerima_dana , "login_status" => true );
+                $session = array('id_user' => $row->id_penerima_dana , "login_usrp_status" => true );
                 $this->session->set_userdata($session);
 
                 $json['valid'] = true;

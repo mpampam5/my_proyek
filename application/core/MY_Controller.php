@@ -44,7 +44,7 @@ class Usrp extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    if (!$this->session->userdata("login_status")) {
+    if (!$this->session->userdata("login_usrp_status")) {
         redirect(site_url("usrp/login"),"refresh");
     }else {
       $this->load->library(array("usrp/Template","form_validation","security","user_agent"));

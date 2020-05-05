@@ -54,7 +54,7 @@
                             <li class="menu-title">Main Menu</li>
 
                             <li>
-                                <a href="index.html" class="waves-effect"><i class="dripicons-device-desktop"></i><span> Dashboard </span></a>
+                                <a href="<?=site_url("usrp/dashboard")?>" class="waves-effect"><i class="dripicons-device-desktop"></i><span> Dashboard </span></a>
                             </li>
 
                             <li>
