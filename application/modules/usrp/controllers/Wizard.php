@@ -80,12 +80,23 @@ class Wizard extends Usrp{
 
             $data = array('nama_rekening' => $this->input->post('nama_rekening',true),
                           'no_rekening' => $this->input->post('no_rekening',true),
-                          'bank' => $this->input->post('bank',true)
+                          'bank' => $this->input->post('bank',true),
+                          'complate'  => "1"
                         );
             $this->db->where("id_penerima_dana", sess('id_user'))
                      ->update("master_penerima_dana",$data);
 
-            $json['url'] = site_url("usrp/wizard/form_rekening");
+
+            $this->session->set_flashdata('info_data',
+            '<div class="col-md-6 mx-auto text-center alert alert-success" id="alert-data-success" style="font-size:18px">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+              <p >
+                 Data Berhasil Di Lengkapi.
+              </p>
+            </div>');
+            $json['url'] = site_url("usrp/dashboard");
             $json['success'] =  true;
           }else {
             foreach ($_POST as $key => $value)

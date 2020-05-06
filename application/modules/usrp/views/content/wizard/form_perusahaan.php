@@ -1,6 +1,6 @@
 <link href="<?=base_url()?>_template/usrp/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 <script src="<?=base_url()?>_template/usrp/plugins/select2/js/select2.min.js"></script>
-
+ <!-- <script src="<?=base_url()?>_template/usrp/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script> -->
 <style media="screen">
   .select2-container--default.select2-container--focus .select2-selection--multiple{
     border: 1px solid #268ad2;
@@ -89,13 +89,14 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">File Badan Usaha</label>
       <div class="col-sm-9">
+        <input type="file" name="value-files" id="upload-file"  style="display:none" accept=".pdf">
           <div class="bootstrap-filestyle input-group">
-            <input type="text" class="form-control " placeholder="" readonly>
+            <input type="text" class="form-control bg-white" id="value-file" placeholder="Upload Berkas" readonly>
             <span class="group-span-filestyle input-group-append" tabindex="0">
-              <label for="filestyle-0" class="btn btn-info">
+              <button for="filestyle-0" type="button" id="btn-upload-file" class="btn btn-success">
                 <span class="icon-span-filestyle fa fa-folder-open"></span>
-                <span class="buttonText">Choose file</span>
-              </label>
+                <span class="buttonText">Upload file</span>
+              </button>
             </span>
           </div>
       </div>
@@ -126,15 +127,15 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">File Dokumen Perizinan</label>
       <div class="col-sm-9">
-          <div class="bootstrap-filestyle input-group">
-            <input type="text" class="form-control " placeholder="" readonly>
-            <span class="group-span-filestyle input-group-append" tabindex="0">
-              <label for="filestyle-0" class="btn btn-info">
-                <span class="icon-span-filestyle fa fa-folder-open"></span>
-                <span class="buttonText">Choose file</span>
-              </label>
-            </span>
-          </div>
+        <div class="bootstrap-filestyle input-group">
+          <input type="text" class="form-control bg-white" placeholder="Upload Berkas" readonly>
+          <span class="group-span-filestyle input-group-append" tabindex="0">
+            <label for="filestyle-0" class="btn btn-success">
+              <span class="icon-span-filestyle fa fa-folder-open"></span>
+              <span class="buttonText">Upload file</span>
+            </label>
+          </span>
+        </div>
       </div>
       <div class="col-sm-12 mt-3">
         <ul style="list-style:none;font-size:11px;margin-left:170px">
@@ -173,6 +174,27 @@ function loadKabupaten()
       $("#kabupaten").html('<option value="">-- Pilih Kabupaten/Kota --</option>');
     }
 }
+
+
+$(function () {
+      var fileupload = $("#upload-file");
+      var button = $("#btn-upload-file");
+      button.click(function () {
+          fileupload.click();
+      });
+      fileupload.change(function () {
+          var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+          // $("#data-info").text(fileName);
+
+          var file_data = $('#upload-file').prop('files')[0];
+          var form_data = new FormData();
+          $("#value-file").val(fileName);
+          $("#btn-upload-file").html('<div class="spinner-border spinner-border-sm text-white"></div>');
+
+          form_data.append('value-files', file_data);
+          });
+
+      });
 
 
 $("#form").submit(function(e){

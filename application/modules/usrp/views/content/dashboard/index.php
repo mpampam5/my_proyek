@@ -15,6 +15,7 @@
                       <a href="<?=site_url("usrp/wizard")?>" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i> Lengkapi Data</a>
                     </div>
                     <?php else: ?>
+                      <?php echo $this->session->flashdata('info_data'); ?>
                       <div class="mt-4 text-center">
                           <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Mulai Penggalangan Dana</button>
                           <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Deposit</button>
@@ -69,3 +70,11 @@
 
   </div>
 </div> <!-- Page content Wrapper -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    setTimeout(function() {
+      $('#alert-data-success').fadeOut('slow');
+    }, 8000); // <-- time in milliseconds
+  });
+</script>

@@ -2,14 +2,14 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nama Rekening</label>
       <div class="col-sm-9">
-          <input class="form-control" type="text" value="" name="nama_rekening" id="nama_rekening">
+          <input class="form-control" type="text" value="<?=$dt->nama_rekening?>" name="nama_rekening" id="nama_rekening">
       </div>
   </div>
 
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">No Rekening</label>
       <div class="col-sm-9">
-          <input class="form-control" type="text" value="" name="no_rekening" id="no_rekening">
+          <input class="form-control" type="text" value="<?=$dt->no_rekening?>" name="no_rekening" id="no_rekening">
       </div>
   </div>
 
@@ -17,7 +17,13 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">Bank</label>
       <div class="col-sm-9">
-          <input class="form-control" type="text" value="" name="bank" id="bank">
+        <?php $bank = $this->db->get('trans_bank');?>
+        <select class="form-control" name="bank" id="bank">
+          <option value=""> -- pilih --</option>
+          <?php foreach ($bank->result() as $bk): ?>
+            <option <?=$dt->bank == $bk->id_bank ? "selected":""?> value="<?=$bk->id_bank?>"><?=$bk->nama_bank?></option>
+          <?php endforeach; ?>
+        </select>
       </div>
   </div>
 
@@ -50,7 +56,7 @@
         processData     :false,
         success:function(json){
           if (json.success==true) {
-            $("#content-wizard").load(json.url);
+            window.location.href = json.url;
           }else {
             $("#submit").prop('disabled',false)
                         .html('SELANJUTNYA');
