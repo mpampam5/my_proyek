@@ -20,11 +20,12 @@
         <link href="<?=base_url()?>_template/usrp/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="<?=base_url()?>_template/usrp/css/icons.css" rel="stylesheet" type="text/css">
         <link href="<?=base_url()?>_template/usrp/css/style.css" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
 
         <!-- jQuery  -->
         <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
+                <script src="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/modernizr.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.slimscroll.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/waves.js"></script>
@@ -58,7 +59,7 @@
                             </li>
 
                             <li>
-                                <a href="index.html" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
+                                <a href="<?=site_url("usrp/proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
                             </li>
 
                             <li>
@@ -78,7 +79,7 @@
                             </li>
 
                             <li>
-                                <a href="index.html" class="waves-effect"><i class="fa fa-sign-out"></i><span> Logout </span></a>
+                                <a href="<?=site_url("usrp/login/logout")?>" class="waves-effect"><i class="fa fa-sign-out"></i><span> Logout </span></a>
                             </li>
 
                         </ul>

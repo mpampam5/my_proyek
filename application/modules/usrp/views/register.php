@@ -39,6 +39,11 @@
                         <div id="alert"></div>
 
                         <form class="form-horizontal m-t-30" id="form" action="<?=site_url("register/usrp/action")?>" autocomplete="off">
+                          <div class="form-group">
+                              <label for="nama">No KTP</label><span id="no_ktp"></span>
+                              <input type="text" class="form-control"  name="no_ktp" placeholder="No KTP">
+                          </div>
+
                             <div class="form-group">
                                 <label for="nama">Nama Lengkap</label><span id="nama"></span>
                                 <input type="text" class="form-control"  name="nama" placeholder="Nama Lengkap">

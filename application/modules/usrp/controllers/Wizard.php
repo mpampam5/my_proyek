@@ -6,7 +6,9 @@ class Wizard extends Usrp{
   public function __construct()
   {
     parent::__construct();
-    //Codeigniter : Write Less Do More
+    if (complate_data()) {
+      redirect(site_url("usrp/dashboard"),'refresh');
+    }
   }
 
   function index()
@@ -108,6 +110,85 @@ class Wizard extends Usrp{
           echo json_encode($json);
       }
   }
+
+
+  function do_upload()
+      {
+        if ($this->input->is_ajax_request()) {
+            $json = array('success' =>false , "alert"=> array(), "file_name"=>array());
+            $file = "badan_usaha_".enc_url(profile("id_reg")).".".pathinfo($_FILES['upload-file']['name'], PATHINFO_EXTENSION);
+             if (!file_exists('./_template/files/berkas/'.enc_url(profile('id_reg')))) {
+                mkdir('./_template/files/berkas/'.enc_url(profile('id_reg')), 0777, true);
+            }
+            $config['upload_path'] = "./_template/files/berkas/".enc_url(profile('id_reg'))."/";
+            $config['allowed_types'] = 'pdf';
+            $config['overwrite'] = true;
+            $config['max_size']  = '5024';
+            $config['file_name']  = "$file";
+
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('upload-file')){
+                $json['header_alert'] = "error";
+                $json['alert'] = "File tidak valid, format file harus PDF & ukuran maksimal 5 mb";
+            }else {
+                $where = array('id_penerima_dana' => sess("id_user"));
+                $data = array("file_badan_usaha"=>$config['file_name']);
+                $this->db->where($where)
+                          ->update("master_penerima_dana",$data);
+                $json['file_name'] = "file_badan_usaha.pdf";
+                $json['header_alert'] = "success";
+                $json['alert'] = "File upload successfully.";
+                $json['success'] = true;
+            }
+
+            echo json_encode($json);
+
+      }
+    }
+
+
+    function do_upload2()
+        {
+          if ($this->input->is_ajax_request()) {
+              $json = array('success' =>false , "alert"=> array(), "file_name"=>array());
+
+              $file = "dokumen_perizinan_".enc_url(profile("id_reg")).".".pathinfo($_FILES['upload-file2']['name'], PATHINFO_EXTENSION);
+               if (!file_exists('./_template/files/berkas/'.enc_url(profile('id_reg')))) {
+                  mkdir('./_template/files/berkas/'.enc_url(profile('id_reg')), 0777, true);
+              }
+              $config['upload_path'] = "./_template/files/berkas/".enc_url(profile('id_reg'))."/";
+              $config['allowed_types'] = 'pdf';
+              $config['overwrite'] = true;
+              $config['max_size']  = '5024';
+              $config['file_name']  = "$file";
+
+
+              $this->load->library('upload', $config);
+              $this->upload->initialize($config);
+
+              if (!$this->upload->do_upload('upload-file2')){
+                  $json['header_alert'] = "error";
+                  $json['alert'] = "File tidak valid, format file harus PDF & ukuran maksimal 5 mb";
+              }else {
+                  $where = array('id_penerima_dana' => sess("id_user"));
+                  $data = array("file_dokument_perizinan"=>$config['file_name']);
+                  $this->db->where($where)
+                            ->update("master_penerima_dana",$data);
+                  $json['file_name'] = "file_dokumen_perizinan.pdf";
+                  $json['header_alert'] = "success";
+                  $json['alert'] = "File upload successfully.";
+                  $json['success'] = true;
+              }
+
+              echo json_encode($json);
+
+        }
+      }
+
+
 
   function jsonkabupaten(){
         $propinsiID = $_GET['id'];

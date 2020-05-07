@@ -356,7 +356,7 @@
 
                       <tr>
                         <th>Penanggung Jawab</th>
-                        <td>: <?=$dt->nama_penanggung_jawab?></td>
+                        <td>: <?=$dt->nama?></td>
                       </tr>
 
                       <tr>

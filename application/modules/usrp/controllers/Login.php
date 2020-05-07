@@ -11,7 +11,11 @@ class Login extends CI_Controller{
 
   function index()
   {
-    $this->load->view("login");
+    if ($this->session->userdata("login_usrp_status")) {
+        redirect(site_url("usrp/dashboard"),"refresh");
+    }else {
+      $this->load->view("login");
+    }
   }
 
 
@@ -59,6 +63,13 @@ class Login extends CI_Controller{
           }
           echo json_encode($json);
       }
+  }
+
+
+  function logout()
+  {
+    $this->session->sess_destroy();
+    redirect(site_url("usrp/login"),"refresh");
   }
 
 }

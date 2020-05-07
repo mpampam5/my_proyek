@@ -48,7 +48,7 @@ class Usrp extends CI_Controller{
         redirect(site_url("usrp/login"),"refresh");
     }else {
       $this->load->library(array("usrp/Template","form_validation","security","user_agent"));
-      $this->load->helper(array("public","usrp/usrp"));
+      $this->load->helper(array("public","usrp/usrp","sct"));
     }
   }
 

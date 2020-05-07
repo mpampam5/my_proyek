@@ -89,9 +89,9 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">File Badan Usaha</label>
       <div class="col-sm-9">
-        <input type="file" name="value-files" id="upload-file"  style="display:none" accept=".pdf">
+        <input type="file" name="upload-file" id="upload-file" style="display:none"   accept=".pdf">
           <div class="bootstrap-filestyle input-group">
-            <input type="text" class="form-control bg-white" id="value-file" placeholder="Upload Berkas" readonly>
+            <input type="text" class="form-control bg-white" value="<?=$dt->file_badan_usaha!=""? "file_badan_usaha.pdf":""?>" id="value-file" placeholder="Upload Berkas" readonly>
             <span class="group-span-filestyle input-group-append" tabindex="0">
               <button for="filestyle-0" type="button" id="btn-upload-file" class="btn btn-success">
                 <span class="icon-span-filestyle fa fa-folder-open"></span>
@@ -127,15 +127,16 @@
   <div class="form-group row">
       <label class="col-sm-3 col-form-label">File Dokumen Perizinan</label>
       <div class="col-sm-9">
-        <div class="bootstrap-filestyle input-group">
-          <input type="text" class="form-control bg-white" placeholder="Upload Berkas" readonly>
-          <span class="group-span-filestyle input-group-append" tabindex="0">
-            <label for="filestyle-0" class="btn btn-success">
-              <span class="icon-span-filestyle fa fa-folder-open"></span>
-              <span class="buttonText">Upload file</span>
-            </label>
-          </span>
-        </div>
+        <input type="file" name="upload-file2" id="upload-file2" style="display:none"   accept=".pdf">
+          <div class="bootstrap-filestyle input-group">
+            <input type="text" class="form-control bg-white" value="<?=$dt->file_dokument_perizinan!=""? "file_documen_perizinan.pdf":""?>" id="value-file2" placeholder="Upload Berkas" readonly>
+            <span class="group-span-filestyle input-group-append" tabindex="0">
+              <button for="filestyle-0" type="button" id="btn-upload-file2" class="btn btn-success">
+                <span class="icon-span-filestyle fa fa-folder-open"></span>
+                <span class="buttonText">Upload file</span>
+              </button>
+            </span>
+          </div>
       </div>
       <div class="col-sm-12 mt-3">
         <ul style="list-style:none;font-size:11px;margin-left:170px">
@@ -184,17 +185,98 @@ $(function () {
       });
       fileupload.change(function () {
           var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
-          // $("#data-info").text(fileName);
-
           var file_data = $('#upload-file').prop('files')[0];
           var form_data = new FormData();
           $("#value-file").val(fileName);
-          $("#btn-upload-file").html('<div class="spinner-border spinner-border-sm text-white"></div>');
+          $("#btn-upload-file").html('Loading');
 
-          form_data.append('value-files', file_data);
-          });
+          form_data.append('upload-file', file_data);
+          $.ajax({
+             url: '<?=site_url("usrp/wizard/do_upload")?>',
+             dataType: 'json',
+             cache: false,
+             contentType: false,
+             processData: false,
+             data: form_data,
+             type: 'post',
+             success: function(json){
+               if (json.success==true) {
+                 button.html('Upload File');
+                 $("#value-file").val(json.file_name);
+                 $.toast({
+                   text: json.alert,
+                   showHideTransition: 'slide',
+                   icon: json.header_alert,
+                   loaderBg: '#f96868',
+                   position: 'top-center',
+                 });
+               }else {
+                 button.html('Upload File');
+                 fileupload.val("");
+                 $("#value-file").val("");
+                 $.toast({
+                   text: json.alert,
+                   showHideTransition: 'slide',
+                   icon: json.header_alert,
+                   loaderBg: '#f96868',
+                   position: 'top-center',
+                 });
+               }
+             }
+         });
+    });
+  });
 
+
+  $(function () {
+        var fileupload = $("#upload-file2");
+        var button = $("#btn-upload-file2");
+        button.click(function () {
+            fileupload.click();
+        });
+        fileupload.change(function () {
+            var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+            var file_data = $('#upload-file2').prop('files')[0];
+            var form_data = new FormData();
+            $("#value-file2").val(fileName);
+            $("#btn-upload-file2").html('Loading');
+
+            form_data.append('upload-file2', file_data);
+            $.ajax({
+               url: '<?=site_url("usrp/wizard/do_upload2")?>',
+               dataType: 'json',
+               cache: false,
+               contentType: false,
+               processData: false,
+               data: form_data,
+               type: 'post',
+               success: function(json){
+                 if (json.success==true) {
+                   button.html('Upload File');
+                   $("#value-file2").val(json.file_name);
+                   $.toast({
+                     text: json.alert,
+                     showHideTransition: 'slide',
+                     icon: json.header_alert,
+                     loaderBg: '#f96868',
+                     position: 'top-center',
+                   });
+                 }else {
+                   button.html('Upload File');
+                   fileupload.val("");
+                   $("#value-file2").val("");
+                   $.toast({
+                     text: json.alert,
+                     showHideTransition: 'slide',
+                     icon: json.header_alert,
+                     loaderBg: '#f96868',
+                     position: 'top-center',
+                   });
+                 }
+               }
+           });
       });
+    });
 
 
 $("#form").submit(function(e){

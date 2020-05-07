@@ -34,6 +34,7 @@ class Master_proyek_model extends MY_Model{
       $this->db->select($this->select);
       $this->db->from("master_proyek");
       $this->db->join("master_penerima_dana","master_penerima_dana.id_penerima_dana = master_proyek.id_penerima_dana");
+      $this->db->where("master_proyek.complate","1");
       if($this->input->post('status_publish'))
         {
             $this->db->like('master_proyek.`status`', $this->input->post('status_publish'));
@@ -92,6 +93,7 @@ class Master_proyek_model extends MY_Model{
     {
         $this->db->select($this->select);
         $this->db->from("master_proyek");
+        $this->db->where("master_proyek.complate","1");
         return $this->db->count_all_results();
     }
 
@@ -130,7 +132,7 @@ class Master_proyek_model extends MY_Model{
                                 master_proyek.status_penggalangan,
                                 master_penerima_dana.id_reg,
                                 master_penerima_dana.nama_perusahaan,
-                                master_penerima_dana.nama_penanggung_jawab,
+                                master_penerima_dana.nama,
                                 master_penerima_dana.email")
                       ->from("master_proyek")
                       ->join("master_penerima_dana","master_penerima_dana.id_penerima_dana = master_proyek.id_penerima_dana")
