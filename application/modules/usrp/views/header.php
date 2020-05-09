@@ -59,7 +59,7 @@
                             </li>
 
                             <li>
-                                <a href="<?=site_url("usrp/proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
+                                <a href="<?=site_url("usrp/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
                             </li>
 
                             <li>

@@ -35,6 +35,7 @@ class Master_proyek_model extends MY_Model{
       $this->db->from("master_proyek");
       $this->db->join("master_penerima_dana","master_penerima_dana.id_penerima_dana = master_proyek.id_penerima_dana");
       $this->db->where("master_proyek.complate","1");
+      $this->db->where("master_proyek.status !=","delete");
       if($this->input->post('status_publish'))
         {
             $this->db->like('master_proyek.`status`', $this->input->post('status_publish'));
@@ -94,6 +95,7 @@ class Master_proyek_model extends MY_Model{
         $this->db->select($this->select);
         $this->db->from("master_proyek");
         $this->db->where("master_proyek.complate","1");
+        $this->db->where("master_proyek.status !=","delete");
         return $this->db->count_all_results();
     }
 

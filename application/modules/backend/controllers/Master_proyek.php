@@ -59,6 +59,18 @@ class Master_proyek extends Backend{
             <p class='font-12 mt-2'>
               <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
             "</br>";
+          }elseif ($dt->status=="pengerjaan") {
+            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
+            <p class='font-12 mt-2' style='font-size:10px'>
+              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
+            "</br>";
+            $row[] = "<span class='badge badge-success'>Proyek Di Kerjakan</span><p style='font-size:10px' class='text-center'>Proyek mulai di kerjakan ".$dt->durasi_proyek." bulan kedepan terhitung mulai tgl <span>".date('d-m-Y',strtotime($dt->tgl_mulai_proyek))."</span></p>";
+          }elseif ($dt->status=="dana_dikembalikan") {
+            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
+            <p class='font-12 mt-2' style='font-size:10px'>
+              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
+            "</br>";
+            $row[] = "<span class='badge badge-danger'>Dana Di Kembalikan</span>";
           }
 
 

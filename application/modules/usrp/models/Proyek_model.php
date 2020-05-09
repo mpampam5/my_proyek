@@ -24,10 +24,7 @@ class Proyek_model extends MY_Model{
                   master_proyek.kecamatan,
                   master_proyek.`status`,
                   master_proyek.status_penggalangan,
-                  master_proyek.created_at,
-                  master_penerima_dana.id_reg,
-                  master_penerima_dana.nama_perusahaan,
-                  master_penerima_dana.nama";
+                  master_proyek.created_at";
 
   private function _get_datatables_query()
     {
@@ -36,6 +33,7 @@ class Proyek_model extends MY_Model{
       $this->db->join("master_penerima_dana","master_penerima_dana.id_penerima_dana = master_proyek.id_penerima_dana");
       $this->db->where("master_proyek.id_penerima_dana", sess('id_user'));
       $this->db->where("master_proyek.complate","1");
+      $this->db->where("master_proyek.status !=","delete");
       if($this->input->post('status_publish'))
         {
             $this->db->like('master_proyek.`status`', $this->input->post('status_publish'));
@@ -96,9 +94,49 @@ class Proyek_model extends MY_Model{
         $this->db->from("master_proyek");
         $this->db->where("master_proyek.id_penerima_dana", sess('id_user'));
         $this->db->where("master_proyek.complate","1");
+        $this->db->where("master_proyek.status !=","delete");
         return $this->db->count_all_results();
     }
 
+    function get_detail_model($id)
+    {
+      return $this->db->select("master_proyek.id_proyek,
+                                master_proyek.id_penerima_dana,
+                                master_proyek.kode,
+                                master_proyek.title,
+                                master_proyek.harga_paket,
+                                master_proyek.jumlah_paket,
+                                master_proyek.lama_penggalangan,
+                                master_proyek.mulai_penggalangan,
+                                master_proyek.akhir_penggalangan,
+                                master_proyek.tgl_mulai_proyek,
+                                master_proyek.durasi_proyek,
+                                master_proyek.jenis_akad,
+                                master_proyek.imbal_hasil_pendana,
+                                master_proyek.ujroh_penyelenggara,
+                                master_proyek.deskripsi,
+                                master_proyek.foto_1,
+                                master_proyek.foto_2,
+                                master_proyek.foto_3,
+                                master_proyek.lokasi_proyek,
+                                master_proyek.provinsi,
+                                master_proyek.kabupaten,
+                                master_proyek.kecamatan,
+                                master_proyek.kelurahan,
+                                master_proyek.legalitas,
+                                master_proyek.`status`,
+                                master_proyek.created_at,
+                                master_proyek.acc_at,
+                                master_proyek.acc_by,
+                                master_proyek.acc_by_id,
+                                master_proyek.keterangan,
+                                master_proyek.status_penggalangan,")
+                      ->from("master_proyek")
+                      ->where("master_proyek.id_proyek",$id)
+                      ->where("master_proyek.id_penerima_dana",sess("id_user"))
+                      ->get()
+                      ->row();
+    }
 
 
 }

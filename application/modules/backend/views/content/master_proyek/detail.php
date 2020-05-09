@@ -43,6 +43,10 @@
                     echo '<h6 class="text-warning">MENUNGGU VERIFIKASI</h6>';
                   }elseif ($dt->status=="publish") {
                     echo '<h6 class="text-success">PUBLISH</h6>';
+                  }elseif ($dt->status=="pengerjaan") {
+                    echo '<h6 class="text-success">PROYEK DI KERJAKAN</h6>';
+                  }elseif ($dt->status=="dana_dikembalikan") {
+                    echo '<h6 class="text-danger">DANA DI KEMBALIKAN</h6>';
                   }elseif ($dt->status=="cancel") {
                     echo '<h6 class="text-danger">CANCEL</h6>';
                   }elseif ($dt->status=="done") {
@@ -69,6 +73,10 @@
                   }elseif ($dt->status=="cancel") {
                     echo "<h6 class='text-danger'> BELUM DITENTUKAN </h6>";
                   }elseif ($dt->status=="done") {
+                    echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
+                  }elseif ($dt->status=="pengerjaan") {
+                    echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
+                  }elseif ($dt->status=="dana_dikembalikan") {
                     echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
                   }
                    ?>
@@ -129,7 +137,7 @@
                     <!-- <a href="<?=site_url("backend/master_proyek")?>" class="btn btn-md btn-secondary btn-block"><i class="fa fa-file"></i> Lihat Daftar Proyek</a> -->
                     <ul class="list-group list-group-flush mb-4">
                       <li class="list-group-item"><a href="<?=site_url("backend/master_proyek")?>"><i class="fa fa-star"></i> Lihat Daftar Proyek</a></li>
-                      <?php if ($dt->status=="publish" OR $dt->status=="done"): ?>
+                      <?php if ($dt->status=="publish" OR $dt->status=="done" OR $dt->status=="pengerjaan" OR $dt->status=="dana_dikembalikan"): ?>
                       <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_pemberi_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Daftar Pemberi Dana</a></li>
                       <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_progres_proyek/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Progres Proyek</a></li>
                       <li class="list-group-item"><a href="" target="_blank"><i class="fa fa-star"></i> Lihat Akumulasi Imbal Hasil</a></li>
@@ -154,8 +162,8 @@
                                 <label>Tanggal Mulai Penggalangan </label>
                                 <div>
                                     <div class="input-daterange input-group" id="date-range">
-                                        <input type="text"  class="form-control" name="start_proyek" placeholder="Tgl Mulai">
-                                        <input type="text" class="form-control" name="end_proyek" placeholder="Tgl Berakhir">
+                                        <input type="text"  class="form-control bg-white" name="start_proyek" readonly placeholder="Tgl Mulai" value="<?=date("m/d/Y")?>">
+                                        <input type="text" class="form-control bg-white" name="end_proyek" readonly placeholder="Tgl Berakhir">
                                     </div>
                                 </div>
                                 <div id="start_proyek"></div>
@@ -307,7 +315,7 @@
                         <td>: <?=$dt->lama_penggalangan?> Hari</td>
                       </tr>
 
-                      <?php if ($dt->status=="publish" OR $dt->status=="done"): ?>
+                      <?php if ($dt->status=="publish" OR $dt->status=="done" OR $dt->status=="pengerjaan" OR $dt->status=="dana_dikembalikan"): ?>
                         <tr>
                           <th>Waktu Penggalangan</th>
                           <td>: <?=date("d-m-Y",strtotime($dt->mulai_penggalangan))?> s/d <?=date("d-m-Y",strtotime($dt->akhir_penggalangan))?> (<?=selisih_hari($dt->akhir_penggalangan)?> Hari lagi)</td>
@@ -328,9 +336,17 @@
                       <tr>
                         <th>Foto</th>
                         <td>:
-                          <a href="#" class="badge badge-info font-14"> Foto 1</a>
-                          <a href="#" class="badge badge-info font-14"> Foto 1</a>
-                          <a href="#" class="badge badge-info font-14"> Foto 1</a>
+                          <?php if ($dt->foto_1!=""): ?>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_1?>" target="_blank" class="badge badge-info font-14"> Foto 1</a>
+                          <?php endif; ?>
+
+                          <?php if ($dt->foto_2!=""): ?>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_2?>" target="_blank" class="badge badge-info font-14"> Foto 2</a>
+                          <?php endif; ?>
+
+                          <?php if ($dt->foto_3!=""): ?>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_3?>" target="_blank" class="badge badge-info font-14"> Foto 3</a>
+                          <?php endif; ?>
                         </td>
                       </tr>
 

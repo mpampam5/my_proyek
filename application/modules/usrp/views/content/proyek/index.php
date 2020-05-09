@@ -25,6 +25,8 @@
                     <option value="">-- Status --</option>
                     <option value="process">Menunggu Verifikasi</option>
                     <option value="publish">Publish</option>
+                    <option value="pengerjaan">Proses Pengerjaan</option>
+                    <option value="dana_dikembalikan">Dana Di Kembalikan</option>
                     <option value="done">Selesai</option>
                     <option value="cancel">Cancel</option>
                   </select>
@@ -49,7 +51,7 @@
                 <div class="col-sm-12">
                   <button class="btn btn-primary btn-sm" id="btn-search" type="button"><i class="fa fa-search"></i> Filter Search</button>
                   <button type="button" id="reload"  name="button" class="btn btn-warning btn-sm"><i class="fa fa-refresh"></i> Reload</button>
-                  <a href="<?=site_url("usrp/proyek/add")?>" class="btn btn-info btn-sm"><i class="fa fa-file"></i> Buat Penggalangan</a>
+                  <a href="<?=site_url("usrp/master_proyek/add")?>" class="btn btn-info btn-sm"><i class="fa fa-file"></i> Buat Penggalangan</a>
                 </div>
               </div>
             </div>
@@ -61,7 +63,6 @@
               <thead>
                 <tr>
                   <th>Created</th>
-                  <th>PEMILIK PROYEK</th>
                   <th>PROYEK</th>
                   <th>STATUS PENGGALANGAN</th>
                   <th>STATUS</th>
@@ -100,7 +101,7 @@ var table;
 
       // Load data for the table's content from an Ajax source
       "ajax": {
-          "url": "<?php echo site_url("usrp/proyek/json")?>",
+          "url": "<?php echo site_url("usrp/master_proyek/json")?>",
           "type": "POST",
           "data": function(data){
             data.status_publish = $("#status_publish option:selected").val();
@@ -113,6 +114,7 @@ var table;
       //Set column definition initialisation properties.
         "columnDefs": [
           {
+              "className": "text-center",
               "orderable": false,
               "targets": 2
           },
@@ -125,11 +127,6 @@ var table;
               "className": "text-center",
               "orderable": false,
               "targets": 4
-          },
-          {
-              "className": "text-center",
-              "orderable": false,
-              "targets": 5
           }
       ],
     });
