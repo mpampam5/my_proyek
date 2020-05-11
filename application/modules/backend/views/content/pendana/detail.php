@@ -17,12 +17,12 @@
               <div class="card m-b-30">
                 <div class="card-body">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="">Log Aktifitas Pendana</a></li>
+                    <!-- <li class="list-group-item"><a href="">Log Aktifitas Pendana</a></li> -->
                     <li class="list-group-item"><a href="">Lihat Pendanaan Aktif</a></li>
                     <li class="list-group-item"><a href="">Lihat Pendanaan Selesai</a></li>
-                    <li class="list-group-item"><a href="">Lihat Mutasi Dompet</a></li>
+                    <!-- <li class="list-group-item"><a href="">Lihat Mutasi Dompet</a></li> -->
                     <li class="list-group-item"><a href="">Reset Password</a></li>
-                    <li class="list-group-item"><a href="">Reset PIN Transaksi</a></li>
+                    <!-- <li class="list-group-item"><a href="">Reset PIN Transaksi</a></li> -->
                     <li class="list-group-item"><a href="">Nonaktifkan Pendana</a></li>
                   </ul>
                 </div>

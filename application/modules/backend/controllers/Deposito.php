@@ -11,7 +11,7 @@ class Deposito extends Backend{
 
   function index()
   {
-    $this->template->set_title("Daftar Deposito");
+    $this->template->set_title("Daftar Deposit Pendana");
     $this->template->view("content/deposito/index");
   }
 
@@ -61,7 +61,7 @@ class Deposito extends Backend{
   function detail($id="")
   {
     if ($row = $this->model->get_detail_model(dec_url($id))) {
-      $this->template->set_title("Detail Deposito #$row->code");
+      $this->template->set_title("Detail Deposit Pendana #$row->code");
       $data['dt'] = $row;
       $this->template->view("content/deposito/detail",$data);
     }

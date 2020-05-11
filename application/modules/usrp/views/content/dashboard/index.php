@@ -35,15 +35,15 @@
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-info">15,852</h3>
-                    Saldo Dompet
+                    <h3 class="text-info">Rp.<?=format_rupiah($this->balance_usrp->init())?></h3>
+                    Saldo
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-purple">9,514</h3>
+                    <h3 class="text-purple">Rp. <?=format_rupiah($this->balance_usrp->get_withdraw(sess('id_user'))) ?></h3>
                     Total Withdraw
                 </div>
             </div>

@@ -6,7 +6,7 @@ class Setting_umum extends backend{
   public function __construct()
   {
     parent::__construct();
-    $this->load->helper("sct")
+    $this->load->helper("sct");
   }
 
   function index()

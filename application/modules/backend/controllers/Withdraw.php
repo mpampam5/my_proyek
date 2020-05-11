@@ -11,7 +11,7 @@ class Withdraw extends Backend{
 
   function index()
   {
-    $this->template->set_title("Daftar Withdraw");
+    $this->template->set_title("Daftar Withdraw Pendana");
     $this->template->view("content/withdraw/index");
   }
 
@@ -60,7 +60,7 @@ class Withdraw extends Backend{
   function detail($id="")
   {
     if ($row = $this->model->get_detail_model(dec_url($id))) {
-      $this->template->set_title("Detail Withdraw #$row->code");
+      $this->template->set_title("Detail Withdraw Pendana #$row->code");
       $data['dt'] = $row;
       $this->template->view("content/withdraw/detail",$data);
     }

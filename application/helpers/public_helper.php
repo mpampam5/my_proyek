@@ -61,3 +61,66 @@ function pass_decrypt($token,$str,$hash)
         return false;
     }
 }
+
+
+function bank($id)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->get_where("trans_bank",["id_bank"=>$id]);
+  return $qry->row()->nama_bank;
+}
+
+
+function provinsi($id)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->get_where("wil_provinsi",['id'=>$id])->row();
+  return $qry->name;
+}
+
+function kabupaten($id)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->get_where("wil_kabupaten",['id'=>$id])->row();
+  return $qry->name;
+}
+
+
+
+function where_bank($id,$field)
+{
+  $ci=& get_instance();
+  $bank = $ci->db->query("SELECT
+                            trans_rekening.id_rekening,
+                            trans_rekening.id_bank,
+                            trans_rekening.nama_rekening,
+                            trans_rekening.no_rekening,
+                            trans_bank.nama_bank
+                            FROM
+                            trans_rekening
+                            INNER JOIN trans_bank ON trans_bank.id_bank = trans_rekening.id_bank
+                            WHERE trans_rekening.id_rekening = $id")->row();
+  return $bank->$field;
+}
+
+
+
+function combo_bank()
+{
+  $ci=& get_instance();
+  $bank = $ci->db->query("SELECT
+                            trans_rekening.id_rekening,
+                            trans_rekening.id_bank,
+                            trans_rekening.nama_rekening,
+                            trans_rekening.no_rekening,
+                            trans_bank.nama_bank
+                            FROM
+                            trans_rekening
+                            INNER JOIN trans_bank ON trans_bank.id_bank = trans_rekening.id_bank");
+
+  $str = "";
+  foreach ($bank->result() as $bk) {
+    $str.='<option value="'.$bk->id_rekening.'">'.strtoupper($bk->nama_bank).' / '.$bk->nama_rekening.' / '.$bk->no_rekening.'</option>';
+  }
+  return $str;
+}
