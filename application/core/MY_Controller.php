@@ -53,3 +53,19 @@ class Usrp extends CI_Controller{
   }
 
 }
+
+
+  //usrp class
+  class User extends CI_Controller{
+    public function __construct()
+    {
+      parent::__construct();
+      if (!$this->session->userdata("login_user_status")) {
+          redirect(site_url("user/login"),"refresh");
+      }else {
+        $this->load->helper(array("public","user","sct"));
+        $this->load->library(array("user/Template","user/balance_user","form_validation","security","user_agent"));
+      }
+    }
+
+}

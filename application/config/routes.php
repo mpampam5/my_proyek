@@ -57,3 +57,5 @@ $route['translate_uri_dashes'] = TRUE;
 
 // USER PENERIMA MODAL
 $route["register/usrp/action"] = "usrp/register/action";
+
+$route["register/user/action"] = "user/register/action";
