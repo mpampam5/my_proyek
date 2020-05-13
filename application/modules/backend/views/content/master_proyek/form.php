@@ -127,7 +127,7 @@
             </div>
 
             <div class="text-right">
-              <a href="#" class="btn btn-sm btn-danger">Batal</a>
+              <a href="<?=site_url("backend/master_proyek")?>" class="btn btn-sm btn-danger">Batal</a>
               <button type="submit" id="submit" name="submit" class="btn btn-sm btn-primary">Buat</button>
             </div>
           </form>

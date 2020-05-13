@@ -105,6 +105,46 @@ function balance_user($id_pendana)
   return $ci->balance->init($id_pendana);
 }
 
+function balance_penerima_dana($id_pendana)
+{
+  $ci=& get_instance();
+  return $ci->balance_penerima_dana->inits($id_pendana);
+}
+
+//proyek penerima dana
+function penggalangan_publish($id_penerima_dana)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->select("id_proyek,status,status_penggalangan")
+                ->from("master_proyek")
+                ->where("id_penerima_dana",$id_penerima_dana)
+                ->where("status","publish")
+                ->where("status_penggalangan","mulai")
+                ->get();
+    if ($qry->num_rows() > 0) {
+      return $qry->num_rows();
+    }else {
+      return 0;
+    }
+}
+
+
+function penggalangan_selesai($id_penerima_dana)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->select("id_proyek,status,status_penggalangan")
+                ->from("master_proyek")
+                ->where("id_penerima_dana",$id_penerima_dana)
+                ->where("status","done")
+                ->where("status_penggalangan","selesai")
+                ->get();
+    if ($qry->num_rows() > 0) {
+      return $qry->num_rows();
+    }else {
+      return 0;
+    }
+}
+
 
 
 //core form

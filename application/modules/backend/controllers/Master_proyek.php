@@ -27,7 +27,7 @@ class Master_proyek extends Backend{
       foreach ($list as $dt) {
           $row = array();
           $row[] = date("d/m/Y H:i",strtotime($dt->created_at));
-          $row[] = "<b><a href=''><i class='fa fa-link'></i> ".$dt->id_reg."</a></b> </br>".$dt->nama_perusahaan;
+          $row[] = "* <b><a href='".site_url("backend/master_penerima_dana/detail/".enc_url($dt->id_penerima_dana))."'><i class='fa fa-link'></i> ".$dt->id_reg."</a></b> <br> * ".$dt->nama." </br> * ".$dt->nama_perusahaan;
           $row[] = "Pendanaan <b class='text-info'>$dt->kode</b>. ".$dt->title."
                     <ul>
                       <li>Priode/Tenor : ".$dt->durasi_proyek." Bulan</li>

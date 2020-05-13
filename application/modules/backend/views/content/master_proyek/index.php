@@ -68,7 +68,7 @@
                     <th>PEMILIK PROYEK</th>
                     <th>PROYEK</th>
                     <th>STATUS PENGGALANGAN</th>
-                    <th>STATUS</th>
+                    <th width="200">STATUS</th>
                     <th>###</th>
                   </tr>
                 </thead>
