@@ -36,10 +36,7 @@
 </form>
 
 <script type="text/javascript">
-  $(document).on("click","#kembali",function(e){
-    e.preventDefault();
-    $("#content-wizard").load($(this).attr('href'));
-  });
+
 
   $("#form").submit(function(e){
   e.preventDefault();
@@ -56,7 +53,8 @@
         processData     :false,
         success:function(json){
           if (json.success==true) {
-            window.location.href = json.url;
+            // window.location.href = json.url;
+            $("#content-wizard").load(json.url);
           }else {
             $("#submit").prop('disabled',false)
                         .html('SELANJUTNYA');

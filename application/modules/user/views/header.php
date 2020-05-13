@@ -59,7 +59,7 @@
                             </li>
 
                             <li>
-                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
+                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Pendanaan </span></a>
                             </li>
 
                             <li>

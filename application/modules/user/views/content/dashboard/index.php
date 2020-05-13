@@ -35,7 +35,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-info">Rp.<?=format_rupiah($this->balance_user->init())?></h3>
+                    <h5 class="text-info">Rp.<?=format_rupiah($this->balance_user->init())?></h5>
                     Saldo
                 </div>
             </div>
@@ -43,7 +43,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-purple">Rp. <?=format_rupiah($this->balance_user->get_withdraw(sess('id_user'))) ?></h3>
+                    <h5 class="text-purple">Rp.<?=format_rupiah($this->balance_user->get_withdraw(sess('id_user'))) ?></h5>
                     Total Withdraw
                 </div>
             </div>
@@ -51,15 +51,15 @@
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-primary">289</h3>
-                    Total Proyek
+                    <h5 class="text-primary">289</h5>
+                    Total Pendanaan
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
             <div class="card text-center m-b-30">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-danger">5,220</h3>
+                    <h5 class="text-danger">5,220</h5>
                     Unique Visitors
                 </div>
             </div>

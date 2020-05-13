@@ -142,10 +142,7 @@ function loadKabupaten()
     }
 }
 
-  $(document).on("click","#kembali",function(e){
-    e.preventDefault();
-    $("#content-wizard").load($(this).attr('href'));
-  });
+
 
   $("#form").submit(function(e){
   e.preventDefault();

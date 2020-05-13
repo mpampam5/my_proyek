@@ -230,4 +230,148 @@ class Master_proyek extends Backend{
    }
 
 
+
+   function add()
+   {
+     $data = array('kode' => $this->_kode(),
+                   'created_at' => date('Y-m-d H:i:s')
+                 );
+     $this->db->insert("master_proyek",$data);
+
+     $dt['kode'] = $data['kode'];
+     $dt['id_proyek'] = $this->db->insert_id();
+     $this->template->set_title("Tambah Penggalangan Dana");
+     $this->template->view("content/master_proyek/form",$dt);
+   }
+
+
+   function action_add($kode)
+   {
+     if ($this->input->is_ajax_request()) {
+           $json = array('success'=>false, 'alert'=>array());
+           $this->form_validation->set_rules("penerima_dana","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("title","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("harga_paket","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("paket","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("dana_dibutuhkan","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("priode","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("imbal_hasil_pendana","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("ujroh_penyelenggara","*&nbsp;","trim|xss_clean|numeric|required");
+           $this->form_validation->set_rules("provinsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("kabupaten","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("alamat","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+           if ($this->form_validation->run()) {
+             $data = array('id_penerima_dana' => $this->input->post("id_penerima_dana"),
+                           'title' => $this->input->post("title",true),
+                           'harga_paket' => $this->input->post("harga_paket",true),
+                           'jumlah_paket' => $this->input->post("paket",true),
+                           'durasi_proyek' => $this->input->post("priode",true),
+                           'imbal_hasil_pendana' => $this->input->post("imbal_hasil_pendana",true),
+                           'ujroh_penyelenggara' => $this->input->post("ujroh_penyelenggara",true),
+                           'provinsi' => $this->input->post("provinsi",true),
+                           'kabupaten' => $this->input->post("kabupaten",true),
+                           'lokasi_proyek' => $this->input->post("alamat",true),
+                           'deskripsi' => $this->input->post("deskripsi",true),
+                           'status' => "process",
+                           'created_at' => date("Y-m-d H:i:s"),
+                           'complate' => "1",
+                           );
+             $this->model->get_update("master_proyek",$data,["kode"=>$kode]);
+             $json['alert'] = "Proyek berhasil dibuat, Selanjutnya proses verifikasi";
+             $json['success'] =  true;
+           }else {
+             foreach ($_POST as $key => $value)
+               {
+                 $json['alert'][$key] = form_error($key);
+               }
+           }
+
+           echo json_encode($json);
+       }
+   }
+
+   function _kode(){
+     $tahun = date("Y");
+     $bulan = date("m");
+     $q = $this->db->query("SELECT MAX(RIGHT(kode,6)) AS kd_trans FROM master_proyek WHERE year(created_at)=$tahun AND month(created_at)=$bulan");
+           $kd = "";
+           if($q->num_rows()>0){
+               foreach($q->result() as $k){
+                   $tmp = ((int)$k->kd_trans)+1;
+                   $kd = sprintf("%06s", $tmp);
+               }
+           }else{
+               $kd = "0000001";
+           }
+           return "PR-".date('m.y')."-".$kd;
+   }
+
+
+   function jsonkabupaten(){
+         $propinsiID = $_GET['id'];
+         $kabupaten   = $this->db->get_where('wil_kabupaten',array('province_id'=>$propinsiID));
+         echo '<option value="">-- Pilih Kabupaten/Kota --</option>';
+         foreach ($kabupaten->result() as $k)
+         {
+             echo "<option value='$k->id'>$k->name</option>";
+         }
+     }
+
+     function do_upload($kode)
+         {
+           if ($this->input->is_ajax_request()) {
+               $json = array('success' =>false , "alert"=> array(), "file_name"=>array());
+               if (isset($_FILES['upload-file']['name'])) {
+                 $file = "foto_1.".pathinfo($_FILES['upload-file']['name'], PATHINFO_EXTENSION);
+                 $file_name = "upload-file";
+                 $field= "foto_1";
+               }elseif (isset($_FILES['upload-file1']['name'])) {
+                 $file = "foto_2.".pathinfo($_FILES['upload-file1']['name'], PATHINFO_EXTENSION);
+                 $file_name = "upload-file1";
+                 $field= "foto_2";
+               }elseif (isset($_FILES['upload-file2']['name'])) {
+                 $file = "foto_3.".pathinfo($_FILES['upload-file2']['name'], PATHINFO_EXTENSION);
+                 $file_name = "upload-file2";
+                 $field= "foto_3";
+               }
+
+                if (!file_exists('./_template/files/proyek/'.$kode)) {
+                   mkdir('./_template/files/proyek/'.$kode, 0777, true);
+               }
+
+               $config['upload_path'] = "./_template/files/proyek/".$kode."/";
+               $config['allowed_types'] = 'jpeg|jpg';
+               $config['overwrite'] = true;
+               $config['max_size']  = '1024';
+               $config['file_name']  = "$file";
+
+
+               $this->load->library('upload', $config);
+               $this->upload->initialize($config);
+
+               if (!$this->upload->do_upload("$file_name")){
+                   $json['header_alert'] = "error";
+                   $json['alert'] = "File tidak valid, format file harus JPG,JPEG & ukuran maksimal 1 mb";
+               }else {
+                   $this->model->get_update("master_proyek",["$field"=>$config['file_name']],['kode'=>$kode]);
+                   $json['file_name'] = $config['file_name'];
+                   $json['header_alert'] = "success";
+                   $json['alert'] = "File upload successfully.";
+                   $json['success'] = true;
+               }
+
+               echo json_encode($json);
+
+         }
+       }
+
+
+function penerima_modal()
+{
+  $this->template->view("content/master_proyek/modal_penerima_dana",[],false);
+}
+
+
 }

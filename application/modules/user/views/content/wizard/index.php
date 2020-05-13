@@ -15,6 +15,11 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#content-wizard").load('<?=site_url("user/wizard/form_wizard/1")?>');
-  })
+  });
+
+  $(document).on("click","#kembali",function(e){
+    e.preventDefault();
+    $("#content-wizard").load($(this).attr('href'));
+  });
 
 </script>
