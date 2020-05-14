@@ -22,6 +22,14 @@
         <link href="<?=base_url()?>_template/usrp/css/style.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
 
+        <style media="screen">
+          .list-custom .list-group-item{
+            padding: 5px 20px!important;
+            font-size:14px!important;
+            color:#616161;
+          }
+        </style>
+        
         <!-- jQuery  -->
         <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
@@ -31,6 +39,10 @@
         <script src="<?=base_url()?>_template/usrp/js/waves.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.nicescroll.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.scrollTo.min.js"></script>
+
+
+
+
     </head>
 
 
@@ -60,6 +72,10 @@
 
                             <li>
                                 <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Pendanaan </span></a>
+                            </li>
+
+                            <li>
+                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
                             </li>
 
                             <li>
