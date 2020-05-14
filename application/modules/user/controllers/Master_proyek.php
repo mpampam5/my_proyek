@@ -24,7 +24,7 @@ class Master_proyek extends User{
         $config = array();
         $config["base_url"] = "#";
         $config["total_rows"] = $this->model->count_all();
-        $config["per_page"] = 10;
+        $config["per_page"] = 6;
         $config["uri_segment"] = 4;
         $config["use_page_numbers"] = TRUE;
 
@@ -34,18 +34,18 @@ class Master_proyek extends User{
         $config['prev_link']        = 'Prev';
         $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
         $config['full_tag_close']   = '</ul></nav></div>';
-        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close']    = '</span></li>';
-        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
-        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
-        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close']  = '</span></li>';
+        $config['num_tag_open']     = '<li class="page-item">';
+        $config['num_tag_close']    = '</li>';
+        $config['cur_tag_open']     = '<li class="page-item active">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</li>';
+        $config['next_tag_open']    = '<li class="page-item">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</li>';
+        $config['prev_tag_open']    = '<li class="page-item">';
+        $config['prev_tagl_close']  = 'Next</li>';
+        $config['first_tag_open']   = '<li class="page-item">';
+        $config['first_tagl_close'] = '</li>';
+        $config['last_tag_open']    = '<li class="page-item">';
+        $config['last_tagl_close']  = '</li>';
 
         $config["num_links"] = 1;
         $this->pagination->initialize($config);
@@ -57,6 +57,16 @@ class Master_proyek extends User{
        'data'   => $this->model->fetch_data($config["per_page"], $start)
       );
       echo json_encode($output);
+  }
+
+
+  function detail($id=null, $kode=null)
+  {
+    if ($row = $this->model->get_detail($id,$kode)) {
+      $this->template->set_title("Detail Proyek #$kode");
+      $data['dt'] = $row;
+      $this->template->view("content/master_proyek/detail",$data);
+    }
   }
 
 }

@@ -15,6 +15,8 @@
 
         <!--Morris Chart CSS -->
         <link rel="stylesheet" href="<?=base_url()?>_template/usrp/plugins/morris/morris.css">
+        <!--Animate CSS -->
+        <link href="<?=base_url()?>_template/backend/plugins/animate/animate.min.css" rel="stylesheet" type="text/css">
 
         <!-- Basic Css files -->
         <link href="<?=base_url()?>_template/usrp/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -29,7 +31,7 @@
             color:#616161;
           }
         </style>
-        
+
         <!-- jQuery  -->
         <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
@@ -71,7 +73,7 @@
                             </li>
 
                             <li>
-                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Pendanaan </span></a>
+                                <a href="<?=site_url("user/master_proyeks")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Pendanaan Anda</span></a>
                             </li>
 
                             <li>

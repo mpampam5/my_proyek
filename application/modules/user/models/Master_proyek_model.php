@@ -17,6 +17,7 @@ function fetch_data($limit,$start)
                       master_proyek.foto_1,
                       master_proyek.status,
                       master_proyek.status_penggalangan,
+                      master_proyek.akhir_penggalangan,
                       master_proyek.complate");
   $this->db->from("master_proyek");
   $this->db->where("master_proyek.status","publish");
@@ -37,9 +38,19 @@ function fetch_data($limit,$start)
       $imbal_hasil = $pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara;
       $rupiah_imbal_hasil = ($pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara)/100*$total_dana;
 
-      $output.='<div class="col-md-6 col-lg-6 col-xl-4">
+      if ($pb->foto_1!="") {
+        $image = base_url().'_template/files/proyek/'.$pb->kode.'/'.$pb->foto_1;
+      }else {
+        $image = base_url().'_template/files/no-image.png';
+      }
+
+
+      $output.='<div class="col-md-6 col-lg-6 col-xl-4 animated zoomIn delay-2s">
           <div class="card m-b-30">
-              <img class="card-img-top img-fluid" src="'.base_url().'_template/backend/images/small/img-2.jpg" alt="Card image cap">
+              <div class="card-img-top" style="height:150px;background:url('.$image.')">
+                <span class="label-hari">Tersisa '.selisih_hari($pb->akhir_penggalangan).' hari lagi</span>
+              </div>
+
               <div class="card-body" style="height:80px;max-height:80px!important;">
                   <p class="card-text" style="color:#6b6b6b;font-size:15px">Pendanaan <b>'.$pb->kode.'</b>. '.$pb->title.'</p>
               </div>
@@ -59,7 +70,7 @@ function fetch_data($limit,$start)
                   <li class="list-group-item">Terima Imbal Hasil <span class="float-right badge badge-primary">Tiap Bulan</span></li>
               </ul>
               <div class="card-body">
-                  <a href="#" class="btn btn-sm btn-block btn-primary">Danai Sekarang</a>
+                  <a href="'.site_url("user/master_proyek/detail/".$pb->id_proyek.'/'.$pb->kode).'" class="btn btn-sm btn-block btn-primary">Danai Sekarang</a>
               </div>
           </div>
       </div>';
@@ -79,6 +90,33 @@ function count_all()
   $this->db->where("master_proyek.complate","1");
   $qry = $this->db->get();
   return $qry->num_rows();
+}
+
+
+function get_detail($id,$kode)
+{
+  $this->db->select(" master_proyek.id_proyek,
+                      master_proyek.kode,
+                      master_proyek.title,
+                      master_proyek.harga_paket,
+                      master_proyek.jumlah_paket,
+                      master_proyek.durasi_proyek,
+                      master_proyek.imbal_hasil_pendana,
+                      master_proyek.ujroh_penyelenggara,
+                      master_proyek.foto_1,
+                      master_proyek.status,
+                      master_proyek.status_penggalangan,
+                      master_proyek.mulai_penggalangan,
+                      master_proyek.akhir_penggalangan,
+                      master_proyek.complate");
+  $this->db->from("master_proyek");
+  $this->db->where("master_proyek.status","publish");
+  $this->db->where("master_proyek.status_penggalangan","mulai");
+  $this->db->where("master_proyek.complate","1");
+  $this->db->where("master_proyek.id_proyek",$id);
+  $this->db->where("master_proyek.kode",$kode);
+  $qry = $this->db->get();
+  return $qry->row();
 }
 
 }
