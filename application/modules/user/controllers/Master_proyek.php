@@ -69,4 +69,72 @@ class Master_proyek extends User{
     }
   }
 
+  function simulasi_act($id, $kode)
+  {
+    if ($this->input->is_ajax_request()) {
+      $json = array('success'=>false, 'alert'=>array(), 'data' => null);
+      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|numeric|required");
+      $this->form_validation->set_rules("tanggal","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("akhir_penggalangan","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("durasi_proyek","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+      if ($this->form_validation->run()) {
+        $tanggal = date('Y-m-d',strtotime($this->input->post('tanggal')));
+        $nominal = $this->input->post("nominal");
+        $akhir_penggalangan = $this->input->post("akhir_penggalangan");
+        $priode = $this->input->post("durasi_proyek");
+        $selisih_hari = selisih_hari($akhir_penggalangan,$tanggal);
+
+        $penggalangan = (0.03 / 100) * $nominal ;
+        $hsl_penggalangan =  $penggalangan * $selisih_hari;
+
+        $profit_bulan = (1 / 100) * $nominal;
+        $profit_bulan_pertama = $profit_bulan + $hsl_penggalangan;
+        $imbal_hasil = (1.5 / 100) * $nominal;
+
+        $hasil_durasi = $profit_bulan * $priode;
+
+        $dana_pokok_imbal_hasil = $nominal + $imbal_hasil + $hasil_durasi + $hsl_penggalangan;
+
+        $output = '';
+        $output .='<p>Simulasi Imbal Hasil</p>
+                  <table class="table table-bordered">
+                    <tr>
+                      <th>Tgl Pendanaan</th>
+                      <th>Jumlah Dana</th>
+                      <th>Hari Ke</th>
+                      <th>Penggalangan</th>
+                      <th>Bulan 1</th>
+                      <th>Pembayaran Bulan 1</th>
+                      <th>Bulan 2 - akhir</th>
+                      <th>Sisa Imbal Hasil</th>
+                    </tr>
+
+                    <tr>
+                      <td>'.date('d/m/Y',strtotime($tanggal)).'</td>
+                      <td>'.format_rupiah($nominal).'</td>
+                      <td>'.$selisih_hari.'</td>
+                      <td>'.format_rupiah($hsl_penggalangan).'</td>
+                      <td>'.format_rupiah($profit_bulan).'</td>
+                      <td>'.format_rupiah($profit_bulan_pertama).'</td>
+                      <td>'.format_rupiah($profit_bulan).'</td>
+                      <td>'.format_rupiah($imbal_hasil).'</td>
+                    </tr>
+                  </table>
+                  <p class="text-right" style="font-weight:bold">Total Imbal Hasil dan Dana Pokok : Rp.'.format_rupiah($dana_pokok_imbal_hasil).'</p>';
+
+        $json['data'] = $output;
+        $json['success'] =  true;
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
+
+
+      echo json_encode($json);
+    }
+  }
+
 }

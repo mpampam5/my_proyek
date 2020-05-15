@@ -8,7 +8,7 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
 
 <div class="page-content-wrapper">
   <div class="container-fluid">
-    <div class="col-md-10 mx-auto animated zoomIn delay-2s">
+    <div class="col-md-11 mx-auto animated zoomIn delay-2s">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -77,32 +77,38 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
 
 
 
-    <div class="col-md-10 mx-auto mt-2 animated zoomIn delay-2s">
+    <div class="col-md-11 mx-auto mt-2 animated zoomInUp delay-2s mb-5">
       <div class="card">
           <div class="card-body">
             <h4 class="header-title">
               HITUNG IMBAL HASIL (*SIMULASI)
             </h4>
 
-            <form class="" action="index.html" method="post">
+            <form id="form" action="<?=site_url("user/master_proyek/simulasi_act/$dt->id_proyek/$dt->kode")?>" autocomplete="off">
               <div class="row">
-                <div class="col-sm-4 form-group">
-                  <label for="">Masukkan Jumlah Uang</label>
-                  <input type="text" class="form-control" id="" placeholder="">
+                <div class="col-sm-5 form-group">
+                  <label for="">Masukkan Jumlah Dana</label>
+                  <input type="text" class="form-control" name="nominal">
+                  <div id="nominal"></div>
                 </div>
+
+                <div class="col-sm-4 form-group">
+                  <label for="">Pilih Tanggal Pendanaan</label>
+                  <input class="form-control" type="date" id="tanggal" name="tanggal" min="<?=$dt->mulai_penggalangan?>" max="<?=$dt->akhir_penggalangan?>">
+                </div>
+
+                <input type="hidden" name="akhir_penggalangan" id="akhir_penggalangan" value="<?=$dt->akhir_penggalangan?>">
+                <input type="hidden" id="durasi_proyek" name="durasi_proyek" value="<?=$dt->durasi_proyek?>">
 
                 <div class="col-sm-3 form-group">
-                  <label for="">Pilih Tanggal Pendanaan</label>
-                  <input class="form-control" type="date" min="<?=$dt->mulai_penggalangan?>" max="<?=$dt->akhir_penggalangan?>" required name="" value="">
-                </div>
-
-                <div class="col-sm-5 form-group">
                   <label for="">&nbsp;</label>
-                  <button type="submit" name="button" class="btn btn-sm btn-success form-control">Hitung Imbal Hasil</button>
+                  <button type="submit" id="submit" name="submit" class="btn btn-sm btn-primary form-control">Hitung Imbal Hasil</button>
                 </div>
-
               </div>
             </form>
+
+            <div id="hasil-simulasi" style="min-height:100px;padding-top:40px;"></div>
+
           </div>
       </div>
     </div>
@@ -111,3 +117,51 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
 
   </div>
 </div> <!-- Page content Wrapper -->
+
+<script src="<?=base_url()?>_template/usrp/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+<script type="text/javascript">
+$("#form").submit(function(e){
+e.preventDefault();
+var me = $(this);
+$("#submit").prop('disabled',true).html('Loading...');
+$("#hasil-simulasi").html(`<p class="text-center"  style="font-size:18px"><i class="fa fa-spinner fa-spin"></i> Memproses perhitungan imbal hasil.</p>`);
+$(".form-group").find('.text-danger').remove();
+$.ajax({
+      url             : me.attr('action'),
+      type            : 'post',
+      data            :  new FormData(this),
+      contentType     : false,
+      cache           : false,
+      dataType        : 'JSON',
+      processData     :false,
+      success:function(json){
+        if (json.success==true) {
+          $("#submit").prop('disabled',false)
+                      .html('Hitung Imbal Hasil');
+          $('.form-group').find('.text-danger').remove();
+          $("#hasil-simulasi").html(json.data);
+        }else {
+          $("#hasil-simulasi").html('');
+          $("#submit").prop('disabled',false)
+                      .html('Hitung Imbal Hasil');
+          $.each(json.alert, function(key, value) {
+            var element = $('#' + key);
+            $(element)
+            .closest('.form-group')
+            .find('.text-danger').remove();
+            $(element).after(value);
+          });
+        }
+      }
+    });
+});
+
+$("input[name='nominal']").TouchSpin({
+            min: 1000000,
+            max: <?=$total_dana?>,
+            step: 1000000,
+            prefix: 'Rp',
+            buttondown_class: 'btn btn-primary',
+            buttonup_class: 'btn btn-primary'
+        });
+</script>

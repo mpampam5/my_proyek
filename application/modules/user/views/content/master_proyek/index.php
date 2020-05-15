@@ -79,10 +79,6 @@ $(document).ready(function(){
  });
 
 
- $(document).on("click", "#filter", function(event){
-  event.preventDefault();
-  load_data(1);
- });
 
 });
 </script>
