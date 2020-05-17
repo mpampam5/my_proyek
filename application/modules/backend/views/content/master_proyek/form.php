@@ -40,21 +40,7 @@
               <input type="text" class="form-control bg-white" id="dana_dibutuhkan" name="dana_dibutuhkan" readonly>
             </div>
 
-            <div class="form-group">
-              <label for="">Priode/Tenor (Bulan)</label>
-              <input id="priode" type="text" value="1" name="priode" class=" form-control bg-white" readonly>
-            </div>
 
-
-            <div class="form-group">
-              <label for="">Imbal Hasil Pendana</label>
-              <input id="imbal_hasil_pendana" type="text" value="1" name="imbal_hasil_pendana" readonly class=" form-control bg-white">
-            </div>
-
-            <div class="form-group">
-              <label for="">Ujroh Penyelenggara</label>
-              <input id="ujroh_penyelenggara" type="text" value="1" name="ujroh_penyelenggara" readonly class=" form-control bg-white">
-            </div>
 
             <div class="form-group">
               <label for="">Lokasi Proyek</label>
@@ -123,7 +109,8 @@
 
             <div class="form-group">
               <label for="">Deskripsi Proyek</label>
-              <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" cols="80" placeholder="Deskripsi"></textarea>
+              <textarea class="form-control" id="elm1" rows="5" cols="80" placeholder="Deskripsi"></textarea>
+              <input type="hidden" id="deskripsi" name="deskripsi">
             </div>
 
             <div class="text-right">
@@ -137,7 +124,8 @@
   </div>
 </div> <!-- Page content Wrapper -->
 
-
+<!--Wysiwig js-->
+<script src="<?=base_url()?>_template/backend/plugins/tinymce/tinymce.min.js"></script>
 <script src="<?=base_url()?>_template/backend//plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -145,6 +133,22 @@ $(document).ready(function(){
   let harga_paket = $("#harga_paket").val();
   jumlah = harga_paket * paket;
   $("#dana_dibutuhkan").val(jumlah)
+
+      tinymce.init({
+          selector: "textarea#elm1",
+          theme: "modern",
+          setup : function(ed) {
+            ed.on('change', function(e) {
+            // This will print out all your content in the tinyMce box
+            console.log(ed.getContent());
+            // Your text from the tinyMce box will now be passed to your text area …
+            $("#deskripsi").val(ed.getContent());
+            });
+          }
+        });
+
+
+
 });
 
 $(document).on("change","#paket",function(e){
@@ -208,23 +212,6 @@ $("input[name='harga_paket']").TouchSpin({
             buttonup_class: 'btn btn-primary'
         });
 
-$("input[name='imbal_hasil_pendana']").TouchSpin({
-          min: 1,
-          max: 100,
-          step: 1,
-          postfix: '%',
-          buttondown_class: 'btn btn-primary',
-          buttonup_class: 'btn btn-primary'
-      });
-
-$("input[name='ujroh_penyelenggara']").TouchSpin({
-          min: 1,
-          max: 100,
-          step: 1,
-          postfix: '%',
-          buttondown_class: 'btn btn-primary',
-          buttonup_class: 'btn btn-primary'
-      });
 
 
       $(function () {

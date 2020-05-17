@@ -77,12 +77,14 @@ class Master_proyek extends User{
       $this->form_validation->set_rules("tanggal","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_rules("akhir_penggalangan","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_rules("durasi_proyek","*&nbsp;","trim|xss_clean|required");
+        $this->form_validation->set_rules("imbal_hasil","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
       if ($this->form_validation->run()) {
         $tanggal = date('Y-m-d',strtotime($this->input->post('tanggal')));
         $nominal = $this->input->post("nominal");
         $akhir_penggalangan = $this->input->post("akhir_penggalangan");
         $priode = $this->input->post("durasi_proyek");
+        $imbal_hasil_post = $this->input->post("imbal_hasil");
         $selisih_hari = selisih_hari($akhir_penggalangan,$tanggal);
 
         $penggalangan = (0.03 / 100) * $nominal ;
@@ -90,7 +92,7 @@ class Master_proyek extends User{
 
         $profit_bulan = (1 / 100) * $nominal;
         $profit_bulan_pertama = $profit_bulan + $hsl_penggalangan;
-        $imbal_hasil = (1.5 / 100) * $nominal;
+        $imbal_hasil = ($imbal_hasil_post / 100) * $nominal;
 
         $hasil_durasi = $profit_bulan * $priode;
 

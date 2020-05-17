@@ -44,7 +44,7 @@
           $qry = $this->CI->db->select("id_withdraw,id_pendana,SUM(nominal) AS nominal,status")
                               ->from("withdraw")
                               ->where("id_pendana",$id_pendana)
-                              ->where("status !=","cancel")
+                              ->where("status","approved")
                               ->group_by('id_pendana')
                               ->get();
           if ($qry->num_rows() > 0 ) {

@@ -41,7 +41,8 @@ function profile($field)
                         master_pendana.created_at,
                         master_pendana.update_at,
                         master_pendana.verifikasi_at,
-                        master_pendana.complate")
+                        master_pendana.complate,
+                        master_pendana.pin_transaksi")
                   ->from("master_pendana")
                   ->where("master_pendana.id_pendana",sess("id_user"))
                   ->get()

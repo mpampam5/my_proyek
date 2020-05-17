@@ -134,7 +134,7 @@ class Master_proyek extends Usrp{
           $this->form_validation->set_rules("provinsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
           $this->form_validation->set_rules("kabupaten","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
           $this->form_validation->set_rules("alamat","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
-          $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+          $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean|required");
           $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
           if ($this->form_validation->run()) {
             $data = array('title' => $this->input->post("title",true),

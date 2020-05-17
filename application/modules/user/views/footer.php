@@ -34,6 +34,8 @@
           $('#modalTitle, #modalContent , #modalFooter').html('');
         }, 500);
      });
+
+
 </script>
 
 </body>

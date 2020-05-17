@@ -66,11 +66,11 @@
     </div>
 
 
-  
+
 
     <div class="row mt-5">
       <div class="col-lg-11 mx-auto">
-      <div class="mb-3">
+      <div class="mb-3 animated fadeInRight delay-2s">
         <h3 class="pb-2">Penggalangan Dana Sedang Berlangsung</h3>
         <p style="color:#141414;font-size:18px">Berikan Pendanaan Terbaikmu, dan Nikmati Imbal Hasil Terbaik.</p>
         <a href="<?=site_url("user/master_proyek")?>" class="btn btn-sm btn-primary">Lihat Semua Penggalangan</a>
@@ -82,11 +82,20 @@
             $total_dana = $pb->harga_paket * $pb->jumlah_paket; //dana di butuhkan
             $dana_terkumpul = $this->proyek->total_dana_terkumpul($pb->id_proyek);
             $persen = cari_persen($total_dana,$dana_terkumpul);
+            $imbal_hasil = $pb->imbal_hasil_pendana;
+            $rupiah_imbal_hasil = ($pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara)/100*$total_dana;
 
+            if ($pb->foto_1!="") {
+              $image = base_url().'_template/files/proyek/'.$pb->kode.'/'.$pb->foto_1;
+            }else {
+              $image = base_url().'_template/files/no-image.png';
+            }
              ?>
-            <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="col-md-6 col-lg-6 col-xl-4 animated zoomIn delay-2s">
                 <div class="card m-b-30">
-                    <img class="card-img-top img-fluid" src="<?=base_url()?>_template/backend/images/small/img-2.jpg" alt="Card image cap">
+                  <div class="card-img-top" style="height:150px;background:url(<?=$image?>)">
+                    <span class="label-hari">Tersisa <?=selisih_hari($pb->akhir_penggalangan)?> hari lagi</span>
+                  </div>
                     <div class="card-body" style="height:80px;max-height:80px!important;">
                         <p class="card-text" style="color:#6b6b6b;font-size:15px">Pendanaan <b><?=$pb->kode?></b>. <?=$pb->title?></p>
                     </div>
@@ -94,19 +103,19 @@
                       <span>Dana terkumpul (<?=$persen?>%)</span>
                       <div class="mt-1">
                         <div class="progress" style="background-color:#ebebeb;height:0.5rem;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%; color:#fff;"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%; color:#fff;"></div>
                         </div>
                       </div>
                     </div>
                     <ul class="list-group list-group-flush list-custom">
-                        <li class="list-group-item">Dana Dibutuhkan <span class="float-right badge badge-success">Rp.<?=format_rupiah($total_dana)?></span></li>
-                        <li class="list-group-item">Minimum Pendanaan <span class="float-right badge badge-success">Rp.<?=format_rupiah($pb->harga_paket)?></span></li>
-                        <li class="list-group-item">Durasi Proyek <span class="float-right badge badge-success"><?=$pb->durasi_proyek?> bulan</span></li>
-                        <li class="list-group-item">Imbal Hasil /tahun <span class="float-right badge badge-success">(<?=$pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara?>%) Rp.<?=format_rupiah(($pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara)/100*$total_dana)?></span></li>
-                        <li class="list-group-item">Terima Imbal Hasil <span class="float-right badge badge-success">Tiap Bulan</span></li>
+                        <li class="list-group-item">Dana Dibutuhkan <span class="float-right badge badge-primary">Rp.<?=format_rupiah($total_dana)?></span></li>
+                        <li class="list-group-item">Minimum Pendanaan <span class="float-right badge badge-primary">Rp.<?=format_rupiah($pb->harga_paket)?></span></li>
+                        <li class="list-group-item">Durasi Proyek <span class="float-right badge badge-primary"><?=$pb->durasi_proyek?> bulan</span></li>
+                        <li class="list-group-item">Imbal Hasil /tahun <span class="float-right badge badge-primary"> Rp.<?=format_rupiah(($pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara)/100*$total_dana)?> (<?=$pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara?>%)</span></li>
+                        <li class="list-group-item">Terima Imbal Hasil <span class="float-right badge badge-primary">Tiap Bulan</span></li>
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="btn btn-sm btn-block btn-success">Danai Sekarang</a>
+                        <a href="<?=site_url("user/master_proyek/detail/".$pb->id_proyek."/".$pb->kode)?>" class="btn btn-sm btn-block btn-primary">Danai Sekarang</a>
                     </div>
                 </div>
             </div>

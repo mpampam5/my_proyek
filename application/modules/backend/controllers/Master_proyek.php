@@ -50,6 +50,13 @@ class Master_proyek extends Backend{
                         </p>";
             }elseif ($dt->status_penggalangan=="selesai") {
               $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>";
+            }elseif ($dt->status_penggalangan=="akan_datang") {
+                $row[] = "<span class='badge badge-success text-white'>Akan Rilis</span>
+                            <p class='font-12 mt-2'>
+                              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))."
+                            </p>";
+            }elseif ($dt->status_penggalangan=="terpenuhi") {
+                $row[] = "<span class='badge badge-success text-white'>Terpenuhi</span>";
             }
           }elseif ($dt->status=="cancel") {
             $row[] = "-";
@@ -120,11 +127,14 @@ class Master_proyek extends Backend{
        $status = $this->input->post("status_publish",true);
        $mulai_penggalangan = date("Y-m-d",strtotime($this->input->post("start_proyek")));
        $akhir_penggalangan = date("Y-m-d",strtotime($this->input->post("end_proyek")));
-
        $this->form_validation->set_rules("status_publish","*&nbsp;","trim|xss_clean|required|callback__cek_status");
        if ($status=="publish") {
          $this->form_validation->set_rules("start_proyek","*&nbsp;","trim|xss_clean|required");
          $this->form_validation->set_rules("end_proyek","*&nbsp;","trim|xss_clean|required");
+         $this->form_validation->set_rules("priode","*&nbsp;","trim|xss_clean|numeric|required");
+         $this->form_validation->set_rules("pembagian","*&nbsp;","trim|xss_clean|required|callback__cek_desimal");
+         $this->form_validation->set_rules("pembagian_penyelenggara","*&nbsp;","trim|xss_clean|required|callback__cek_desimal");
+         $this->form_validation->set_rules("imbal_hasil","*&nbsp;","trim|xss_clean|required|callback__cek_desimal");
        }
        $this->form_validation->set_rules("keterangan","*&nbsp;","trim|xss_clean");
        $this->form_validation->set_rules("password","*&nbsp;","trim|xss_clean|required|callback__cek_password");
@@ -132,14 +142,19 @@ class Master_proyek extends Backend{
        if ($this->form_validation->run()) {
          if ($id!="") {
            if ($row = $this->model->get_detail_model(dec_url($id))) {
-
-
-
               if ($status=="publish") {
                 $update['mulai_penggalangan']   = $mulai_penggalangan;
                 $update['akhir_penggalangan']   = $akhir_penggalangan;
+                $update['durasi_proyek'] = $this->input->post("priode",true);
+                $update['imbal_hasil'] = $this->input->post("pembagian",true);
+                $update['ujroh_penyelenggara'] = $this->input->post("pembagian_penyelenggara",true);
+                $update['imbal_hasil_pendana'] = $this->input->post("imbal_hasil",true);
                 $update['tgl_mulai_proyek']     = date("Y-m-d",strtotime("+1 days",strtotime($akhir_penggalangan)));
-                $update['status_penggalangan']  = "mulai";
+                if ($mulai_penggalangan == date('Y-m-d')) {
+                  $update['status_penggalangan']  = "mulai";
+                }else {
+                  $update['status_penggalangan']  = "akan_datang";
+                }
                 $update['lama_penggalangan']    = selisih_hari($akhir_penggalangan,$mulai_penggalangan);
               }
               $update['status']                 = $status;
@@ -176,6 +191,16 @@ class Master_proyek extends Backend{
      }else {
        $this->form_validation->set_message("_cek_status","* status tidak valid");
         return false;
+     }
+   }
+
+   function _cek_desimal($str)
+   {
+     if (is_numeric($str)) {
+       return true;
+     }else {
+       $this->form_validation->set_message("_cek_desimal","* Hanya berupa angka desimal");
+       return false;
      }
    }
 
@@ -254,22 +279,17 @@ class Master_proyek extends Backend{
            $this->form_validation->set_rules("harga_paket","*&nbsp;","trim|xss_clean|numeric|required");
            $this->form_validation->set_rules("paket","*&nbsp;","trim|xss_clean|numeric|required");
            $this->form_validation->set_rules("dana_dibutuhkan","*&nbsp;","trim|xss_clean|numeric|required");
-           $this->form_validation->set_rules("priode","*&nbsp;","trim|xss_clean|numeric|required");
-           $this->form_validation->set_rules("imbal_hasil_pendana","*&nbsp;","trim|xss_clean|numeric|required");
-           $this->form_validation->set_rules("ujroh_penyelenggara","*&nbsp;","trim|xss_clean|numeric|required");
            $this->form_validation->set_rules("provinsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
            $this->form_validation->set_rules("kabupaten","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
            $this->form_validation->set_rules("alamat","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
-           $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+           $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean|required");
            $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
            if ($this->form_validation->run()) {
              $data = array('id_penerima_dana' => $this->input->post("id_penerima_dana"),
                            'title' => $this->input->post("title",true),
+                           'dana_dibutuhkan' => $this->input->post("harga_paket",true) * $this->input->post("paket",true),
                            'harga_paket' => $this->input->post("harga_paket",true),
                            'jumlah_paket' => $this->input->post("paket",true),
-                           'durasi_proyek' => $this->input->post("priode",true),
-                           'imbal_hasil_pendana' => $this->input->post("imbal_hasil_pendana",true),
-                           'ujroh_penyelenggara' => $this->input->post("ujroh_penyelenggara",true),
                            'provinsi' => $this->input->post("provinsi",true),
                            'kabupaten' => $this->input->post("kabupaten",true),
                            'lokasi_proyek' => $this->input->post("alamat",true),

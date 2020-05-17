@@ -16,6 +16,7 @@ class Dashboard_model extends MY_Model{
                                 master_proyek.foto_1,
                                 master_proyek.`status`,
                                 master_proyek.status_penggalangan,
+                                master_proyek.akhir_penggalangan,
                                 master_proyek.complate")
                       ->from("master_proyek")
                       ->where("master_proyek.`status`","publish")

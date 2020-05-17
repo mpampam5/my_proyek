@@ -110,7 +110,8 @@
 
             <div class="form-group">
               <label for="">Deskripsi Proyek</label>
-              <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" cols="80" placeholder="Deskripsi"></textarea>
+              <textarea class="form-control" id="elm1" rows="5" cols="80" placeholder="Deskripsi"></textarea>
+              <input type="hidden" id="deskripsi" name="deskripsi">
             </div>
 
             <div class="text-right">
@@ -124,10 +125,23 @@
   </div>
 </div> <!-- Page content Wrapper -->
 
-
-<script src="<?=base_url()?>_template/usrp//plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+<script src="<?=base_url()?>_template/usrp/plugins/tinymce/tinymce.min.js"></script>
+<script src="<?=base_url()?>_template/usrp/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+  tinymce.init({
+      selector: "textarea#elm1",
+      theme: "modern",
+      setup : function(ed) {
+        ed.on('change', function(e) {
+        // This will print out all your content in the tinyMce box
+        console.log(ed.getContent());
+        // Your text from the tinyMce box will now be passed to your text area …
+        $("#deskripsi").val(ed.getContent());
+        });
+      }
+    });
+
   let paket = $("#paket").val();
   let harga_paket = $("#harga_paket").val();
   jumlah = harga_paket * paket;

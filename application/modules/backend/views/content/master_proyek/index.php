@@ -28,7 +28,9 @@
                   <div class="col-sm-2 pr-0 pl-1 form-group">
                     <select class="form-control form-control-sm" id="status_penggalangan" name="status_penggalangan">
                       <option value="">-- Status Penggalangan --</option>
+                      <option value="akan_datang">Akan Rilis</option>
                       <option value="mulai">Sedang Berlangsung</option>
+                      <option value="terpenuhi">Terpenuhi</option>
                       <option value="selesai">Telah Berakhir</option>
                     </select>
                   </div>

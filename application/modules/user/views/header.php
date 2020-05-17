@@ -25,10 +25,32 @@
         <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
 
         <style media="screen">
+        .font-bold{
+          font-weight: bold;
+        }
           .list-custom .list-group-item{
             padding: 5px 20px!important;
             font-size:14px!important;
             color:#616161;
+          }
+
+
+          .card-img-top{
+            background-repeat: no-repeat!important;
+            background-size: cover!important;
+            background-position: center!important;
+            position: relative;
+          }
+
+          .label-hari{
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            background-color: #dd4747;
+            color:#fff;
+            padding: 2px 10px 3px 6px;
+            /* opacity: 0.8; */
+            border-radius: 0 4px 4px 0;
           }
         </style>
 

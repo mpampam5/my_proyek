@@ -68,7 +68,11 @@
                     if ($dt->status_penggalangan=="mulai") {
                       echo "<h6 class='text-success font-13'>PENGGALANGAN BERLANGSUNG</h6>";
                     }elseif ($dt->status_penggalangan=="selesai") {
-                      echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
+                      echo "<h6 class='text-success'>TELAH BERAKHIR</h6>";
+                    }elseif ($dt->status_penggalangan=="terpenuhi") {
+                      echo "<h6 class='text-success'>TERPENUHI</h6>";
+                    }elseif ($dt->status_penggalangan=="akan_datang") {
+                      echo "<h6 class='text-warning'>Akan Rilis</h6>";
                     }
                   }elseif ($dt->status=="cancel") {
                     echo "<h6 class='text-danger'> BELUM DITENTUKAN </h6>";
@@ -152,23 +156,48 @@
                             <label for="">Status Approved</label>
                             <select class="form-control" name="status_publish" id="status_publish">
                               <option value=""> -- pilih -- </option>
-                              <option value="cancel">Cancel</option>
                               <option value="publish">Publish</option>
+                              <option value="cancel">Cancel</option>
                             </select>
                           </div>
 
-
-                          <div class="form-group">
-                                <label>Tanggal Mulai Penggalangan </label>
-                                <div>
-                                    <div class="input-daterange input-group" id="date-range">
-                                        <input type="text"  class="form-control bg-white" name="start_proyek" readonly placeholder="Tgl Mulai" value="<?=date("m/d/Y")?>">
-                                        <input type="text" class="form-control bg-white" name="end_proyek" readonly placeholder="Tgl Berakhir">
-                                    </div>
-                                </div>
-                                <div id="start_proyek"></div>
-                                <div id="end_proyek"></div>
+                          <div id="is_publish" style="display: none">
+                            <div class="form-group">
+                              <label for="">Ujroh Penyelenggara</label>
+                              <input type="text" class="form-control" name="pembagian_penyelenggara" placeholder="0.00"/>
+                              <div id="pembagian_penyelenggara"></div>
                             </div>
+
+                            <div class="form-group">
+                              <label for="">Imbal hasil pertahun</label>
+                              <input type="text" class="form-control"  name="imbal_hasil" placeholder="0.00"/>
+                              <div id="imbal_hasil"></div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label for="">Priode/Tenor (Bulan)</label>
+                              <input  type="text" value="1" name="priode" class=" form-control bg-white">
+                              <div id="priode"></div>
+                            </div>
+
+                              <div class="form-group">
+                                <label for="">Tanggal Mulai Penggalangan</label>
+                                <input type="date" class="form-control" id="start_proyek" name="start_proyek" min="<?=date("Y-m-d")?>">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="">Tanggal Selesai Penggalangan</label>
+                                <input type="date" class="form-control" id="end_proyek" name="end_proyek" min="<?=date("Y-m-d")?>">
+                              </div>
+
+
+                              <div class="form-group">
+                                <label for="">% Pembagian Imbal Hasil</label>
+                                <input type="text" class="form-control" name="pembagian" placeholder="0.00"/>
+                                <div id="pembagian"></div>
+                              </div>
+                          </div>
 
                           <div class="form-group">
                             <label for="">Keterangan</label>
@@ -184,11 +213,68 @@
                         </form>
                       </div>
 
-
+                      <script src="<?=base_url()?>_template/backend//plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
                       <script type="text/javascript">
-                      jQuery('#date-range').datepicker({
-                          toggleActive: true
+                      $(document).on("change","#status_publish",function(e){
+                        e.preventDefault();
+                        const val = $("#status_publish option:selected" ).val();
+                        if (val=="publish") {
+                          $("#is_publish").show();
+                        }else {
+                          $("#is_publish").hide();
+                        }
                       });
+                      $("input[name='priode']").TouchSpin({
+                                min: 1,
+                                max: 36,
+                                step: 1,
+                                postfix: 'Bulan',
+                                buttondown_class: 'btn btn-primary',
+                                buttonup_class: 'btn btn-primary'
+                            });
+
+
+                            $("input[name='pembagian']").TouchSpin({
+                                      min: 0,
+                                      max: 100,
+                                      step: 0.01,
+                                      decimals: 2,
+                                      boostat: 1,
+                                      maxboostedstep: 0.01,
+                                      postfix: '%',
+                                      buttondown_class: 'btn btn-primary',
+                                      buttonup_class: 'btn btn-primary'
+                                  });
+
+                                  $("input[name='pembagian_penyelenggara']").TouchSpin({
+                                            min: 0,
+                                            max: 100,
+                                            step: 0.01,
+                                            decimals: 2,
+                                            boostat: 1,
+                                            maxboostedstep: 0.01,
+                                            postfix: '%',
+                                            buttondown_class: 'btn btn-primary',
+                                            buttonup_class: 'btn btn-primary'
+                                        });
+
+                                        $("input[name='imbal_hasil']").TouchSpin({
+                                                  min: 0,
+                                                  max: 100,
+                                                  step: 0.01,
+                                                  decimals: 2,
+                                                  boostat: 1,
+                                                  maxboostedstep: 0.01,
+                                                  postfix: '%',
+                                                  buttondown_class: 'btn btn-primary',
+                                                  buttonup_class: 'btn btn-primary'
+                                              });
+
+                      $(document).on("change","#start_proyek",function(e){
+                        e.preventDefault();
+                        $("#end_proyek").val("");
+                        $("#end_proyek").attr("min",$(this).val());
+                      })
 
                       $("#form").submit(function(e){
                       e.preventDefault();
