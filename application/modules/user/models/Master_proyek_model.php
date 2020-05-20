@@ -47,7 +47,7 @@ function fetch_data($limit,$start)
         $persen = cari_persen($total_dana,$dana_terkumpul);
         $imbal_hasil = $pb->imbal_hasil_pendana;
         $rupiah_imbal_hasil = ($pb->imbal_hasil_pendana+$pb->ujroh_penyelenggara)/100*$total_dana;
-
+        $cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$pb->id_proyek);
         if ($pb->foto_1!="") {
           $image = base_url().'_template/files/proyek/'.$pb->kode.'/'.$pb->foto_1;
         }else {
@@ -70,6 +70,7 @@ function fetch_data($limit,$start)
 
         $output.='</div>
                 <div class="card-body" style="height:80px;max-height:80px!important;">
+                    '.($cek_pendanaan > 0 ? '<span class="text-success"><i class="fa fa-check-circle"></i> TELAH ANDA DANAI</span>':'').'
                     <p class="card-text" style="color:#6b6b6b;font-size:15px">Pendanaan <b>'.$pb->kode.'</b>. '.$pb->title.'</p>
                 </div>
                 <div class="card-body">

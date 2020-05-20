@@ -18,7 +18,7 @@
         function init($id_pendana){
           $deposito = $this->get_deposito($id_pendana);
           $withdraw = $this->get_withdraw($id_pendana);
-          $pendanaan_proyek = $this->pendanaan_proyek($id_pendana);
+          $pendanaan_proyek = $this->get_pendanaan($id_pendana);
           $nominal = $deposito-$withdraw-$pendanaan_proyek;
           return $nominal;
         }
@@ -56,23 +56,19 @@
         }
 
 
-        function pendanaan_proyek($id_pendana)
+        function get_pendanaan($id_pendana)
         {
-          $qry = $this->CI->db->select("trans_penggalangan_dana.id_penggalangan_dana_proyek,
-                                        trans_penggalangan_dana.id_proyek,
-                                        trans_penggalangan_dana.id_pendana,
-                                        trans_penggalangan_dana.jumlah_paket,
-                                        master_proyek.harga_paket")
-                              ->from("trans_penggalangan_dana")
-                              ->join("master_proyek","master_proyek.id_proyek = trans_penggalangan_dana.id_proyek")
-                              ->where("trans_penggalangan_dana.id_pendana",$id_pendana)
-                              ->get();
-            $row = array();
-            foreach ($qry->result() as $dt) {
-              $row[] = $dt->harga_paket*$dt->jumlah_paket;
-            }
-
-            return array_sum($row);
+          $this->CI->db->select("id_penggalangan_dana_proyek, SUM(total_rupiah) AS total_rupiah");
+          $this->CI->db->from("trans_penggalangan_dana");
+          $this->CI->db->where("id_pendana",$id_pendana);
+          $this->CI->db->where("status","approved");
+          $this->CI->db->group_by('id_pendana');
+            $qry = $this->CI->db->get();
+          if ($qry->num_rows() > 0 ) {
+            return $qry->row()->total_rupiah;
+          }else {
+            return 0;
+          }
         }
 
 

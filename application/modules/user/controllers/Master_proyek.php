@@ -77,7 +77,7 @@ class Master_proyek extends User{
       $this->form_validation->set_rules("tanggal","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_rules("akhir_penggalangan","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_rules("durasi_proyek","*&nbsp;","trim|xss_clean|required");
-        $this->form_validation->set_rules("imbal_hasil","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("imbal_hasil","*&nbsp;","trim|xss_clean|required");
       $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
       if ($this->form_validation->run()) {
         $tanggal = date('Y-m-d',strtotime($this->input->post('tanggal')));
@@ -104,7 +104,7 @@ class Master_proyek extends User{
                     <tr>
                       <th>Tgl Pendanaan</th>
                       <th>Jumlah Dana</th>
-                      <th>Hari Ke</th>
+                      <th>Jumlah Hari</th>
                       <th>Penggalangan</th>
                       <th>Bulan 1</th>
                       <th>Pembayaran Bulan 1</th>
@@ -115,12 +115,17 @@ class Master_proyek extends User{
                     <tr>
                       <td>'.date('d/m/Y',strtotime($tanggal)).'</td>
                       <td>'.format_rupiah($nominal).'</td>
-                      <td>'.$selisih_hari.'</td>
+                      <td class="text-center">'.$selisih_hari.'</td>
                       <td>'.format_rupiah($hsl_penggalangan).'</td>
                       <td>'.format_rupiah($profit_bulan).'</td>
-                      <td>'.format_rupiah($profit_bulan_pertama).'</td>
-                      <td>'.format_rupiah($profit_bulan).'</td>
-                      <td>'.format_rupiah($imbal_hasil).'</td>
+                      <td>'.format_rupiah($profit_bulan_pertama).'</td>';
+
+                if ($priode > 1) {
+                  $output .='<td>'.format_rupiah($profit_bulan).'</td>';
+                }else {
+                  $output .='<td class="text-center"> - </td>';
+                }
+                $output .='<td>'.format_rupiah($imbal_hasil).'</td>
                     </tr>
                   </table>
                   <p class="text-right" style="font-weight:bold">Total Imbal Hasil dan Dana Pokok : Rp.'.format_rupiah($dana_pokok_imbal_hasil).'</p>';
@@ -135,6 +140,62 @@ class Master_proyek extends User{
       }
 
 
+      echo json_encode($json);
+    }
+  }
+
+
+  function add($id = null,$kode = null){
+    if ($this->input->is_ajax_request()) {
+      if ($row = $this->model->get_detail($id,$kode)) {
+        if ($row->status_penggalangan == "mulai" AND $row->status == "publish") {
+          $dt['dt'] =$row;
+          $dt['action'] = site_url("user/master_proyek/add_action/".$row->id_proyek."/".$row->kode);
+          $this->template->view("content/master_proyek/form",$dt,false);
+        }
+      }
+    }
+  }
+
+
+  function add_action($id = null,$kode = null){
+    if ($this->input->is_ajax_request()) {
+      $json = array('success'=>false, 'alert'=>array());
+      $row = $this->model->get_detail($id,$kode);
+      $paket =  $this->input->post("paket");
+      $nominal =  $row->harga_paket;
+      $total = $nominal * $paket;
+      $this->form_validation->set_rules("paket","*&nbsp;","trim|xss_clean|numeric|required");
+      $this->form_validation->set_rules("total","*&nbsp;","trim|xss_clean|required|callback__cek_saldo[".$total."]");
+      $this->form_validation->set_rules("pin","*&nbsp;","trim|xss_clean|required|callback__cek_pin");
+      $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+      if ($this->form_validation->run()) {
+        if ($row) {
+            if ($row->status_penggalangan == "mulai" AND $row->status == "publish") {
+              $insert = array('id_proyek' => $row->id_proyek,
+                              'id_pendana' => sess('id_user'),
+                              'jumlah_paket' => $paket,
+                              'join_hari_ke' => selisih_hari($row->akhir_penggalangan),
+                              'date_join' => date("Y-m-d"),
+                              'total_rupiah' => $total,
+                              'status'  => "approved",
+                              'created_at' => date("Y-m-d H:i:s"),
+                              );
+              $this->model->get_insert("trans_penggalangan_dana",$insert);
+              $json['success'] = true;
+              $json['alert'] ="Berhasil mendanai";
+            }else {
+              $json['alert'] ="Gagal mendanai";
+            }
+          }else {
+            $json['alert'] ="Gagal mendanai";
+          }
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
       echo json_encode($json);
     }
   }

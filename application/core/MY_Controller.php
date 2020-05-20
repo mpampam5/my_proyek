@@ -65,6 +65,51 @@ class Usrp extends CI_Controller{
       }else {
         $this->load->helper(array("public","user","sct"));
         $this->load->library(array("user/Template","user/balance_user","form_validation","security","user_agent"));
+        if (profile('pin_transaksi') == null) {
+          redirect(site_url("user/pin"),"refresh");
+        }
+      }
+    }
+
+
+    function _cek_password($str)
+    {
+      if ($str!="") {
+        if (pass_decrypt(profile("token_password"),$str,profile("password"))) {
+          return true;
+        }else {
+          $this->form_validation->set_message('_cek_password', '* Password Salah');
+          return false;
+        }
+      }else {
+        return true;
+      }
+    }
+
+
+    function _cek_pin($str)
+    {
+      if ($str!="") {
+        if (pass_decrypt(profile("token_pin"),$str,profile("pin"))) {
+          return true;
+        }else {
+          $this->form_validation->set_message('_cek_pin', '* PIN Transaksi Salah');
+          return false;
+        }
+      }else {
+        return true;
+      }
+    }
+
+
+    function _cek_saldo($str, $nominal){
+      $saldo = $this->balance_user->init();
+      $nominals = replace_rupiah($nominal);
+      if ($nominals > $saldo) {
+        $this->form_validation->set_message('_cek_saldo', '* Saldo Anda tidak mencukupi');
+        return false;
+      }else {
+        return true;
       }
     }
 

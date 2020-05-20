@@ -84,14 +84,15 @@ class Deposit extends User{
   {
     if ($this->input->is_ajax_request()) {
       $json = array('success'=>false, 'alert'=>array());
-      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|numeric|required|callback__cek_deposit");
+      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|required|callback__cek_deposit");
       $this->form_validation->set_rules("bank","*&nbsp;","trim|xss_clean|numeric|required");
+      $this->form_validation->set_rules("pin","*&nbsp;","trim|xss_clean|numeric|required|callback__cek_pin");
       $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
       if ($this->form_validation->run()) {
         $data = array('code' => $this->_code(),
                       'id_pendana' => sess("id_user"),
                       'kode_unik' => $this->_kode_unik(),
-                      'nominal' => $this->input->post("nominal"),
+                      'nominal' => replace_rupiah($this->input->post("nominal")),
                       'id_rekening' => $this->input->post("bank"),
                       'status' => "process",
                       'created_at' => date("Y-m-d H:i:s")
@@ -148,10 +149,10 @@ class Deposit extends User{
 
   function _cek_deposit($str)
   {
-    if ($str < master_config("DP-MIN")) {
+    if (replace_rupiah($str) < master_config("DP-MIN")) {
       $this->form_validation->set_message("_cek_deposit","*&nbsp; Minmal Deposit Rp.".format_rupiah(master_config("DP-MIN")));
       return false;
-    }elseif ($str > master_config("DP-MAX")) {
+    }elseif (replace_rupiah($str) > master_config("DP-MAX")) {
       $this->form_validation->set_message("_cek_deposit","*&nbsp; Maksimal Deposit Rp.".format_rupiah(master_config("DP-MAX")));
       return false;
     }else {

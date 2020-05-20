@@ -27,8 +27,12 @@
 
 <!-- App js -->
 <script src="<?=base_url()?>_template/usrp/js/app.js"></script>
-
+  <script src="<?=base_url()?>_template/backend/plugins/bootstrap-inputmask/jquery.mask.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+  $('.rupiah').mask('00.000.000.000', {reverse: true});
+});
+
   $('#modalGue').on('hide.bs.modal', function () {
       setTimeout(function(){
           $('#modalTitle, #modalContent , #modalFooter').html('');

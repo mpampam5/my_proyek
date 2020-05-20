@@ -21,7 +21,7 @@
                   <td>
                     <select class="form-control" id="status_view" name="status">
                       <option value="">All</option>
-                      <option value="process">Waithing</option>
+                      <option value="process">Proses</option>
                       <option value="approved">Approved</option>
                       <option value="cancel">Cancel</option>
                     </select>
@@ -36,8 +36,8 @@
               </table>
 
 
-              <table class="table table-bordered" id="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                <thead style="background:#dadada">
+              <table class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;" id="table">
+                <thead>
                   <tr>
                     <th>DATE REQUEST</th>
                     <th>CODE-TRANSAKSI</th>

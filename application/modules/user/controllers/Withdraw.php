@@ -71,12 +71,13 @@ class Withdraw extends User{
   {
     if ($this->input->is_ajax_request()) {
       $json = array('success'=>false, 'alert'=>array());
-      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|numeric|required|callback__cek_wd");
+      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|required|callback__cek_wd");
+      $this->form_validation->set_rules("pin","*&nbsp;","trim|xss_clean|numeric|required|callback__cek_pin");
       $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
       if ($this->form_validation->run()) {
         $data = array('code' => $this->_code(),
                       'id_pendana' => sess("id_user"),
-                      'nominal' => $this->input->post("nominal"),
+                      'nominal' => replace_rupiah($this->input->post("nominal")),
                       'status' => "process",
                       'created_at' => date("Y-m-d H:i:s")
                       );
@@ -98,14 +99,20 @@ class Withdraw extends User{
 
   function _cek_wd($str)
   {
-    if ($str < master_config("WD-MIN")) {
-      $this->form_validation->set_message("_cek_wd","*&nbsp; Minmal Withdraw Rp.".format_rupiah(master_config("DP-MIN")));
-      return false;
-    }elseif ($str > master_config("WD-MAX")) {
-      $this->form_validation->set_message("_cek_wd","*&nbsp; Maksimal Withdraw Rp.".format_rupiah(master_config("DP-MAX")));
+    $strs = replace_rupiah($str);
+    if ($strs > $this->balance_user->init()) {
+      $this->form_validation->set_message("_cek_wd","*&nbsp; Saldo tidak mencukupi. Sisa Saldo Rp.".format_rupiah($this->balance_user->init()));
       return false;
     }else {
-      return true;
+      if ($strs < master_config("WD-MIN")) {
+        $this->form_validation->set_message("_cek_wd","*&nbsp; Minmal Withdraw Rp.".format_rupiah(master_config("DP-MIN")));
+        return false;
+      }elseif ($strs > master_config("WD-MAX")) {
+        $this->form_validation->set_message("_cek_wd","*&nbsp; Maksimal Withdraw Rp.".format_rupiah(master_config("DP-MAX")));
+        return false;
+      }else {
+        return true;
+      }
     }
   }
 

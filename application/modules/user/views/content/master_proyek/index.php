@@ -37,8 +37,8 @@ ul.pagination li.page-item a{
           <b>Filter :&nbsp;&nbsp;</b>
           <div class="btn-group" id="filters" role="group" aria-label="Basic example">
               <button type="button" data-value="all" class="filter btn btn-info active">Semua</button>
-              <button type="button" data-value="akan_datang" class="filter btn btn-info">Akan Rilis</button>
               <button type="button" data-value="sedang_berlangsung" class="filter btn btn-info">Sedang Berlangsung</button>
+              <button type="button" data-value="akan_datang" class="filter btn btn-info">Akan Rilis</button>
               <button type="button" data-value="terpenuhi" class="filter btn btn-info">Terpenuhi</button>
               <button type="button" data-value="selesai" class="filter btn btn-info">Selesai</button>
           </div>
@@ -58,8 +58,8 @@ $(document).ready(function(){
  function load_data(page)
  {
    const data_filter = $('.filter.active').attr('data-value');
-   
-   if (data_filter=="semua") {
+
+   if (data_filter=="all") {
      $("#title-proyek").text("Semua Penggalangan Dana ");
    }else if (data_filter=="sedang_berlangsung") {
     $("#title-proyek").text("Penggalangan Dana Sedang Berlangsung");

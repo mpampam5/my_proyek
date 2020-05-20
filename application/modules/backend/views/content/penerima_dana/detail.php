@@ -38,8 +38,8 @@
             <div class="col-md-12 col-xl-4 animated fadeInRight delay-3s">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-success">289</h3>
-                    Pendanaan Aktif
+                    <h3 class="text-success"><?=format_rupiah($this->balance->deposito($dt->id_pendana))?></h3>
+                    Total Deposit
                 </div>
               </div>
             </div>
@@ -48,7 +48,7 @@
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
                     <h3 class="text-danger">289</h3>
-                    Pendanaan Selesai
+                    Total Withdraw
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
                     <h3 class="text-primary">289</h3>
-                    Total Pendanaan
+                    Total Omset
                 </div>
               </div>
             </div>

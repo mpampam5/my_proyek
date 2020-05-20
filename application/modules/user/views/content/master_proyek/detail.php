@@ -5,6 +5,7 @@ $persen = cari_persen($total_dana,$dana_terkumpul);
 $imbal_hasil = $dt->imbal_hasil_pendana;
 $total_imbal_hasil = $dt->ujroh_penyelenggara + $dt->imbal_hasil_pendana;
 $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$total_dana;
+$cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$dt->id_proyek);
  ?>
 <style media="screen">
   .selisih-hari{
@@ -101,6 +102,9 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
             <!-- //end col md -7 -->
 
             <div class="col-sm-5">
+              <?php if ($cek_pendanaan > 0): ?>
+                <span class="text-success"><i class="fa fa-check-circle"></i> TELAH ANDA DANAI SEBESAR Rp.<?=format_rupiah($cek_pendanaan)?></span>
+              <?php endif; ?>
                   <h4 class="header-title">
                     Pendanaan <?=$dt->kode?>. <?=ucfirst($dt->title);?>
                   </h4>
@@ -132,7 +136,7 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
                               </div>';
                   }elseif ($dt->status_penggalangan=="mulai") {
                     echo    '<div class="mt-3">
-                                <a href="'.site_url("user/master_proyek/detail/".$dt->id_proyek.'/'.$dt->kode).'" class="btn btn-lg btn-block btn-primary">Danai Sekarang</a>
+                                <a id="danai" href="'.site_url("user/master_proyek/add/".$dt->id_proyek.'/'.$dt->kode).'" class="btn btn-lg btn-block btn-primary">Danai Sekarang</a>
                               </div>';
                   }elseif ($dt->status_penggalangan=="terpenuhi") {
                     echo      '<div class="mt-3">
@@ -220,9 +224,11 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
                   <input class="form-control" type="date" id="tanggal" name="tanggal" min="<?=$dt->mulai_penggalangan?>" max="<?=$dt->akhir_penggalangan?>">
                 </div>
 
-                <input type="hidden" name="akhir_penggalangan" id="akhir_penggalangan" value="<?=$dt->akhir_penggalangan?>">
-                <input type="hidden" id="durasi_proyek" name="durasi_proyek" value="<?=$dt->durasi_proyek?>">
-                <input type="hidden" id="imbal_hasil" name="imbal_hasil" value="<?=$dt->imbal_hasil?>">
+                <div class="form-group">
+                  <input type="hidden" name="akhir_penggalangan" id="akhir_penggalangan" value="<?=$dt->akhir_penggalangan?>">
+                  <input type="hidden" id="durasi_proyek" name="durasi_proyek" value="<?=$dt->durasi_proyek?>">
+                  <input type="hidden" id="imbal_hasil" name="imbal_hasil" value="<?=$dt->imbal_hasil?>">
+                </div>
 
                 <div class="col-sm-3 form-group">
                   <label for="">&nbsp;</label>
@@ -330,7 +336,7 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
                             </ol>
 
                             <?php else: ?>
-                              <i>Belum ada progres</i>
+                              <i></i>
                           <?php endif; ?>
                         </p>
                     </div>
@@ -347,8 +353,22 @@ $rupiah_imbal_hasil = ($dt->imbal_hasil_pendana+$dt->ujroh_penyelenggara)/100*$t
   </div>
 </div> <!-- Page content Wrapper -->
 
+
 <script src="<?=base_url()?>_template/usrp/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
 <script type="text/javascript">
+
+<?php if ($dt->status_penggalangan=="mulai"): ?>
+  $(document).on("click","#danai", function(e){
+    e.preventDefault();
+    $('.modal-dialog').removeClass('modal-sm')
+                      .removeClass('modal-lg')
+                      .addClass('modal-md');
+    $("#modalTitle").text('Danai Proyek');
+    $('#modalContent').load($(this).attr('href'));
+    $("#modalGue").modal('show');
+  });
+<?php endif; ?>
+
 
 $(document).ready(function(){
     $("#carouselExampleIndicators .carousel-item:first").addClass("active");

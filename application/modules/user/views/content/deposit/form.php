@@ -6,7 +6,7 @@
           <form id="form" action="<?=site_url("user/deposit/add_action")?>" autocomplete="off">
             <div class="form-group">
               <label for="">Nominal</label>
-              <input type="text" class="form-control" id="nominal" name="nominal" placeholder="Nominal">
+              <input type="text" class="form-control rupiah" id="nominal" name="nominal" placeholder="Nominal">
             </div>
 
             <div class="form-group">
@@ -16,6 +16,12 @@
                 <?=combo_bank()?>
               </select>
             </div>
+
+            <div class="form-group">
+              <label for="">PIN Transaksi</label>
+              <input type="password" class="form-control" id="pin" name="pin" placeholder="Masukkan PIN Transaksi Anda">
+            </div>
+
 
 
             <a href="<?=site_url("user/deposit")?>" class="btn btn-danger btn-sm">Batal</a>

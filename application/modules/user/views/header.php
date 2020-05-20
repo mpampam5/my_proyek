@@ -95,11 +95,11 @@
                             </li>
 
                             <li>
-                                <a href="<?=site_url("user/master_proyeks")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Pendanaan Anda</span></a>
+                                <a href="<?=site_url("user/pendanaan")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Pendanaan Anda</span></a>
                             </li>
 
                             <li>
-                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Daftar Proyek </span></a>
+                                <a href="<?=site_url("user/master_proyek")?>" class="waves-effect"><i class="dripicons-copy"></i><span> Penggalangan Dana</span></a>
                             </li>
 
                             <li>

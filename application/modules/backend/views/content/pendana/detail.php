@@ -7,7 +7,7 @@
             <div class="col-lg-12">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-info">Rp.<?=format_rupiah(balance_user($dt->id_pendana))?></h3>
+                    <h5 class="text-info">Rp.<?=format_rupiah(balance_user($dt->id_pendana))?></h5>
                     Total Saldo
                 </div>
               </div>
@@ -38,8 +38,8 @@
             <div class="col-md-12 col-xl-4 animated fadeInRight delay-3s">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-success">289</h3>
-                    Pendanaan Aktif
+                    <h5 class="text-success">Rp.<?=format_rupiah($this->balance->get_deposito($dt->id_pendana))?></h5>
+                    Total Deposit
                 </div>
               </div>
             </div>
@@ -47,8 +47,8 @@
             <div class="col-md-12 col-xl-4 animated fadeInRight delay-4s">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-danger">289</h3>
-                    Pendanaan Selesai
+                    <h5 class="text-danger">Rp.<?=format_rupiah($this->balance->get_withdraw($dt->id_pendana))?></h5>
+                    Total Withdraw
                 </div>
               </div>
             </div>
@@ -56,8 +56,8 @@
             <div class="col-md-12 col-xl-4 animated fadeInRight delay-5s">
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
-                    <h3 class="text-primary">289</h3>
-                    Total Pendanaan
+                    <h5 class="text-primary">Rp.<?=format_rupiah($this->balance->get_pendanaan($dt->id_pendana))?></h5>
+                    Total Omset
                 </div>
               </div>
             </div>
