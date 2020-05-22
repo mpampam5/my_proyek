@@ -26,7 +26,7 @@ class Pendanaan extends User{
       foreach ($list as $dt) {
           $row = array();
           $row[] = date("d/m/Y H:i", strtotime($dt->created_at));
-          $row[] = format_rupiah($dt->total_rupiah);
+          $row[] = "Rp.".format_rupiah($dt->total_rupiah);
           $row[] = "Pendanaan <b>".$dt->kode."</b>. ".ucfirst($dt->title);
           if ($dt->status=="approved") {
             $row[] = '<span class="badge badge-success"> Approved</span>';

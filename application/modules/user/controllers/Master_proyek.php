@@ -182,6 +182,19 @@ class Master_proyek extends User{
                               'created_at' => date("Y-m-d H:i:s"),
                               );
               $this->model->get_insert("trans_penggalangan_dana",$insert);
+
+              $last_id = $this->db->insert_id();
+
+              for ($i=1; $i <= $row->durasi_proyek; $i++) {
+              $insert_profit = array( 'id_proyek' => $row->id_proyek,
+                                      'id_pendana' => sess('id_user'),
+                                      'id_trans_pendanaan_proyek' => $last_id,
+                                      'waktu_pembagian' => date('Y-m-d', strtotime("+$i month", strtotime($row->tgl_mulai_proyek))),
+                                      'nominal_rupiah' => 100000
+                                    );
+              $this->model->get_insert("trans_profit",$insert_profit);
+            }
+
               $json['success'] = true;
               $json['alert'] ="Berhasil mendanai";
             }else {

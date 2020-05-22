@@ -114,17 +114,24 @@
           <h4 class="header-title">Profit</h4>
           <table class="table table-bordered">
             <thead>
+              <th>Waktu Pembagian</th>
               <th>Profit Ke</th>
-              <th>Profit</th>
+              <th>Profit Bulanan</th>
+              <th>Bonus Penggalangan</th>
+              <th>Sisa Imbal Hasil</th>
               <th>Status</th>
+              <th>Total</th>
             </thead>
 
             <tbody>
                 <?php $no = 1; ?>
                 <?php foreach ($profit->result() as $pr): ?>
                   <tr>
-                    <td><?=date("d/m/Y",strtotime($pr->waktu_pembagian))?> (Profit ke-<?=$no++?>)</td>
-                    <td><?=format_rupiah($pr->nominal_rupiah)?></td>
+                    <td><?=date("d/m/Y",strtotime($pr->waktu_pembagian))?></td>
+                    <td class="text-center">Profit ke-<?=$no++?></td>
+                    <td class="text-center">Rp.<?=format_rupiah($pr->nominal_rupiah)?></td>
+                    <td></td>
+                    <td></td>
                     <td class="text-center">
                       <?php if ($pr->status_profit == 1): ?>
                         <span class="badge badge-success"> Telah Di Bagikan</span>
@@ -132,6 +139,7 @@
                           <span class="badge badge-danger"> Belum Di Bagikan</span>
                       <?php endif; ?>
                     </td>
+                    <td></td>
                   </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -80,9 +80,11 @@ $.ajax({
             icon: 'success',
             loaderBg: '#f96868',
             position: 'bottom-right',
-            hideAfter: 3000
+            hideAfter: 3000,
+            afterHidden: function () {
+              location.reload(true);
+            }
           });
-          window.reload();
         }else {
           $("#submit_atc").prop('disabled',false)
                       .html('Danai Sekarang');
