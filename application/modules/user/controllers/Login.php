@@ -71,10 +71,15 @@ class Login extends CI_Controller{
   }
 
 
-  function logout()
+  function logout($var = "")
   {
     $this->session->sess_destroy();
-    redirect(site_url("user/login"),"refresh");
+    if ($var == "1") {
+      $this->session->set_flashdata("info",'<div class="text-center text-info">Password berhasil di ganti, Silahkan Login kembali.</div>');
+    }elseif ($var == "2") {
+      $this->session->set_flashdata("info",'<div class="text-center text-info">Akun berhasil di tutup.</div>');
+    }
+    $this->load->view("login");
   }
 
 }

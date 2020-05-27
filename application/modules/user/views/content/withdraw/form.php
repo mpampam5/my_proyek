@@ -21,8 +21,8 @@
 
 
           <div class="alert alert-info mt-5">
-            <strong><i class="fa fa-info"></i>Info.</strong>
-            Saldo anda akan terpotong walaupun withdraw dalam status proses.
+            <strong><i class="fa fa-info-circle"></i> Perhatian</strong><br/>
+            Pastikan Data Rekening anda sudah benar. Kami akan mentransfer nominal sesuai Data Rekening yang tertera di profile anda. <a href="<?=site_url("user/profile")?>" class="font-bold">lihat Profile</a>
           </div>
         </div>
       </div>

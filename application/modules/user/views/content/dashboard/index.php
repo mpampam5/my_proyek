@@ -1,11 +1,13 @@
+
+
 <div class="page-content-wrapper">
 
   <div class="header-bg">
       <div class="container-fluid">
           <div class="row">
               <div class="col-12 mb-4 pt-5">
-                  <h4 class="text-center">Hi, <?=profile("nama")?></h4>
-                  <p class="text-center" style="color:#555555;font-size:16px"><?=profile("email")?></p>
+                  <h4 class="text-center font-style" style="text-transform :uppercase">Hi, <?=profile("nama")?></h4>
+                  <p class="text-center font-style" style="color:#555555;font-size:16px"><?=profile("email")?><br>#<?=profile("id_reg")?></p>
                   <?php if (!complate_data()): ?>
                     <div class="col-md-6 mx-auto text-center alert alert-info">
                       <p style="font-size:18px">
@@ -17,8 +19,9 @@
                     <?php else: ?>
                       <?php echo $this->session->flashdata('info_data'); ?>
                       <div class="mt-4 text-center">
-                          <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Deposit</button>
-                          <button type="button" class="btn btn-outline-primary ml-1 waves-effect waves-light">Withdraw</button>
+                          <a href="<?=site_url("user/deposit/add")?>" class="btn btn-outline-primary ml-1 waves-effect waves-light">Deposit</a>
+                          <a href="<?=site_url("user/withdraw/add")?>" class="btn btn-outline-primary ml-1 waves-effect waves-light">Withdraw</a>
+                          <a href="<?=site_url("user/profile")?>" class="btn btn-outline-primary ml-1 waves-effect waves-light">Lihat Profile</a>
                       </div>
                   <?php endif; ?>
 
@@ -31,7 +34,7 @@
 
 
     <div class="row">
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-10 mx-auto font-style">
           <div class="row">
             <div class="col-md-6 col-xl-4">
                 <div class="card text-center m-b-30">
@@ -66,8 +69,8 @@
 
     <div class="row mt-5">
       <div class="col-lg-11 mx-auto">
-      <div class="mb-3 animated fadeInRight delay-2s">
-        <h3 class="pb-2">Penggalangan Dana Sedang Berlangsung</h3>
+      <div class="mb-3 animated fadeInRight delay-2s font-style">
+        <h3 class="pb-2 text-primary">Penggalangan Dana Sedang Berlangsung</h3>
         <p style="color:#141414;font-size:18px">Berikan Pendanaan Terbaikmu, dan Nikmati Imbal Hasil Terbaik.</p>
         <a href="<?=site_url("user/master_proyek")?>" class="btn btn-sm btn-primary">Lihat Semua Penggalangan</a>
       </div>
@@ -88,7 +91,7 @@
             }
              ?>
             <div class="col-md-6 col-lg-6 col-xl-4 animated zoomIn delay-2s">
-                <div class="card m-b-30">
+                <div class="card m-b-30" style="position:relative">
                   <div class="card-img-top" style="height:150px;background:url(<?=$image?>)">
                     <span class="label-hari">Tersisa <?=selisih_hari($pb->akhir_penggalangan)?> hari lagi</span>
                   </div>

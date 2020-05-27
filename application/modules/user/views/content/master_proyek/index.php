@@ -28,8 +28,8 @@ ul.pagination li.page-item a{
   <div class="container-fluid">
     <div class="col-md-11 mx-auto mb-5">
       <div class="row">
-        <div class="col-sm-12 mb-3 animated fadeInRight delay-2s">
-          <h3 class="pb-2" id="title-proyek">Semua Penggalangan Dana</h3>
+        <div class="col-sm-12 mb-3 animated fadeInRight delay-2s font-style">
+          <h3 class="pb-2 text-primary" id="title-proyek">Semua Penggalangan Dana</h3>
           <p style="color:#141414;font-size:18px">Berikan Pendanaan Terbaikmu, dan Nikmati Imbal Hasil Terbaik.</p>
         </div>
 

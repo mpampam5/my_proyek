@@ -11,10 +11,12 @@
 
           <div class="card m-b-30">
             <div class="card-body">
-              <div class="alert alert-info mb-3">
-                <strong><i class="fa fa-info"></i>Info.</strong>
-                Saldo anda akan terpotong walaupun Withdraw dalam status proses.
+
+              <div class="alert alert-info">
+                <strong><i class="fa fa-info-circle"></i> Perhatian</strong><br/>
+                Pastikan Data Rekening anda sudah benar. Kami akan mentransfer nominal sesuai Data Rekening yang tertera di Profile anda.  <a href="<?=site_url("user/profile")?>" class="font-bold">lihat Profile</a>
               </div>
+
 
               <table class="table table-borderless" >
                 <tr>

@@ -13,7 +13,7 @@
 </style>
 <div class="page-content-wrapper">
   <div class="container-fluid">
-    <div class="col-md-10 mx-auto mb-2">
+    <div class="col-md-12 mx-auto mb-2">
       <div class="card">
         <div class="card-body">
           <table class="table tables table-borderless">
@@ -43,17 +43,22 @@
               </tr>
 
               <tr>
+                <th>Tanggal Pendanaan</th>
+                <td>: <?=date("d/m/Y",strtotime($dt->date_join))?> (Hari ke <?=selisih_hari($dt->akhir_penggalangan, $dt->date_join)?>)</td>
+              </tr>
+
+              <tr>
                 <th>Total Pendanaan Anda</th>
                 <td>: Rp.<?=format_rupiah($dt->total_rupiah)?> (<?=cari_persen($dt->dana_dibutuhkan,$dt->total_rupiah)?> % dari dana yang di butuhkan)</td>
               </tr>
 
               <tr>
-                <th>Status</th>
+                <th>Status Pendanaan</th>
                 <td>:
                     <?php if ($dt->status=="approved"): ?>
                       <span class="badge badge-success">Approved</span>
                       <?php else: ?>
-                        <span class="badge badge-warning">Dana Di Kembalikan</span>
+                        <span class="badge badge-danger">Dana Di Kembalikan</span>
                     <?php endif; ?>
                 </td>
               </tr>
@@ -95,6 +100,10 @@
                                       trans_profit.id_trans_pendanaan_proyek,
                                       trans_profit.waktu_pembagian,
                                       trans_profit.nominal_rupiah,
+                                      trans_profit.penggalangan,
+                                      trans_profit.sisa_imbal_hasil,
+                                      trans_profit.pendanaan,
+                                      trans_profit.total,
                                       trans_profit.status AS status_profit,
                                       trans_penggalangan_dana.status")
                               ->from("trans_profit")
@@ -108,44 +117,55 @@
      ?>
 
     <?php if ($profit->num_rows() > 0): ?>
-    <div class="col-md-10 mx-auto mb-5">
+    <div class="col-md-12 mx-auto mb-5">
       <div class="card">
         <div class="card-body">
-          <h4 class="header-title">Profit</h4>
-          <table class="table table-bordered">
-            <thead>
-              <th>Waktu Pembagian</th>
-              <th>Profit Ke</th>
-              <th>Profit Bulanan</th>
-              <th>Bonus Penggalangan</th>
-              <th>Sisa Imbal Hasil</th>
-              <th>Status</th>
-              <th>Total</th>
-            </thead>
+          <h4 class="header-title">Dividen</h4>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <th>Waktu Pembagian</th>
+                <th>Profit Ke</th>
+                <th>Modal Pendanaan</th>
+                <th>Dividen Bulanan</th>
+                <th>Bonus Penggalangan</th>
+                <th>Sisa Imbal Hasil</th>
+                <th>Status</th>
+                <th>Total</th>
+              </thead>
 
-            <tbody>
-                <?php $no = 1; ?>
-                <?php foreach ($profit->result() as $pr): ?>
+              <tbody>
+                  <?php $no = 1; ?>
+                  <?php foreach ($profit->result() as $pr): ?>
+                    <tr>
+                      <td><?=date("d/m/Y",strtotime($pr->waktu_pembagian))?></td>
+                      <td class="text-center">Profit ke-<?=$no++?></td>
+                      <td>Rp.<?=format_rupiah($pr->pendanaan)?></td>
+                      <td>Rp.<?=format_rupiah($pr->nominal_rupiah)?></td>
+                      <td>Rp.<?=format_rupiah($pr->penggalangan)?></td>
+                      <td>Rp.<?=format_rupiah($pr->sisa_imbal_hasil)?></td>
+                      <td class="text-center">
+                        <?php if ($pr->status_profit == 1): ?>
+                          <span class="badge badge-success"> Telah Di Bagikan</span>
+                          <?php else: ?>
+                            <span class="badge badge-danger"> Belum Di Bagikan</span>
+                        <?php endif; ?>
+                      </td>
+                      <td>Rp.<?=format_rupiah($pr->total)?></td>
+                    </tr>
+
+                    <?php $total[] = $pr->total; ?>
+                  <?php endforeach; ?>
                   <tr>
-                    <td><?=date("d/m/Y",strtotime($pr->waktu_pembagian))?></td>
-                    <td class="text-center">Profit ke-<?=$no++?></td>
-                    <td class="text-center">Rp.<?=format_rupiah($pr->nominal_rupiah)?></td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">
-                      <?php if ($pr->status_profit == 1): ?>
-                        <span class="badge badge-success"> Telah Di Bagikan</span>
-                        <?php else: ?>
-                          <span class="badge badge-danger"> Belum Di Bagikan</span>
-                      <?php endif; ?>
-                    </td>
-                    <td></td>
+                    <td colspan="7" class="text-right"><b>Total Dividen :</b></td>
+                    <td><b>Rp.<?=format_rupiah(array_sum($total))?></b></td>
                   </tr>
-                <?php endforeach; ?>
-            </tbody>
+              </tbody>
 
 
-          </table>
+            </table>
+          </div>
+
         </div>
       </div>
     </div>

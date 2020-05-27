@@ -36,7 +36,9 @@
                         <h4 class="text-muted font-18 m-b-5 text-center">LOGIN</h4>
                         <p class="text-muted text-center">Silahkan login.</p>
 
-                        <div id="alert"></div>
+                        <div id="alert">
+                          <?=$this->session->flashdata("info"); ?>
+                        </div>
 
                         <form class="form-horizontal m-t-30" id="form" action="<?=site_url("user/login/action")?>">
                             <div class="form-group">

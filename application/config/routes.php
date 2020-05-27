@@ -59,3 +59,5 @@ $route['translate_uri_dashes'] = TRUE;
 $route["register/usrp/action"] = "usrp/register/action";
 
 $route["register/user/action"] = "user/register/action";
+
+$route["user/auth/logout/(:num)"] = "user/login/logout/$1";

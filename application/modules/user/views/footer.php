@@ -30,6 +30,7 @@
   <script src="<?=base_url()?>_template/backend/plugins/bootstrap-inputmask/jquery.mask.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+  $(".fancy").fancybox();
   $('.rupiah').mask('00.000.000.000', {reverse: true});
 });
 
@@ -39,6 +40,16 @@ $(document).ready(function(){
         }, 500);
      });
 
+
+     $(document).on("click",".modal-reset",function(e){
+       e.preventDefault();
+       $('.modal-dialog').removeClass('modal-lg')
+                         .removeClass('modal-md')
+                         .addClass('modal-sm');
+       $("#modalTitle").text($(this).attr('data-title'));
+       $('#modalContent').load($(this).attr('href'));
+       $("#modalGue").modal('show');
+     });
 
 </script>
 

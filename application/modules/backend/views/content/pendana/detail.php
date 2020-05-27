@@ -94,11 +94,6 @@
                       </tr>
 
                       <tr>
-                        <th class="text-muted"> No.NPWP</th>
-                        <td>: <?=($dt->no_npwp=="")?"-":$dt->no_npwp?></td>
-                      </tr>
-
-                      <tr>
                         <th class="text-muted"> Nama</th>
                         <td>: <?=$dt->nama?></td>
                       </tr>
@@ -123,10 +118,6 @@
                         <td>: <?=$dt->status_perkawinan?></td>
                       </tr>
 
-                      <tr>
-                        <th class="text-muted"> Nama Ibu Kandung</th>
-                        <td>: <?=$dt->nama_ibu_kandung?></td>
-                      </tr>
 
                       <tr>
                         <th class="text-muted"> Pendidikan Terakhir</th>

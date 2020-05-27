@@ -19,7 +19,8 @@
           $deposito = $this->get_deposito(sess('id_user'));
           $withdraw = $this->get_withdraw(sess('id_user'));
           $pendanaan = $this->get_pendanaan(sess('id_user'));
-          $nominal = $deposito-$withdraw-$pendanaan;
+          $dividen = $this->get_dividen(sess('id_user'));
+          $nominal = $deposito-$withdraw-$pendanaan+$dividen;
           return $nominal;
         }
 
@@ -69,6 +70,31 @@
             $qry = $this->CI->db->get();
           if ($qry->num_rows() > 0 ) {
             return $qry->row()->total_rupiah;
+          }else {
+            return 0;
+          }
+        }
+
+
+        function get_dividen($id_pendana)
+        {
+          $this->CI->db->select(" trans_profit.id_trans_profit,
+                                  trans_profit.id_proyek,
+                                  trans_profit.id_trans_pendanaan_proyek,
+                                  trans_profit.id_pendana AS id_pendana_proyek,
+                                  trans_profit.waktu_pembagian,
+                                  SUM(trans_profit.total) AS total,
+                                  trans_profit.`status`,
+                                  trans_penggalangan_dana.`status`");
+          $this->CI->db->from("trans_profit");
+          $this->CI->db->join("trans_penggalangan_dana","trans_penggalangan_dana.id_penggalangan_dana_proyek = trans_profit.id_trans_pendanaan_proyek");
+          $this->CI->db->where("trans_profit.id_pendana",$id_pendana);
+          $this->CI->db->where("trans_penggalangan_dana.`status`","approved");
+          $this->CI->db->where("trans_profit.status",1);
+          $this->CI->db->group_by("trans_profit.id_pendana");
+          $qry = $this->CI->db->get();
+          if ($qry->num_rows() > 0 ) {
+            return $qry->row()->total;
           }else {
             return 0;
           }

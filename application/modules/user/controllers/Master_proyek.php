@@ -182,18 +182,71 @@ class Master_proyek extends User{
                               'created_at' => date("Y-m-d H:i:s"),
                               );
               $this->model->get_insert("trans_penggalangan_dana",$insert);
-
+              //profit
               $last_id = $this->db->insert_id();
+              //hitung profit
+              $tanggal = date('Y-m-d');
+              $nominal = $total;
+              $akhir_penggalangan = $row->akhir_penggalangan;
+              $priode = $row->durasi_proyek;
+              $selisih_hari = selisih_hari($akhir_penggalangan,$tanggal);
 
-              for ($i=1; $i <= $row->durasi_proyek; $i++) {
-              $insert_profit = array( 'id_proyek' => $row->id_proyek,
-                                      'id_pendana' => sess('id_user'),
-                                      'id_trans_pendanaan_proyek' => $last_id,
-                                      'waktu_pembagian' => date('Y-m-d', strtotime("+$i month", strtotime($row->tgl_mulai_proyek))),
-                                      'nominal_rupiah' => 100000
-                                    );
-              $this->model->get_insert("trans_profit",$insert_profit);
-            }
+              $penggalangan = (0.03 / 100) * $nominal ;
+              $hsl_penggalangan =  $penggalangan * $selisih_hari;
+
+              $profit_bulan = (1 / 100) * $nominal;
+              $profit_bulan_pertama = $profit_bulan + $hsl_penggalangan;
+              $imbal_hasil = ($row->imbal_hasil / 100) * $nominal;
+
+              if ($row->durasi_proyek == 1) {
+                $insert_profit['id_proyek']                 =  $row->id_proyek;
+                $insert_profit['id_pendana']                =  sess('id_user');
+                $insert_profit['id_trans_pendanaan_proyek'] =  $last_id;
+                $insert_profit['waktu_pembagian']           = date('Y-m-d', strtotime("+1 month", strtotime($row->tgl_mulai_proyek)));
+                $insert_profit['nominal_rupiah']            =  $profit_bulan;
+                $insert_profit['penggalangan']              =  $hsl_penggalangan;
+                $insert_profit['sisa_imbal_hasil']          =  $imbal_hasil;
+                $insert_profit['pendanaan']                 =  $nominal;
+                $insert_profit['total']                     =  $profit_bulan+$nominal+$hsl_penggalangan+$imbal_hasil;
+                $this->model->get_insert("trans_profit",$insert_profit);
+              }else {
+                for ($i=1; $i <= $row->durasi_proyek; $i++) {
+                  if ($i == 1) {
+                    $insert_profit['id_proyek']                 =  $row->id_proyek;
+                    $insert_profit['id_pendana']                =  sess('id_user');
+                    $insert_profit['id_trans_pendanaan_proyek'] =  $last_id;
+                    $insert_profit['waktu_pembagian']           = date('Y-m-d', strtotime("+$i month", strtotime($row->tgl_mulai_proyek)));
+                    $insert_profit['nominal_rupiah']            =  $profit_bulan;
+                    $insert_profit['penggalangan']              =  $hsl_penggalangan;
+                    $insert_profit['sisa_imbal_hasil']          =  0;
+                    $insert_profit['pendanaan']                 =  0;
+                    $insert_profit['total']                     =  $profit_bulan+$hsl_penggalangan;
+                  }elseif ($i == $row->durasi_proyek) {
+                    $insert_profit['id_proyek']                 =  $row->id_proyek;
+                    $insert_profit['id_pendana']                =  sess('id_user');
+                    $insert_profit['id_trans_pendanaan_proyek'] =  $last_id;
+                    $insert_profit['waktu_pembagian']           = date('Y-m-d', strtotime("+$i month", strtotime($row->tgl_mulai_proyek)));
+                    $insert_profit['nominal_rupiah']            =  $profit_bulan;
+                    $insert_profit['penggalangan']              =  0;
+                    $insert_profit['sisa_imbal_hasil']          =  $imbal_hasil;
+                    $insert_profit['pendanaan']                 =  $nominal;
+                    $insert_profit['total']                     =  $profit_bulan+$nominal+$imbal_hasil;
+                  }else {
+                    $insert_profit['id_proyek']                 =  $row->id_proyek;
+                    $insert_profit['id_pendana']                =  sess('id_user');
+                    $insert_profit['id_trans_pendanaan_proyek'] =  $last_id;
+                    $insert_profit['waktu_pembagian']           = date('Y-m-d', strtotime("+$i month", strtotime($row->tgl_mulai_proyek)));
+                    $insert_profit['nominal_rupiah']            =  $profit_bulan;
+                    $insert_profit['penggalangan']              =  0;
+                    $insert_profit['sisa_imbal_hasil']          =  0;
+                    $insert_profit['pendanaan']                 =  0;
+                    $insert_profit['total']                     =  $profit_bulan;
+                  }
+
+                  $this->model->get_insert("trans_profit",$insert_profit);
+                }
+              }
+
 
               $json['success'] = true;
               $json['alert'] ="Berhasil mendanai";

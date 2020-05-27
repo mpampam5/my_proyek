@@ -23,8 +23,14 @@
         <link href="<?=base_url()?>_template/usrp/css/icons.css" rel="stylesheet" type="text/css">
         <link href="<?=base_url()?>_template/usrp/css/style.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 
         <style media="screen">
+        @import  url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@700&display=swap');
+          .font-style{
+            font-family: 'El Messiri', sans-serif !important;
+          }
+
         .font-bold{
           font-weight: bold;
         }
@@ -40,6 +46,14 @@
             background-size: cover!important;
             background-position: center!important;
             position: relative;
+            -webkit-transition: 0.4s ease;
+            transition: 0.4s ease;
+          }
+
+          .card-img-top:hover{
+            -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+            opacity: 0.8;
           }
 
           .label-hari{
@@ -49,7 +63,6 @@
             background-color: #dd4747;
             color:#fff;
             padding: 2px 10px 3px 6px;
-            /* opacity: 0.8; */
             border-radius: 0 4px 4px 0;
           }
         </style>
@@ -57,7 +70,8 @@
         <!-- jQuery  -->
         <script src="<?=base_url()?>_template/usrp/js/jquery.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/bootstrap.bundle.min.js"></script>
-                <script src="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
+        <script src="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/modernizr.min.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/jquery.slimscroll.js"></script>
         <script src="<?=base_url()?>_template/usrp/js/waves.js"></script>
@@ -110,16 +124,13 @@
                                 <a href="<?=site_url("user/withdraw")?>" class="waves-effect"><i class="fa fa-file"></i><span> Withdraw </span></a>
                             </li>
 
-                            <li>
-                                <a href="<?=site_url("user/profile")?>" class="waves-effect"><i class="fa fa-user"></i><span> Profile </span></a>
-                            </li>
 
                             <!-- <li>
                                 <a href="index.html" class="waves-effect"><i class="fa fa-book"></i><span> Baca panduan </span></a>
                             </li> -->
 
                             <li>
-                                <a href="<?=site_url("user/login/logout")?>" class="waves-effect"><i class="fa fa-sign-out"></i><span> Logout </span></a>
+                                <a href="<?=site_url("user/login/logout/2")?>" class="waves-effect"><i class="dripicons-exit"></i><span> Logout </span></a>
                             </li>
 
                         </ul>
@@ -157,12 +168,11 @@
                                         <img src="<?=base_url()?>_template/usrp/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                        <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Profile</a>
-                                        <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted"></i> My Wallet</a>
-                                        <a class="dropdown-item" href="#"><span class="badge badge-success float-right m-t-5">5</span><i class="dripicons-gear text-muted"></i> Settings</a>
-                                        <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted"></i> Lock screen</a>
+                                        <a class="dropdown-item" href="<?=site_url("user/profile")?>"><i class="dripicons-user text-muted"></i> Profile</a>
+                                        <a class="dropdown-item modal-reset" data-title="Reset Password" href="<?=site_url("user/config/reset_password")?>" id="ganti_password"><i class="fa fa-key text-muted"></i> Ganti Password</a>
+                                        <a class="dropdown-item modal-reset" data-title="Reset PIN Transaksi" href="<?=site_url("user/config/reset_pin")?>" id="ganti_pin"><i class="mdi mdi-key-variant text-muted"></i> Ganti PIN</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted"></i> Logout</a>
+                                        <a class="dropdown-item" href="<?=site_url("user/auth/logout/2")?>"><i class="dripicons-exit text-muted"></i> Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -175,7 +185,7 @@
                                     </button>
                                 </li>
                                 <li class="hide-phone list-inline-item app-search">
-                                    <h3 class="page-title"><?=$title?></h3>
+                                    <h3 class="page-title font-style"><?=$title?></h3>
                                 </li>
                             </ul>
 
