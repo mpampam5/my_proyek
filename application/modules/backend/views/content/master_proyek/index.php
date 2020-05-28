@@ -70,7 +70,8 @@
                     <th>PEMILIK PROYEK</th>
                     <th>PROYEK</th>
                     <th>STATUS PENGGALANGAN</th>
-                    <th width="200">STATUS</th>
+                    <th>STATUS</th>
+                    <th>STATUS DIVIDEN</th>
                     <th>###</th>
                   </tr>
                 </thead>
@@ -137,6 +138,11 @@ var table;
               "className": "text-center",
               "orderable": false,
               "targets": 5
+          },
+          {
+              "className": "text-center",
+              "orderable": false,
+              "targets": 6
           }
       ],
     });

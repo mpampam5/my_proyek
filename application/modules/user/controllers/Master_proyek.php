@@ -87,10 +87,10 @@ class Master_proyek extends User{
         $imbal_hasil_post = $this->input->post("imbal_hasil");
         $selisih_hari = selisih_hari($akhir_penggalangan,$tanggal);
 
-        $penggalangan = (0.03 / 100) * $nominal ;
+        $penggalangan = (master_config("FINANCIAL-PED") / 100) * $nominal ;
         $hsl_penggalangan =  $penggalangan * $selisih_hari;
 
-        $profit_bulan = (1 / 100) * $nominal;
+        $profit_bulan = (master_config("FINANCIAL-DB") / 100) * $nominal;
         $profit_bulan_pertama = $profit_bulan + $hsl_penggalangan;
         $imbal_hasil = ($imbal_hasil_post / 100) * $nominal;
 

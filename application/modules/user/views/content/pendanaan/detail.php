@@ -53,6 +53,44 @@
               </tr>
 
               <tr>
+                <th>Tanggal Mulai Proyek</th>
+                <td>: <?=date("d/m/Y",strtotime($dt->tgl_mulai_proyek))?></td>
+              </tr>
+
+              <tr>
+                <th>Tanggal Selesai Proyek</th>
+                <td>: <?=date("d/m/Y",strtotime($dt->tgl_selesai_proyek))?></td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  &nbsp;
+                </td>
+              </tr>
+
+
+              <tr>
+                <td colspan="2">
+                  <div class="alert alert-primary" role="alert">
+                    <strong><i class="fa fa-info-circle"></i> INFORMASI</strong>
+                    <ul>
+                      <li>Imbal hasil pertama dibagikan 1 bulan setelah proyek dimulai yaitu tanggal <?=date('d/m/Y', strtotime("+1 month", strtotime(date("$dt->tgl_mulai_proyek"))));?>.</li>
+                      <li>Dana Akan di kembalikan pada masing-masing pendana jika dana terkumpul di bawah <?=master_config('FINANCIAL-PD')?>%.</li>
+                      <li>Info lebih lanjut silahkan hubungi admin.</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td colspan="2">
+                  &nbsp;
+                </td>
+              </tr>
+
+
+              <tr>
                 <th>Status Pendanaan</th>
                 <td>:
                     <?php if ($dt->status=="approved"): ?>
@@ -64,18 +102,12 @@
               </tr>
 
               <tr>
-                <th>Tanggal Mulai Proyek</th>
-                <td>: <?=date("d/m/Y",strtotime($dt->tgl_mulai_proyek))?></td>
-              </tr>
-
-              <tr>
-                <th>Pembagian Profit</th>
-                <td>: <b>*Imbal hasil pertama dibagikan 1 bulan setelah proyek dimulai yaitu tanggal <?=date('d/m/Y', strtotime("+1 month", strtotime(date("$dt->tgl_mulai_proyek"))));?></b></td>
-              </tr>
-
-              <tr>
-                <th>Pengembalian Dana</th>
-                <td>:  <b>*Dana Akan di kembalikan pada masing-masing pendana jika dana terkumpul di bawah 50%</b></td>
+                <th>Keterangan Pengembalian Dana</th>
+                <td>:
+                  <?php if ($dt->status=="dikembalikan"): ?>
+                    <?=$dt->keterangan?>
+                  <?php endif; ?>
+                </td>
               </tr>
 
               <tr>

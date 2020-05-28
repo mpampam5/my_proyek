@@ -61,22 +61,8 @@ class Master_proyek extends Backend{
           }elseif ($dt->status=="cancel") {
             $row[] = "-";
             $row[] = "<span class='badge badge-danger'>Cancel</span>";
-          }elseif ($dt->status=="done") {
-            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
-            <p class='font-12 mt-2'>
-              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
-            "</br>";
-          }elseif ($dt->status=="pengerjaan") {
-            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
-            <p class='font-12 mt-2' style='font-size:10px'>
-              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
-            "</br>";
-            $row[] = "<span class='badge badge-success'>Proyek Di Kerjakan</span><p style='font-size:10px' class='text-center'>Proyek mulai di kerjakan ".$dt->durasi_proyek." bulan kedepan terhitung mulai tgl <span>".date('d-m-Y',strtotime($dt->tgl_mulai_proyek))."</span></p>";
-          }elseif ($dt->status=="dana_dikembalikan") {
-            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>
-            <p class='font-12 mt-2' style='font-size:10px'>
-              <i class='fa fa-calendar'></i> ".date('d-m-Y',strtotime($dt->mulai_penggalangan))." s/d ".date('d-m-Y',strtotime($dt->akhir_penggalangan)).
-            "</br>";
+          }elseif ($dt->status=="unapproved") {
+            $row[] = "<span class='badge badge-danger text-white'>Telah Berakhir</span>";
             $row[] = "<span class='badge badge-danger'>Dana Di Kembalikan</span>";
           }
 
@@ -85,9 +71,16 @@ class Master_proyek extends Backend{
             $row[] = "<span class='badge badge-warning text-white'>Menunggu Verifikasi</span>";
           }elseif ($dt->status=="publish") {
             $row[] = "<span class='badge badge-success'>Publish</span>";
-          }elseif ($dt->status=="done") {
-            $row[] = "<span class='badge badge-success'>Proyek Selesai</span>";
           }
+
+          if ($dt->status_pembagian_dividen == "belum") {
+            $row[] = "<span class='badge badge-danger'>Belum Di Bagikan</span>";
+          }elseif ($dt->status_pembagian_dividen == "mulai") {
+            $row[] = "<span class='badge badge-primary'>Mulai Pembagian</span>";
+          }elseif ($dt->status_pembagian_dividen == "selesai") {
+            $row[] = "<span class='badge badge-danger'>Selesai</span>";
+          }
+
 
 
           $row[] = '
@@ -127,6 +120,10 @@ class Master_proyek extends Backend{
        $status = $this->input->post("status_publish",true);
        $mulai_penggalangan = date("Y-m-d",strtotime($this->input->post("start_proyek")));
        $akhir_penggalangan = date("Y-m-d",strtotime($this->input->post("end_proyek")));
+       $priode  = $this->input->post("priode",true);
+       $tgl_mulai_proyek = date("Y-m-d",strtotime("+1 days",strtotime($akhir_penggalangan)));
+       $tgl_selesai_proyek = date("Y-m-d",strtotime("+$priode month",strtotime($tgl_mulai_proyek)));
+
        $this->form_validation->set_rules("status_publish","*&nbsp;","trim|xss_clean|required|callback__cek_status");
        if ($status=="publish") {
          $this->form_validation->set_rules("start_proyek","*&nbsp;","trim|xss_clean|required");
@@ -145,11 +142,12 @@ class Master_proyek extends Backend{
               if ($status=="publish") {
                 $update['mulai_penggalangan']   = $mulai_penggalangan;
                 $update['akhir_penggalangan']   = $akhir_penggalangan;
-                $update['durasi_proyek'] = $this->input->post("priode",true);
-                $update['imbal_hasil'] = $this->input->post("pembagian",true);
-                $update['ujroh_penyelenggara'] = $this->input->post("pembagian_penyelenggara",true);
-                $update['imbal_hasil_pendana'] = $this->input->post("imbal_hasil",true);
-                $update['tgl_mulai_proyek']     = date("Y-m-d",strtotime("+1 days",strtotime($akhir_penggalangan)));
+                $update['durasi_proyek']        = $priode;
+                $update['imbal_hasil']          = $this->input->post("pembagian",true);
+                $update['ujroh_penyelenggara']  = $this->input->post("pembagian_penyelenggara",true);
+                $update['imbal_hasil_pendana']  = $this->input->post("imbal_hasil",true);
+                $update['tgl_mulai_proyek']     = $tgl_mulai_proyek;
+                $update['tgl_selesai_proyek']     = $tgl_selesai_proyek;
                 if ($mulai_penggalangan == date('Y-m-d')) {
                   $update['status_penggalangan']  = "mulai";
                 }else {
@@ -391,6 +389,54 @@ class Master_proyek extends Backend{
 function penerima_modal()
 {
   $this->template->view("content/master_proyek/modal_penerima_dana",[],false);
+}
+
+
+function kembalikan_dana($id="")
+{
+  if ($row = $this->model->get_detail_model(dec_url($id))) {
+    $this->template->set_title("Kembalikan Dana Proyek #$row->kode");
+    $data['dt'] = $row;
+    $this->template->view("content/master_proyek/form_kembalikan_dana",$data);
+  }
+}
+
+function action_kembalikan_dana($id="")
+{
+  if ($this->input->is_ajax_request()) {
+        $json = array('success'=>false, 'alert'=>array());
+        $this->form_validation->set_rules("keterangan","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
+        $this->form_validation->set_rules("password","*&nbsp;","trim|xss_clean|htmlspecialchars|required|callback__cek_password");
+        $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+        if ($this->form_validation->run()) {
+          $where = array('id_proyek' => dec_url($id));
+          //update data master proyek
+          $data = array('keterangan'  => $this->input->post("keterangan",true),
+                        'status'      => "unapproved",
+                        'acc_by_id'   => sess("id_user"),
+                        'acc_at'      => date("Y-m-d H:i:s")
+                        );
+          $this->model->get_update("master_proyek",$data,$where);
+
+          // update data trans_penggalangan dana
+          $data_2 = array('status' => "dikembalikan");
+          $this->model->get_update("trans_penggalangan_dana",$data_2,$where);
+
+          // update data profit/dividen
+          $data_3 = array('status' => null);
+          $this->model->get_update("trans_profit",$data_3,$where);
+
+          $json['alert'] = "Dana Berhasil Di Kembalikan";
+          $json['success'] =  true;
+        }else {
+          foreach ($_POST as $key => $value)
+            {
+              $json['alert'][$key] = form_error($key);
+            }
+        }
+
+        echo json_encode($json);
+    }
 }
 
 

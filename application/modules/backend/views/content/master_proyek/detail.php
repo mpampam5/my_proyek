@@ -43,14 +43,10 @@
                     echo '<h6 class="text-warning">MENUNGGU VERIFIKASI</h6>';
                   }elseif ($dt->status=="publish") {
                     echo '<h6 class="text-success">PUBLISH</h6>';
-                  }elseif ($dt->status=="pengerjaan") {
-                    echo '<h6 class="text-success">PROYEK DI KERJAKAN</h6>';
-                  }elseif ($dt->status=="dana_dikembalikan") {
+                  }elseif ($dt->status=="unapproved") {
                     echo '<h6 class="text-danger">DANA DI KEMBALIKAN</h6>';
                   }elseif ($dt->status=="cancel") {
                     echo '<h6 class="text-danger">CANCEL</h6>';
-                  }elseif ($dt->status=="done") {
-                    echo '<h6 class="text-success">PROYEK SELESAI</h6>';
                   } ?>
 
                   STATUS
@@ -75,12 +71,8 @@
                       echo "<h6 class='text-warning'>Akan Rilis</h6>";
                     }
                   }elseif ($dt->status=="cancel") {
-                    echo "<h6 class='text-danger'> BELUM DITENTUKAN </h6>";
-                  }elseif ($dt->status=="done") {
-                    echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
-                  }elseif ($dt->status=="pengerjaan") {
-                    echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
-                  }elseif ($dt->status=="dana_dikembalikan") {
+                    echo "<h6 class='text-danger'>BELUM DITENTUKAN</h6>";
+                  }elseif ($dt->status=="unapproved") {
                     echo "<h6 class='text-danger'>TELAH BERAKHIR</h6>";
                   }
                    ?>
@@ -91,7 +83,7 @@
 
 
             <!-- PROGRES BAR -->
-            <?php if ($dt->status=="publish" OR $dt->status=="done"): ?>
+            <?php if ($dt->status=="publish" OR $dt->status=="done" OR $dt->status=="unapproved"): ?>
             <div class="col-md-8 mb-5 mt-5 mx-auto animated zoomIn delay-3s">
                 <h5 class="font-18 text-center">DANA TERKUMPUL Rp.<?=format_rupiah($dana_terkumpul)?> (<?=$persen?>%)</h5>
                 <div class="progress">
@@ -141,10 +133,17 @@
                     <!-- <a href="<?=site_url("backend/master_proyek")?>" class="btn btn-md btn-secondary btn-block"><i class="fa fa-file"></i> Lihat Daftar Proyek</a> -->
                     <ul class="list-group list-group-flush mb-4">
                       <li class="list-group-item"><a href="<?=site_url("backend/master_proyek")?>"><i class="fa fa-star"></i> Lihat Daftar Proyek</a></li>
-                      <?php if ($dt->status=="publish" OR $dt->status=="done" OR $dt->status=="pengerjaan" OR $dt->status=="dana_dikembalikan"): ?>
-                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_pemberi_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Daftar Pemberi Dana</a></li>
-                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_progres_proyek/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-star"></i> Lihat Progres Proyek</a></li>
-                      <li class="list-group-item"><a href="" target="_blank"><i class="fa fa-star"></i> Lihat Akumulasi Imbal Hasil</a></li>
+                      <?php if ($dt->status=="publish" OR $dt->status=="unapproved"): ?>
+                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_pemberi_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-users"></i> Lihat Pendana</a></li>
+                      <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_progres_proyek/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-bar-chart"></i> Lihat Progres Proyek</a></li>
+                      <?php endif; ?>
+
+                      <?php if ($dt->status=="publish"): ?>
+                        <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/kembalikan_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-sign-out"></i> Kembalikan Dana</a></li>
+                      <?php endif; ?>
+
+                      <?php if ($dt->status=="unapproved"): ?>
+                        <li class="list-group-item"><a href="" target="_blank"><i class="fa fa-trash"></i> Hapus</a></li>
                       <?php endif; ?>
                     </ul>
 

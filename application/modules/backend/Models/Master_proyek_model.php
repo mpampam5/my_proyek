@@ -24,6 +24,7 @@ class Master_proyek_model extends MY_Model{
                   master_proyek.kecamatan,
                   master_proyek.`status`,
                   master_proyek.status_penggalangan,
+                  master_proyek.status_pembagian_dividen,
                   master_proyek.created_at,
                   master_penerima_dana.id_reg,
                   master_penerima_dana.nama_perusahaan,

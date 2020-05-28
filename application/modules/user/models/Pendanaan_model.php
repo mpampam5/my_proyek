@@ -89,7 +89,9 @@ class Pendanaan_model extends MY_Model{
                               master_proyek.mulai_penggalangan,
                               master_proyek.akhir_penggalangan,
                               master_proyek.tgl_mulai_proyek,
+                              master_proyek.tgl_selesai_proyek,
                               master_proyek.durasi_proyek,
+                              master_proyek.keterangan,
                               master_proyek.status_penggalangan")
                 ->from("trans_penggalangan_dana")
                 ->join("master_proyek","master_proyek.id_proyek = trans_penggalangan_dana.id_proyek")

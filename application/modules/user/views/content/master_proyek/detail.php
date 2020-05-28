@@ -130,21 +130,27 @@ $cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$dt->id_proy
                   </ul>
 
                   <?php
-                  if ($dt->status_penggalangan=="akan_datang") {
+                  if ($dt->status == "approved") {
+                    if ($dt->status_penggalangan=="akan_datang") {
+                      echo    '<div class="mt-3">
+                                  <h2 class="header-title"><i class="fa fa-lock"></i> Akan Rilis</h2>
+                                </div>';
+                    }elseif ($dt->status_penggalangan=="mulai") {
+                      echo    '<div class="mt-3">
+                                  <a id="danai" href="'.site_url("user/master_proyek/add/".$dt->id_proyek.'/'.$dt->kode).'" class="btn btn-lg btn-block btn-primary">Danai Sekarang</a>
+                                </div>';
+                    }elseif ($dt->status_penggalangan=="terpenuhi") {
+                      echo      '<div class="mt-3">
+                                  <h2 class="header-title"><i class="fa fa-lock"></i> Pendanaan Terpenuhi</h2>
+                                </div>';
+                    }elseif ($dt->status_penggalangan=="selesai") {
+                      echo      '<div class="mt-3">
+                                  <h2 class="header-title"><i class="fa fa-lock"></i> Pendanaan Selesai</h2>
+                                </div>';
+                    }
+                  }elseif($dt->status == "unapproved") {
                     echo    '<div class="mt-3">
-                                <h2 class="header-title"><i class="fa fa-lock"></i> Akan Rilis</h2>
-                              </div>';
-                  }elseif ($dt->status_penggalangan=="mulai") {
-                    echo    '<div class="mt-3">
-                                <a id="danai" href="'.site_url("user/master_proyek/add/".$dt->id_proyek.'/'.$dt->kode).'" class="btn btn-lg btn-block btn-primary">Danai Sekarang</a>
-                              </div>';
-                  }elseif ($dt->status_penggalangan=="terpenuhi") {
-                    echo      '<div class="mt-3">
-                                <h2 class="header-title"><i class="fa fa-lock"></i> Pendanaan Terpenuhi</h2>
-                              </div>';
-                  }elseif ($dt->status_penggalangan=="selesai") {
-                    echo      '<div class="mt-3">
-                                <h2 class="header-title"><i class="fa fa-lock"></i> Pendanaan Selesai</h2>
+                                <h2 class="header-title"><i class="fa fa-lock"></i> Dana Telah Di Kembalikan</h2>
                               </div>';
                   }
                    ?>
