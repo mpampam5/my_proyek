@@ -31,7 +31,7 @@ class Pendanaan extends User{
           if ($dt->status=="approved") {
             $row[] = '<span class="badge badge-success"> Approved</span>';
           }else {
-            $row[] = '<span class="badge badge-warning text-white"> Dana Di Kembalikan</span>';
+            $row[] = '<span class="badge badge-danger text-white"> Dana Di Kembalikan</span>';
           }
           $row[] = '<a href="'.site_url("user/pendanaan/detail/".enc_url($dt->id_penggalangan_dana_proyek)."/".$dt->kode).'" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>';
           $data[] = $row;

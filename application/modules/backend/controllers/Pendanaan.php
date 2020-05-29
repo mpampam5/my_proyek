@@ -36,7 +36,7 @@ class Pendanaan extends Backend{
             $row[]  = '<span class="badge badge-danger">Dana Dikembalikan</span>';
           }
 
-          
+
 
           $data[] = $row;
       }

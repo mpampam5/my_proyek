@@ -17,13 +17,10 @@
               <div class="card m-b-30">
                 <div class="card-body">
                   <ul class="list-group list-group-flush">
-                    <!-- <li class="list-group-item"><a href="">Log Aktifitas Pendana</a></li> -->
-                    <li class="list-group-item"><a href="">Lihat Pendanaan Aktif</a></li>
-                    <li class="list-group-item"><a href="">Lihat Pendanaan Selesai</a></li>
+                    <li class="list-group-item"><a href=""><i class="fa fa-file"></i> Lihat Pendanaan</a></li>
                     <!-- <li class="list-group-item"><a href="">Lihat Mutasi Dompet</a></li> -->
-                    <li class="list-group-item"><a href="">Reset Password</a></li>
                     <!-- <li class="list-group-item"><a href="">Reset PIN Transaksi</a></li> -->
-                    <li class="list-group-item"><a href="">Nonaktifkan Pendana</a></li>
+                    <li class="list-group-item"><a href=""><i class="fa fa-close"></i> Nonaktifkan Pendana</a></li>
                   </ul>
                 </div>
               </div>
@@ -57,7 +54,7 @@
               <div class="card m-b-10 text-center">
                 <div class="mb-2 card-body text-muted">
                     <h5 class="text-primary">Rp.<?=format_rupiah($this->balance->get_pendanaan($dt->id_pendana))?></h5>
-                    Total Omset
+                    Total Pendanaan
                 </div>
               </div>
             </div>
@@ -71,11 +68,13 @@
               width: 250px;
               padding: 3px 3px 3px 3px;
               font-size: 14px;
+              text-transform: uppercase;
             }
               .tabless tr td{
                 color:#8a8a8a;
                 padding: 3px 3px 3px 3px!important;
                 font-size: 14px;
+                text-transform: uppercase;
               }
             </style>
             <!-- DATA PERSON -->
@@ -104,6 +103,11 @@
                       </tr>
 
                       <tr>
+                        <th class="text-muted"> Jenis Kelamin</th>
+                        <td>: <?=$dt->jenis_kelamin?></td>
+                      </tr>
+
+                      <tr>
                         <th class="text-muted"> Email</th>
                         <td>: <?=$dt->email?></td>
                       </tr>
@@ -112,12 +116,6 @@
                         <th class="text-muted"> Telepon</th>
                         <td>: <?=$dt->telepon?></td>
                       </tr>
-
-                      <tr>
-                        <th class="text-muted"> Status Kawin</th>
-                        <td>: <?=$dt->status_perkawinan?></td>
-                      </tr>
-
 
                       <tr>
                         <th class="text-muted"> Pendidikan Terakhir</th>
@@ -130,8 +128,13 @@
                       </tr>
 
                       <tr>
-                        <th class="text-muted"> Pendapatan</th>
-                        <td>: <?=$dt->pendapatan?></td>
+                        <th class="text-muted"> Provinsi</th>
+                        <td>: <?=provinsi($dt->provinsi)?></td>
+                      </tr>
+
+                      <tr>
+                        <th class="text-muted"> Kabupaten/kota</th>
+                        <td>: <?=kabupaten($dt->kabupaten)?></td>
                       </tr>
 
                       <tr>
@@ -140,23 +143,8 @@
                       </tr>
 
                       <tr>
-                        <th class="text-muted"> Provinsi</th>
-                        <td>: Nama</td>
-                      </tr>
-
-                      <tr>
-                        <th class="text-muted"> Kabupaten/kota</th>
-                        <td>: Nama</td>
-                      </tr>
-
-                      <tr>
-                        <th class="text-muted"> Kecamatan</th>
-                        <td>: Nama</td>
-                      </tr>
-
-                      <tr>
-                        <th class="text-muted"> Kelurahan/desa</th>
-                        <td>: Nama</td>
+                        <th class="text-muted"> Kode Pos</th>
+                        <td>: <?=$dt->kode_pos?></td>
                       </tr>
                     </table>
                 </div>
@@ -226,24 +214,29 @@
             <div class="col-md-12 col-xl-12 animated fadeInRight delay-8s">
               <div class="card m-b-30">
                 <div class="mb-2 card-body text-muted">
-                  <div class="container-box">
-                    <div class="box-file" style="background:url('<?=base_url()?>_template/files/pendaftaran-calon-pengajar.jpg')">
-                      <p>FOTO DIRI</p>
-                    </div>
+                  <table class="table table-borderless">
+                    <tr>
+                      <th>FOTO DIRI</th>
+                      <td>:
+                        <a class="fancy" href="<?=base_url("_template/files/user/")?>/<?=$dt->id_reg?>/<?=$dt->foto_diri?>"><i class="fa fa-image"></i> Lihat File</a>
+                      </td>
+                    </tr>
 
-                    <div class="box-file" style="background:url('<?=base_url()?>_template/files/pendaftaran-calon-pengajar.jpg')">
-                      <p>FOTO KTP</p>
-                    </div>
+                    <tr>
+                      <th>FOTO KTP</th>
+                      <td>:
+                        <a class="fancy" href="<?=base_url("_template/files/user/")?>/<?=$dt->id_reg?>/<?=$dt->foto_ktp?>"><i class="fa fa-image"></i> Lihat File</a>
+                      </td>
+                    </tr>
 
-                    <div class="box-file" style="background:url('<?=base_url()?>_template/files/pendaftaran-calon-pengajar.jpg')">
-                      <p>FOTO DIRI & KTP</p>
-                    </div>
+                    <tr>
+                      <th>FOTO REKENING</th>
+                      <td>:
+                        <a class="fancy" href="<?=base_url("_template/files/user/")?>/<?=$dt->id_reg?>/<?=$dt->foto_buku_rekening?>"><i class="fa fa-image"></i> Lihat File</a>
+                      </td>
+                    </tr>
 
-                    <div class="box-file" style="background:url('<?=base_url()?>_template/files/donatur-menunggu-verifikasi1.png')">
-                      <p>FOTO BUKU REKENING</p>
-                    </div>
-
-                  </div>
+                  </table>
                 </div>
               </div>
             </div>

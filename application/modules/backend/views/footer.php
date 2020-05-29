@@ -33,6 +33,7 @@
         <script src="<?=base_url()?>_template/backend/js/app.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+          $(".fancy").fancybox();
           $('.rupiah').mask('00.000.000.000', {reverse: true});
         });
 

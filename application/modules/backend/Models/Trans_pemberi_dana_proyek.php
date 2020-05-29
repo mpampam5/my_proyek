@@ -14,6 +14,7 @@ class Trans_pemberi_dana_proyek extends MY_Model{
                   master_pendana.id_reg,
                   master_pendana.nama,
                   master_pendana.email,
+                  master_proyek.kode,
                   master_proyek.harga_paket";
 
   private function _get_datatables_query_pemberi_dana($id)

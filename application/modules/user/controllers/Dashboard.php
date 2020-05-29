@@ -14,7 +14,7 @@ class Dashboard extends User{
   function index()
   {
     $this->template->set_title("Dashboard");
-    $dt['poryek_publish'] =  $this->model->proyek_publish();
+    $dt['proyek_publish'] =  $this->model->proyek_publish();
     $this->template->view("content/dashboard/index",$dt);
   }
 

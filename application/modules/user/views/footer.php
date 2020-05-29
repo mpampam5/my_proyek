@@ -1,7 +1,7 @@
 </div> <!-- content -->
 
 <footer class="footer">
-    © <?=date("Y")?>
+    © <?=date("Y")?> <i class="mdi mdi-heart text-danger"></i> <span class="logo-tilte" style="text-transform:uppercase"><?=strtoupper(config_system("title"))?>
 </footer>
 
 </div>

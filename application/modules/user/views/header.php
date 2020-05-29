@@ -125,9 +125,9 @@
                             </li>
 
 
-                            <!-- <li>
-                                <a href="index.html" class="waves-effect"><i class="fa fa-book"></i><span> Baca panduan </span></a>
-                            </li> -->
+                            <li>
+                                <a href="<?=site_url("user/aturan")?>" class="waves-effect"><i class="fa fa-book"></i><span> Baca Aturan </span></a>
+                            </li>
 
                             <li>
                                 <a href="<?=site_url("user/login/logout/2")?>" class="waves-effect"><i class="dripicons-exit"></i><span> Logout </span></a>

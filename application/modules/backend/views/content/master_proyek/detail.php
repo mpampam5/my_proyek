@@ -339,7 +339,7 @@
               </div>
 
               <div class="col-md-8 animated zoomIn delay-3s">
-                <div class="card m-b-10">
+                <div class="card mb-2">
                   <div class="mb-2 card-body text-muted">
                     <table class="table table-borderless">
 
@@ -422,15 +422,15 @@
                         <th>Foto</th>
                         <td>:
                           <?php if ($dt->foto_1!=""): ?>
-                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_1?>" target="_blank" class="badge badge-info font-14"> Foto 1</a>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_1?>" target="_blank" class="fancy badge badge-info font-14"> Foto 1</a>
                           <?php endif; ?>
 
                           <?php if ($dt->foto_2!=""): ?>
-                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_2?>" target="_blank" class="badge badge-info font-14"> Foto 2</a>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_2?>" target="_blank" class="fancy badge badge-info font-14"> Foto 2</a>
                           <?php endif; ?>
 
                           <?php if ($dt->foto_3!=""): ?>
-                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_3?>" target="_blank" class="badge badge-info font-14"> Foto 3</a>
+                            <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_3?>" target="_blank" class="fancy badge badge-info font-14"> Foto 3</a>
                           <?php endif; ?>
                         </td>
                       </tr>
@@ -467,7 +467,52 @@
                     </table>
                   </div>
                 </div>
+
+
+                  <div class="card animated zoomInUp delay-2s">
+                      <div class="card-body">
+                        <h4 class="header-title">
+                          HITUNG IMBAL HASIL (*SIMULASI)
+                        </h4>
+
+                        <form id="form" action="<?=site_url("backend/master_proyek/simulasi_act/$dt->id_proyek/$dt->kode")?>" autocomplete="off">
+                          <div class="row">
+                            <div class="col-sm-5 form-group">
+                              <label for="">Masukkan Jumlah Dana</label>
+                              <input type="text" class="form-control" name="nominal">
+                              <div id="nominal"></div>
+                            </div>
+
+                            <div class="col-sm-4 form-group">
+                              <label for="">Pilih Tanggal Pendanaan</label>
+                              <input class="form-control" type="date" id="tanggal" name="tanggal" min="<?=$dt->mulai_penggalangan?>" max="<?=$dt->akhir_penggalangan?>">
+                            </div>
+
+                            <div class="form-group">
+                              <input type="hidden" name="akhir_penggalangan" id="akhir_penggalangan" value="<?=$dt->akhir_penggalangan?>">
+                              <input type="hidden" id="durasi_proyek" name="durasi_proyek" value="<?=$dt->durasi_proyek?>">
+                              <input type="hidden" id="imbal_hasil" name="imbal_hasil" value="<?=$dt->imbal_hasil?>">
+                            </div>
+
+                            <div class="col-sm-3 form-group">
+                              <label for="">&nbsp;</label>
+                              <button type="submit" id="submit" name="submit" class="btn btn-sm btn-primary form-control">Hitung Imbal Hasil</button>
+                            </div>
+                          </div>
+                        </form>
+
+                        <div id="hasil-simulasi" style="min-height:100px;padding-top:40px;"></div>
+
+                      </div>
+                  </div>
+
+
+
               </div>
+
+
+
+
             </div>
           </div>
 
@@ -476,3 +521,50 @@
       </div>
     </div>
 </div>
+<script src="<?=base_url()?>_template/usrp/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+<script type="text/javascript">
+$("input[name='nominal']").TouchSpin({
+    min: 1000000,
+    max: <?=$total_dana?>,
+    step: 1000000,
+    prefix: 'Rp',
+    buttondown_class: 'btn btn-primary',
+    buttonup_class: 'btn btn-primary'
+});
+
+$("#form").submit(function(e){
+e.preventDefault();
+var me = $(this);
+$("#submit").prop('disabled',true).html('Loading...');
+$("#hasil-simulasi").html(`<p class="text-center"  style="font-size:18px"><i class="fa fa-spinner fa-spin"></i> Memproses perhitungan imbal hasil.</p>`);
+$(".form-group").find('.text-danger').remove();
+$.ajax({
+      url             : me.attr('action'),
+      type            : 'post',
+      data            :  new FormData(this),
+      contentType     : false,
+      cache           : false,
+      dataType        : 'JSON',
+      processData     :false,
+      success:function(json){
+        if (json.success==true) {
+          $("#submit").prop('disabled',false)
+                      .html('Hitung Imbal Hasil');
+          $('.form-group').find('.text-danger').remove();
+          $("#hasil-simulasi").html(json.data);
+        }else {
+          $("#hasil-simulasi").html('');
+          $("#submit").prop('disabled',false)
+                      .html('Hitung Imbal Hasil');
+          $.each(json.alert, function(key, value) {
+            var element = $('#' + key);
+            $(element)
+            .closest('.form-group')
+            .find('.text-danger').remove();
+            $(element).after(value);
+          });
+        }
+      }
+    });
+});
+</script>

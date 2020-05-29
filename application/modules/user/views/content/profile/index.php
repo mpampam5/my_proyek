@@ -150,7 +150,7 @@
             </tr>
 
             <tr>
-              <th>FOTO REKENING</th>
+              <th>FOTO Rekening</th>
               <td>:
                 <a class="fancy" href="<?=base_url("_template/files/user/")?>/<?=profile("id_reg")?>/<?=profile("foto_buku_rekening")?>"><i class="fa fa-image"></i> Lihat File</a>
               </td>

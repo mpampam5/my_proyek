@@ -1,3 +1,17 @@
+<?php if (master_config("DP-STATUS" , "status") ==  0): ?>
+  <div class="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="col-md-8 mx-auto mb-5">
+
+            <div class="alert alert-info">
+              <strong><i class="fa fa-info-circle"></i> INFO</strong><br/>
+              <p>Mohon Maaf, Saat ini layanan DEPOSIT sedang ditutup. Info lebih lanjut hubungi admin.</p>
+            </div>
+
+      </div>
+    </div>
+  </div> <!-- Page content Wrapper -->
+  <?php else: ?>
 <div class="page-content-wrapper">
   <div class="container-fluid">
     <div class="col-md-8 mx-auto mb-5">
@@ -77,3 +91,4 @@ $.ajax({
     });
 });
 </script>
+<?php endif; ?>

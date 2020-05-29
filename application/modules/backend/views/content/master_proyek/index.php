@@ -18,9 +18,7 @@
                       <option value="">-- Status --</option>
                       <option value="process">Menunggu Verifikasi</option>
                       <option value="publish">Publish</option>
-                      <option value="pengerjaan">Proses Pengerjaan</option>
-                      <option value="dana_dikembalikan">Dana Di Kembalikan</option>
-                      <option value="done">Selesai</option>
+                      <option value="unapproved">Dana Di Kembalikan</option>
                       <option value="cancel">Cancel</option>
                     </select>
                   </div>

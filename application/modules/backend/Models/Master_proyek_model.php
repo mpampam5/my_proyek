@@ -115,6 +115,7 @@ class Master_proyek_model extends MY_Model{
                                 master_proyek.durasi_proyek,
                                 master_proyek.jenis_akad,
                                 master_proyek.imbal_hasil_pendana,
+                                master_proyek.imbal_hasil,
                                 master_proyek.ujroh_penyelenggara,
                                 master_proyek.deskripsi,
                                 master_proyek.foto_1,
@@ -142,6 +143,29 @@ class Master_proyek_model extends MY_Model{
                       ->where("master_proyek.id_proyek",$id)
                       ->get()
                       ->row();
+    }
+
+
+    function get_dividen($id_penggalangan_dana_proyek , $id_pendana, $id_proyek)
+    {
+      return $this->db->select("trans_profit.id_trans_profit,
+                                        trans_profit.id_proyek,
+                                        trans_profit.id_pendana,
+                                        trans_profit.id_trans_pendanaan_proyek,
+                                        trans_profit.waktu_pembagian,
+                                        trans_profit.nominal_rupiah,
+                                        trans_profit.penggalangan,
+                                        trans_profit.sisa_imbal_hasil,
+                                        trans_profit.pendanaan,
+                                        trans_profit.total,
+                                        trans_profit.status AS status_profit,
+                                        trans_penggalangan_dana.status")
+                                ->from("trans_profit")
+                                ->join("trans_penggalangan_dana","trans_penggalangan_dana.id_penggalangan_dana_proyek = trans_profit.id_trans_pendanaan_proyek")
+                                ->where("trans_profit.id_proyek",dec_url($id_proyek))
+                                ->where("trans_profit.id_pendana",dec_url($id_pendana))
+                                ->where("trans_profit.id_trans_pendanaan_proyek",dec_url($id_penggalangan_dana_proyek))
+                                ->get();
     }
 
 }

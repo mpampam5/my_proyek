@@ -40,6 +40,11 @@
       body.modal-open{
         padding-right: 0 !important;
       }
+
+      @import  url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@700&display=swap');
+        .font-style{
+          font-family: 'El Messiri', sans-serif !important;
+        }
       </style>
     </head>
 
@@ -58,8 +63,9 @@
                         <!-- Logo container-->
                         <div class="logo">
                             <!-- Text Logo -->
-                            <a href="<?=site_url("backend/dashboard")?>" class="logo logo-tilte" id="logo-tilte">
-                                <?=config_system("title")?>
+                            <a href="<?=site_url("backend/dashboard")?>" class="font-style logo logo-tilte" id="logo-tilte">
+                                <!-- <?=config_system("title")?> -->
+                                ADMINISTRATOR
                             </a>
                             <!-- Image Logo -->
                             <!-- <a href="index.html" class="logo">
@@ -76,49 +82,13 @@
                             <ul class="list-inline float-right mb-0">
 
                                 <!-- notification-->
-                                <li class="list-inline-item dropdown notification-list">
-                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
-                                    aria-haspopup="false" aria-expanded="false">
-                                        <i class="ti-bell noti-icon"></i>
-                                        <span class="badge badge-info badge-pill noti-icon-badge">3</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg">
-                                        <!-- item-->
-                                        <div class="dropdown-item noti-title">
-                                            <h5>Notification (3)</h5>
-                                        </div>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                                            <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                                            <p class="notify-details"><b>Your order is placed</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
-                                            <p class="notify-details"><b>New Message received</b><small class="text-muted">You have 87 unread messages</small></p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-info"><i class="mdi mdi-martini"></i></div>
-                                            <p class="notify-details"><b>Your item is shipped</b><small class="text-muted">It is a long established fact that a reader will</small></p>
-                                        </a>
-
-                                        <!-- All-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            View All
-                                        </a>
-
-                                    </div>
-                                </li>
+                                <!--  -->
                                 <!-- User-->
                                 <li class="list-inline-item dropdown notification-list">
                                     <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
                                     aria-haspopup="false" aria-expanded="false">
                                         <img src="<?=base_url()?>_template/backend/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
-                                        <span class="ml-1">Denish J. <i class="mdi mdi-chevron-down"></i> </span>
+                                        <span class="ml-1"><?=profile("email")?>. <i class="mdi mdi-chevron-down"></i> </span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                         <a class="dropdown-item" href="<?=site_url("backend/login/logout")?>"><i class="dripicons-exit text-muted"></i> Logout</a>
@@ -126,13 +96,7 @@
                                 </li>
                                 <li class="menu-item list-inline-item">
                                     <!-- Mobile menu toggle-->
-                                    <a class="navbar-toggle nav-link">
-                                        <div class="lines">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </a>
+
                                     <!-- End mobile menu toggle-->
                                 </li>
 

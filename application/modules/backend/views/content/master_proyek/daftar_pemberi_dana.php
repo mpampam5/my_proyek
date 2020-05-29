@@ -68,6 +68,7 @@
                     <th>Data Pendana</th>
                     <th>Jumlah Paket</th>
                     <th>Setara Dengan (Rp)</th>
+                    <th>#</th>
                   </tr>
                 </thead>
               </table>
@@ -122,6 +123,11 @@ var table;
               "className": "text-center",
               "orderable": false,
               "targets": 4
+          },
+          {
+              "className": "text-center",
+              "orderable": false,
+              "targets": 5
           }
       ],
     });
