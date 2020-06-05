@@ -5,6 +5,16 @@
         <div class="col-md-12 col-xl-11 mx-auto animated zoomIn delay-2s">
           <div class="card m-b-30">
             <div class="card-body">
+              <h4 class="header-title">Pendanaan <b><a href="<?=site_url("backend/master_proyek/detail/".$id_proyek)?>" target="_blank"><i class="fa fa-link"></i><?=get_proyek(dec_url($id_proyek), "kode")?>.</a></b> <?=get_proyek(dec_url($id_proyek), "title")?></h4>
+              <table>
+                <tr>
+                  <th>Pendana</th>
+                  <td>:
+                    <a href="<?=site_url("backend/pendana/detail/".$id_pendana)?>"><i class="fa fa-link"></i><b><?=get_user(dec_url($id_pendana),"id_reg")?></b></a> <?=strtoupper(get_user(dec_url($id_pendana),"nama"))?>
+                  </td>
+                </tr>
+              </table>
+              <hr>
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead>

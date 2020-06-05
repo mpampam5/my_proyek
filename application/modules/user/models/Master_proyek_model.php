@@ -132,6 +132,7 @@ function get_detail($id,$kode)
                       master_proyek.title,
                       master_proyek.harga_paket,
                       master_proyek.jumlah_paket,
+                      master_proyek.dana_dibutuhkan,
                       master_proyek.durasi_proyek,
                       master_proyek.imbal_hasil_pendana,
                       master_proyek.ujroh_penyelenggara,

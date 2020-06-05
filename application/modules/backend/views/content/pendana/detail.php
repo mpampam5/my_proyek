@@ -17,10 +17,10 @@
               <div class="card m-b-30">
                 <div class="card-body">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href=""><i class="fa fa-file"></i> Lihat Pendanaan</a></li>
+                    <li class="list-group-item"><a target="_blank" href="<?=site_url("backend/pendanaan_user/get_pendanaan/".enc_url($dt->id_pendana)."/".$dt->id_reg)?>"><i class="fa fa-file"></i> Lihat Pendanaan</a></li>
                     <!-- <li class="list-group-item"><a href="">Lihat Mutasi Dompet</a></li> -->
                     <!-- <li class="list-group-item"><a href="">Reset PIN Transaksi</a></li> -->
-                    <li class="list-group-item"><a href=""><i class="fa fa-close"></i> Nonaktifkan Pendana</a></li>
+                    <!-- <li class="list-group-item"><a href=""><i class="fa fa-close"></i> Nonaktifkan Pendana</a></li> -->
                   </ul>
                 </div>
               </div>
@@ -214,7 +214,7 @@
             <div class="col-md-12 col-xl-12 animated fadeInRight delay-8s">
               <div class="card m-b-30">
                 <div class="mb-2 card-body text-muted">
-                  <table class="table table-borderless">
+                  <table class="table table-borderless tabless">
                     <tr>
                       <th>FOTO DIRI</th>
                       <td>:

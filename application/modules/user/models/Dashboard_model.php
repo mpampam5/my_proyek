@@ -26,7 +26,6 @@ class Dashboard_model extends MY_Model{
                       ->limit(3)
                       ->get();
     return $qry->result();
-
   }
 
 }

@@ -138,12 +138,12 @@
                       <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/get_progres_proyek/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-bar-chart"></i> Lihat Progres Proyek</a></li>
                       <?php endif; ?>
 
-                      <?php if ($dt->status=="publish"): ?>
+                      <?php if ($dt->status=="publish" AND $dt->status_pembagian_dividen=="belum"): ?>
                         <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/kembalikan_dana/".enc_url($dt->id_proyek))?>" target="_blank"><i class="fa fa-sign-out"></i> Kembalikan Dana</a></li>
                       <?php endif; ?>
 
                       <?php if ($dt->status=="unapproved"): ?>
-                        <li class="list-group-item"><a href="" target="_blank"><i class="fa fa-trash"></i> Hapus</a></li>
+                        <li class="list-group-item"><a href="<?=site_url("backend/master_proyek/delete/".denc_url($dt->id_proyek))?>"><i class="fa fa-trash"></i> Hapus</a></li>
                       <?php endif; ?>
                     </ul>
 
@@ -400,7 +400,8 @@
                         <td>: <?=$dt->lama_penggalangan?> Hari</td>
                       </tr>
 
-                      <?php if ($dt->status=="publish" OR $dt->status=="done" OR $dt->status=="pengerjaan" OR $dt->status=="dana_dikembalikan"): ?>
+
+                      <?php if ($dt->status=="publish"): ?>
                         <tr>
                           <th>Waktu Penggalangan</th>
                           <td>: <?=date("d-m-Y",strtotime($dt->mulai_penggalangan))?> s/d <?=date("d-m-Y",strtotime($dt->akhir_penggalangan))?> (<?=selisih_hari($dt->akhir_penggalangan)?> Hari lagi)</td>
@@ -433,6 +434,20 @@
                             <a href="<?=base_url()?>_template/files/proyek/<?=$dt->kode?>/<?=$dt->foto_3?>" target="_blank" class="fancy badge badge-info font-14"> Foto 3</a>
                           <?php endif; ?>
                         </td>
+                      </tr>
+
+                      <tr>
+                        <th>Pembagian Imbal hasil Perbulan</th>
+                        <td>: <?=$dt->imbal_hasil?>% /Bulan</td>
+                      </tr>
+
+                      <tr>
+                        <th>Status Pembagian Dividen</th>
+                        <th>:
+                          <span class="badge badge-primary">
+                            <?=strtoupper($dt->status_pembagian_dividen)?>
+                          </span>
+                        </th>
                       </tr>
 
                       <tr>

@@ -10,8 +10,9 @@
 </div>
 <!-- END wrapper -->
 
-<div class="modal animated fadeInUp delay-30s" id="modalGue" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+
+<div class="modal animated fadeInUp delay-30s" id="modalGue" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalTitle"></h5>
@@ -25,11 +26,18 @@
 </div>
 
 
+
+
 <!-- App js -->
 <script src="<?=base_url()?>_template/usrp/js/app.js"></script>
   <script src="<?=base_url()?>_template/backend/plugins/bootstrap-inputmask/jquery.mask.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+  $("#modalGue").on("show.bs.modal", function () {
+  $('body').css('overflow', 'hidden');
+}).on("hide.bs.modal", function () {
+  $('body').css('overflow', 'auto');
+});
   $(".fancy").fancybox();
   $('.rupiah').mask('00.000.000.000', {reverse: true});
 });

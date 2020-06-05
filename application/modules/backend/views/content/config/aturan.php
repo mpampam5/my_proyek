@@ -5,9 +5,11 @@
         <div class="card-body">
           <form class="" action="<?=site_url("backend/aturan/action")?>" id="form" autocomplete="off">
             <div class="form-group">
-              <label for="">Deskripsi</label>
+              <label for="">Deskripsi</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+              <a href="<?=site_url("backend/filemanager")?>" target="_blank" class="btn btn-sm btn-primary">Buka File Manager</a>
+              <hr>
               <textarea class="form-control" id="elm1" rows="5" cols="80" placeholder="Deskripsi"><?=config_system("aturan-dan-ketentuan","deskripsi")?></textarea>
-              <input type="hidden" id="deskripsi" name="deskripsi" value="<?=config_system("aturan-dan-ketentuan","deskripsi")?>">
+              <textarea id="deskripsi" name="deskripsi" rows="0" cols="0" style="visibility:hidden"><?=config_system("tentang","deskripsi")?></textarea>
             </div>
 
             <div class="text-right">
@@ -25,19 +27,25 @@
 <script src="<?=base_url()?>_template/backend//plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-tinymce.init({
-    selector: "textarea#elm1",
-    theme: "modern",
-    height:500,
-    setup : function(ed) {
-      ed.on('change', function(e) {
-      // This will print out all your content in the tinyMce box
-      console.log(ed.getContent());
-      // Your text from the tinyMce box will now be passed to your text area …
-      $("#deskripsi").val(ed.getContent());
-      });
-    }
-  });
+  tinymce.init({
+      selector: "textarea#elm1",
+      theme: "modern",
+      height:500,
+      plugins: [
+          "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+          "code fullscreen insertdatetime",
+          "save table contextmenu directionality paste textcolor"
+      ],
+      toolbar: "insertfile undo redo |  bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview fullpage | forecolor backcolor",
+      setup : function(ed) {
+        ed.on('change', function(e) {
+        // This will print out all your content in the tinyMce box
+        console.log(ed.getContent());
+        // Your text from the tinyMce box will now be passed to your text area …
+        $("#deskripsi").val(ed.getContent());
+        });
+      }
+    });
 });
   $("#form").submit(function(e){
   e.preventDefault();

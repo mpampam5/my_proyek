@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Register Penerima Modal</title>
+        <title>Register Pemodal</title>
         <meta content="Silahkan mendaftar untuk menjadi penerima modal dari proyek yang anda kerjakan." name="description" />
         <meta content="IDEA" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -33,8 +33,9 @@
                 <div class="card-body">
 
                     <div class="p-3">
-                        <h4 class="text-muted font-18 m-b-5 text-center">REGISTER PENERIMA MODAL</h4>
-                        <p class="text-muted text-center">Silakan mendaftar untuk menjadi penerima modal.</p>
+                        <h1 class="text-center text-muted"><a href="<?=site_url("")?>"><?=config_system("title")?></a></h1>
+                        <h4 class="text-muted font-18 m-b-5 text-center">REGISTER PEMODAL</h4>
+                        <p class="text-muted text-center">Silakan mendaftar untuk menjadi pemodal.</p>
 
                         <div id="alert"></div>
 
@@ -72,7 +73,7 @@
 
                             <div class="form-group m-t-10 mb-0 row">
                                 <div class="col-12 m-t-20">
-                                    <p class="font-14 text-muted mb-1">Baca <a href="#" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
+                                    <p class="font-14 text-muted mb-1">Baca <a href="<?=site_url("pages/aturan-dan-ketentuan")?>" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
                                     <p class="font-14 text-muted">Sudah punya akun ? <a href="<?=site_url("user/login")?>" class="font-500 font-14 text-primary font-secondary"> Login </a> </p>
                                 </div>
                             </div>
@@ -83,7 +84,7 @@
             </div>
 
             <div class="m-t-40 text-center">
-                <p>© <?=date('Y')?>. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                <p>© <?=date('Y')?>.<i class="mdi mdi-heart text-danger"></i> <a href="<?=site_url()?>"><?=config_system("title")?></a></p>
             </div>
         </div>
 

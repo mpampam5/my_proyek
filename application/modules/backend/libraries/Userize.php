@@ -11,7 +11,7 @@ class Userize {
   {
     $CI =& get_instance();
     // $registered = array_intersect($this->_role(), $this->_controllerList());
-    $access_all = array('dashboard','core');
+    $access_all = array('dashboard','core','pendanaan_user');
     $registered = array_merge($access_all,$this->_role());
     $uri_segment = strtolower($CI->router->class);
     if (in_array($uri_segment,$registered)) {

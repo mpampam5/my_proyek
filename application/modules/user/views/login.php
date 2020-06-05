@@ -33,6 +33,7 @@
                 <div class="card-body">
 
                     <div class="p-3">
+                        <h1 class="text-center text-muted"><a href="<?=site_url("")?>"><?=config_system("title")?></a></h1>
                         <h4 class="text-muted font-18 m-b-5 text-center">LOGIN</h4>
                         <p class="text-muted text-center">Silahkan login.</p>
 

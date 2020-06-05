@@ -151,3 +151,90 @@ function combo_bank()
   }
   return $str;
 }
+
+
+function get_proyek($id, $field)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->select("*")
+                ->from("master_proyek")
+                ->where("id_proyek",$id)
+                ->get();
+  if ($qry->num_rows() > 0) {
+      return $qry->row()->$field;
+  }else {
+    return "Dont exist";
+  }
+
+}
+
+
+function get_user($id,$field)
+{
+  $ci=& get_instance();
+  $qry = $ci->db->query("SELECT
+                          master_pendana.id_pendana,
+                          master_pendana.id_reg,
+                          master_pendana.no_ktp,
+                          master_pendana.no_npwp,
+                          master_pendana.nama,
+                          master_pendana.tempat_lahir,
+                          master_pendana.tgl_lahir,
+                          master_pendana.jenis_kelamin,
+                          master_pendana.status_perkawinan,
+                          master_pendana.telepon,
+                          master_pendana.email,
+                          master_pendana.nama_ibu_kandung,
+                          master_pendana.id_pendidikan,
+                          master_pendana.id_pekerjaan,
+                          master_pendana.id_pendapatan,
+                          master_pendana.alamat,
+                          master_pendana.provinsi,
+                          master_pendana.kabupaten,
+                          master_pendana.kecamatan,
+                          master_pendana.kelurahan,
+                          master_pendana.kode_pos,
+                          master_pendana.no_rekening,
+                          master_pendana.nama_rekening,
+                          master_pendana.id_bank,
+                          master_pendana.foto_diri,
+                          master_pendana.foto_ktp,
+                          master_pendana.foto_diri_ktp,
+                          master_pendana.foto_buku_rekening,
+                          master_pendana.`password`,
+                          master_pendana.token_password,
+                          master_pendana.pin,
+                          master_pendana.token_pin,
+                          master_pendana.is_verifikasi,
+                          master_pendana.is_active,
+                          master_pendana.created_at,
+                          master_pendana.update_at,
+                          master_pendana.verifikasi_at,
+                          master_pendana.complate,
+                          master_pendana.pin_transaksi,
+                          trans_bank.nama_bank,
+                          trans_pekerjaan.pekerjaan,
+                          trans_pendidikan.pendidikan
+                          FROM
+                          master_pendana
+                          LEFT JOIN trans_bank ON trans_bank.id_bank = master_pendana.id_bank
+                          LEFT JOIN trans_pekerjaan ON trans_pekerjaan.id_pekerjaan = master_pendana.id_pekerjaan
+                          LEFT JOIN trans_pendidikan ON trans_pendidikan.id_pendidikan = master_pendana.id_pendidikan
+                          WHERE
+                          master_pendana.id_pendana = $id;
+                          ");
+if ($qry->num_rows() > 0) {
+  return $qry->row()->$field;
+}else {
+  return "not exist";
+}
+
+}
+
+
+function aktivitas_pendanaan($str)
+{
+  $ci=& get_instance();
+  $data = array('keterangan' => $str, 'created_at' => date("Y-m-d H:i:s"));
+  $ci->db->insert("aktivitas_pendanaan",$data);
+}

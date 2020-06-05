@@ -247,6 +247,20 @@ class Master_proyek extends User{
                 }
               }
 
+              //insert akstivitas pendanaan
+              $dana_terkumpul = $this->proyek->total_dana_terkumpul($row->id_proyek);
+              $persen = cari_persen($row->dana_dibutuhkan,$dana_terkumpul);
+              $persen_replace = substr($persen,0,-3);
+              $keterangan = '<i>#'.profile('id_reg').'&nbsp;'.strtoupper(profile('nama')).'</i> telah mendanai proyek <i>#'.$row->kode.'</i> sebesar Rp.'.format_rupiah($total);
+              aktivitas_pendanaan($keterangan);
+
+              if ($persen_replace >= 100) {
+                //update status penggalangan
+                  $this->model->get_update("master_proyek", ['status_penggalangan'=> "terpenuhi"], ['id_proyek'=>$row->id_proyek]);
+                  $keterangan2 = 'Status penggalangan Proyek <i>#'.$row->kode.'</i> sudah mencapai '.$persen_replace.'% (terpenuhi)';
+                  aktivitas_pendanaan($keterangan2);
+              }
+
 
               $json['success'] = true;
               $json['alert'] ="Berhasil mendanai";

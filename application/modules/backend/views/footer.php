@@ -11,19 +11,18 @@
             </div>
         </footer>
         <!-- End Footer -->
-
-        <div class="modal animated fadeInUp delay-30s" id="modalGue" tabindex="-1" role="dialog">
-        	<div class="modal-dialog" role="document">
-        		<div class="modal-content">
-        			<div class="modal-header">
-        				<h5 class="modal-title" id="modalTitle"></h5>
-        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        					<span aria-hidden="true">&times;</span>
-        				</button>
-        			</div>
-        			<div class="modal-body" id="modalContent"></div>
-        		</div>
-        	</div>
+        <div class="modal animated fadeInUp delay-30s" id="modalGue" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modalContent"></div>
+            </div>
+          </div>
         </div>
 
         <!-- <script src="<?=base_url()?>_template/backend/pages/dashboard.js"></script> -->

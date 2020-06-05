@@ -25,7 +25,7 @@ class Filemanager extends Backend{
           $row = array();
           $row[] = '<a data-fancybox="gallery" data-title="'.$rows->file.'" href="'.base_url().'_template/files/'.$rows->file.'"><div style="background:url('.base_url().'_template/files/'.$rows->file.');background-repeat: no-repeat;background-position: center center;background-size: cover;" class="filemanager-image"></div></a>';
           $row[] = '<p class="text-muted font-14"><a href="'.base_url().'_template/files/'.$rows->file.'" data-fancybox="gallery">'.$rows->file.'</a>
-                    <br><span class="font-12">'.date("d/m/Y H:i",strtotime($rows->created)).'</span></p>';
+                    <br><span class="font-12">'.date("d/m/Y H:i",strtotime($rows->created)).'</span></p><p class="text-primary"><i class="fa fa-link"></i> '.base_url().'_template/files/'.$rows->file.'</p>';
 
           $row[] = '<a href="'.site_url("backend/kategori/delete/".enc_url($rows->id)).'" class="bnt btn-sm btn-danger" id="delete"><i class="fa fa-trash"></i></a>';
 

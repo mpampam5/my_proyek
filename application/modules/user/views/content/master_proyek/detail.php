@@ -130,7 +130,7 @@ $cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$dt->id_proy
                   </ul>
 
                   <?php
-                  if ($dt->status == "approved") {
+                  if ($dt->status == "publish") {
                     if ($dt->status_penggalangan=="akan_datang") {
                       echo    '<div class="mt-3">
                                   <h2 class="header-title"><i class="fa fa-lock"></i> Akan Rilis</h2>
@@ -309,7 +309,7 @@ $cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$dt->id_proy
 
                             <tr>
                               <th>Pengembalian Dana</th>
-                              <td>:  <b>*Dana Akan di kembalikan pada masing-masing pendana jika dana terkumpul di bawah 50%</b></td>
+                              <td>:  <b>*Dana Akan di kembalikan pada masing-masing pendana jika dana terkumpul di bawah <?=master_config("FINANCIAL-PD")?>%.</b></td>
                             </tr>
                           </table>
                         </p>
@@ -367,8 +367,8 @@ $cek_pendanaan = $this->balance_user->get_pendanaan(sess('id_user'),$dt->id_proy
   $(document).on("click","#danai", function(e){
     e.preventDefault();
     $('.modal-dialog').removeClass('modal-sm')
-                      .removeClass('modal-lg')
-                      .addClass('modal-md');
+                      .removeClass('modal-md')
+                      .addClass('modal-lg');
     $("#modalTitle").text('Danai Proyek');
     $('#modalContent').load($(this).attr('href'));
     $("#modalGue").modal('show');

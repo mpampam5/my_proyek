@@ -128,6 +128,7 @@ class Master_proyek_model extends MY_Model{
                                 master_proyek.kelurahan,
                                 master_proyek.legalitas,
                                 master_proyek.`status`,
+                                master_proyek.status_pembagian_dividen,
                                 master_proyek.created_at,
                                 master_proyek.acc_at,
                                 master_proyek.acc_by,

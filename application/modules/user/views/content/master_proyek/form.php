@@ -1,9 +1,15 @@
 <h6 class="header-title">Saldo : Rp.<?=format_rupiah($this->balance_user->init())?></h6>
 <hr>
+<div class="alert alert-info">
+  <strong><i class="fa fa-info-circle"></i> PERINGATAN</strong>
+  <p style="font-size:12px;">Anda tidak dapat membatalkan pendanaan setelah anda menekan tombol DANAI SEKARANG.
+    dana anda akan di kembalikan jika dana yang terkumpul di bawah <?=master_config("FINANCIAL-PD")?>%.
+    patikan anda telah membaca aturan, peryaratan & ketentuan yang berlaku.</p>
+  </div>
 <form id="form_act" action="<?=$action?>" autocomplete="off">
   <div class="form-group">
     <label for="">Jumlah Paket</label>
-    <input type="text" class="form-control" name="paket" id="pkt" placeholder="jumlah_paket">
+    <input type="text" class="form-control" name="paket" id="pkt" placeholder="jumlah paket">
     <div id="paket"></div>
   </div>
 

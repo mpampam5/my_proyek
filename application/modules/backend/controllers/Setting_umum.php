@@ -21,7 +21,8 @@ class Setting_umum extends backend{
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
         $this->form_validation->set_rules("title","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
-        $this->form_validation->set_rules("telepon","*&nbsp;","trim|xss_clean|numeric|required");
+        $this->form_validation->set_rules("telepon","*&nbsp;","trim|xss_clean|required");
+        $this->form_validation->set_rules("telepon_wa","*&nbsp;","trim|xss_clean|required");
         $this->form_validation->set_rules("email","*&nbsp;","trim|xss_clean|required|valid_email");
         $this->form_validation->set_rules("domain","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
         $this->form_validation->set_rules("alamat","*&nbsp;","trim|xss_clean|htmlspecialchars|required");
@@ -101,6 +102,30 @@ class Setting_umum extends backend{
 
         echo json_encode($json);
     }
+  }
+
+  function action_tentang()
+  {
+    if ($this->input->is_ajax_request()) {
+          $json = array('success'=>false, 'alert'=>array());
+          $this->form_validation->set_rules("deskripsi","*&nbsp;","trim|xss_clean");
+          $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+          if ($this->form_validation->run()) {
+
+            $this->db->where("slug","tentang");
+            $this->db->update("config_system",array("deskripsi"=> $this->input->post("deskripsi",true)));
+
+            $json['alert']   = "Berhasil menyimpan perubahan";
+            $json['success'] =  true;
+          }else {
+            foreach ($_POST as $key => $value)
+              {
+                $json['alert'][$key] = form_error($key);
+              }
+          }
+
+          echo json_encode($json);
+      }
   }
 
 }

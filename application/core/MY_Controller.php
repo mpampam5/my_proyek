@@ -114,3 +114,17 @@ class Usrp extends CI_Controller{
     }
 
 }
+
+
+/**
+ * public
+ */
+class Pbl extends CI_Controller
+{
+  public function __construct()
+  {
+    parent::__construct();
+      $this->load->library(array("public/Template"));
+      $this->load->helper(array("public"));
+  }
+}

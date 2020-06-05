@@ -26,6 +26,34 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 
         <style media="screen">
+        /* Let's get this party started */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: rgba(18, 18, 18, 0.8);
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+        	background: rgba(255,0,0,0.4);
+        }
+
+        body.modal-open{
+                overflow: visible!important;
+                position: fixed;
+            }
+
         @import  url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@700&display=swap');
           .font-style{
             font-family: 'El Messiri', sans-serif !important;

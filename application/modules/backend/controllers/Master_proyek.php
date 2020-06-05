@@ -426,6 +426,9 @@ function action_kembalikan_dana($id="")
           $data_3 = array('status' => null);
           $this->model->get_update("trans_profit",$data_3,$where);
 
+          $keterangan = 'Dana yang terkumpul pada proyek <i>#'.get_proyek(dec_url($id),'kode').'</i> telah di kembalikan pada masing-masing pendana karena, <i>'.$data['keterangan'].'</i>. (Pengembalian manual oleh admin)';
+          aktivitas_pendanaan($keterangan);
+
           $json['alert'] = "Dana Berhasil Di Kembalikan";
           $json['success'] =  true;
         }else {
@@ -444,6 +447,8 @@ function get_dividen($id_penggalangan_dana_proyek = null, $id_pendana = null , $
 {
   if ($row = $this->model->get_dividen($id_penggalangan_dana_proyek, $id_pendana, $id_proyek)) {
       $dt['prs'] = $row;
+      $dt['id_proyek']  = $id_proyek;
+      $dt['id_pendana'] = $id_pendana;
       $this->template->set_title("Detail Dividen Pada Proyek #$kode");
       $this->template->view("content/master_proyek/detail_dividen",$dt);
   }
