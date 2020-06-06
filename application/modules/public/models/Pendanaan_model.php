@@ -20,6 +20,7 @@ class Pendanaan_model extends CI_Model{
                         master_proyek.status_penggalangan,
                         master_proyek.mulai_penggalangan,
                         master_proyek.akhir_penggalangan,
+                        master_proyek.dana_dibutuhkan,
                         master_proyek.complate");
     $this->db->from("master_proyek");
     $this->db->where("master_proyek.status","publish");
@@ -54,43 +55,73 @@ class Pendanaan_model extends CI_Model{
           }
 
 
-          $output.='<div class="col-md-6 col-lg-6 col-xl-4 animated zoomIn delay-1s">
-                      <div class="card m-b-30">
-                    <div class="card-img-top" style="height:150px;background:url('.$image.')">';
-                    if ($pb->status_penggalangan=="akan_datang") {
-                      $output.='<span class="label-hari bg-danger">Akan Rilis '.date('d/m/Y',strtotime($pb->mulai_penggalangan)).'</span>';
-                    }elseif ($pb->status_penggalangan=="mulai") {
-                      $output.='<span class="label-hari bg-info">Tersisa '.selisih_hari($pb->akhir_penggalangan).' hari lagi</span>';
-                    }elseif ($pb->status_penggalangan=="terpenuhi") {
-                      $output.='<span class="label-hari bg-success">Terpenuhi</span>';
-                    }elseif ($pb->status_penggalangan=="selesai") {
-                      $output.='<span class="label-hari bg-success">Selesai</span>';
-                    }
 
-          $output.='</div>
-                  <div class="card-body" style="height:80px;max-height:80px!important;">
-                      <p class="card-text" style="color:#6b6b6b;font-size:15px">Pendanaan <b>'.$pb->kode.'</b>. '.$pb->title.'</p>
-                  </div>
-                  <div class="card-body">
-                    <span>Dana terkumpul ('.$persen.'%)</span>
-                    <div class="mt-1">
-                      <div class="progress" style="background-color:#ebebeb;height:0.5rem;">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="'.$persen.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$persen.'%; color:#fff;"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <ul class="list-group list-group-flush list-custom">
-                      <li class="list-group-item">Dana Dibutuhkan <span class="float-right badge badge-primary">Rp.'.format_rupiah($total_dana).'</span></li>
-                      <li class="list-group-item">Minimum Pendanaan <span class="float-right badge badge-primary">Rp.'.format_rupiah($pb->harga_paket).'</span></li>
-                      <li class="list-group-item">Durasi Proyek <span class="float-right badge badge-primary">'.$pb->durasi_proyek.' bulan</span></li>
-                      <li class="list-group-item">Imbal Hasil /tahun <span class="float-right badge badge-primary"> Rp.'.format_rupiah($rupiah_imbal_hasil).' ('.$imbal_hasil.'%)</span></li>
-                      <li class="list-group-item">Terima Imbal Hasil <span class="float-right badge badge-primary">Tiap Bulan</span></li>
-                  </ul>
-                  <div class="card-body">
-                      <a href="'.site_url("user/master_proyek/detail/".$pb->id_proyek.'/'.$pb->kode).'" class="btn btn-sm btn-block btn-primary">Detail</a>
-                  </div>
-              </div>
-          </div>';
+          $output.='<div class="col-md-4 appear-animation animated fadeIn appear-animation-visible" data-appear-animation="fadeIn" data-appear-animation-delay="0" data-appear-animation-duration="1s" style="animation-duration: 1s; animation-delay: 0ms;">
+                        <div class="card">
+                              <img class="card-img-top" src="'.$image.'" alt="Card Image" height="200">
+
+                            <div class="card-body">
+                                <h4 class="card-title mb-1 text-3 font-weight-bold" style="min-height:70px;">Pendanaan '.$pb->kode.' '.$pb->title.'</h4>
+                                <div class="row">
+                                  <div class="col-sm-12">';
+                                  if ($pb->status_penggalangan=="akan_datang") {
+                                    $output.='<span class="badge badge-warning">AKAN DATANG</span>';
+                                  }elseif ($pb->status_penggalangan=="mulai") {
+                                    $output.='<span class="badge badge-info">SEDANG BERLANGSUNG</span>';
+                                  }elseif ($pb->status_penggalangan=="terpenuhi") {
+                                    $output.='<span class="badge badge-danger">TERPENUHI</span>';
+                                  }elseif ($pb->status_penggalangan=="selesai") {
+                                    $output.='<span class="badge badge-success">SELESAI</span>';
+                                  }
+              $output.='          </div>
+                                    <div class="col-lg-7 text-left">
+                                        <p style="margin-bottom: 3px;">Dana Terkumpul</p>
+                                    </div>
+                                    <div class="col-lg-5 text-right">
+                                        <h5 style="margin-bottom: 0px;">'.$persen.'%</h5>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="progress progress-sm mb-2">
+                                            <div class="progress-bar progress-bar-primary progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="'.$persen.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$persen.'%">
+                                                <span class="sr-only">'.$persen.'% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-lg-6">
+                                        <h6 class="mb-0 text-2">Dana Dibutuhkan</h6>
+                                        <h6 class="font-weight-bold">Rp. '.format_rupiah($pb->dana_dibutuhkan).'</h6>
+
+                                        <h6 class="mb-0 text-2">Imbal Hasil/Tahun</h6>
+                                        <h6 class="font-weight-bold">'.$pb->imbal_hasil_pendana.'%</h6>
+
+                                        <h6 class="mb-0 text-2">Terima Imbal Hasil</h6>
+                                        <h6 class="font-weight-bold">Tiap Bulan</h6>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h6 class="mb-0 text-2">Durasi/Tenor Proyek</h6>
+                                        <h6 class="font-weight-bold">'.$pb->durasi_proyek.' bulan</h6>
+
+                                        <h6 class="mb-0 text-2">Minimum Pendanaan</h6>
+                                        <h6 class="font-weight-bold">Rp.'.format_rupiah($pb->harga_paket).'</h6>';
+
+                                        if ($pb->status_penggalangan=="mulai") {
+                                          $output.='<h6 class="mb-0 text-2">Penggalangan Berakhir</h6>
+                                          <h6 class="font-weight-bold">'.selisih_hari($pb->akhir_penggalangan).' Hari lagi</h6>';
+                                        }elseif ($pb->status_penggalangan=="akan_datang") {
+                                          $output.='<h6 class="mb-0 text-2">Mulai Penggalangan</h6>
+                                          <h6 class="font-weight-bold">'.date('d/m/Y',strtotime($pb->mulai_penggalangan)).'</h6>';
+                                        }elseif ($pb->status_penggalangan=="terpenuhi" OR $pb->status_penggalangan=="selesai") {
+                                          $output.='<h6 class="mb-0 text-2">Status Penggalangan</h6>
+                                          <h6 class="font-weight-bold">Berakhir</h6>';
+                                        }
+                    $output.='</div>
+                                </div>
+                                <a href="'.site_url("penggalangan-dana/read/$pb->id_proyek/$pb->kode/pendanaan-".url_title($pb->title,"dash")).'" class="read-more text-color-primary font-weight-semibold text-2">Lihat Selengkapnya <i class="fas fa-angle-right position-relative top-1 ml-1"></i></a>
+                            </div>
+                        </div>
+                    </div>';
         }
       }else {
         $output.='<div class="text-center"><img src="'.base_url().'_template/files/data-not-found.png" /></div>';
@@ -120,5 +151,42 @@ class Pendanaan_model extends CI_Model{
     $qry = $this->db->get();
     return $qry->num_rows();
   }
+
+
+
+    function get_detail($id,$kode)
+    {
+      $this->db->select(" master_proyek.id_proyek,
+                          master_proyek.id_penerima_dana,
+                          master_proyek.kode,
+                          master_proyek.title,
+                          master_proyek.harga_paket,
+                          master_proyek.jumlah_paket,
+                          master_proyek.dana_dibutuhkan,
+                          master_proyek.durasi_proyek,
+                          master_proyek.imbal_hasil_pendana,
+                          master_proyek.ujroh_penyelenggara,
+                          master_proyek.foto_1,
+                          master_proyek.foto_2,
+                          master_proyek.foto_3,
+                          master_proyek.status,
+                          master_proyek.status_penggalangan,
+                          master_proyek.mulai_penggalangan,
+                          master_proyek.akhir_penggalangan,
+                          master_proyek.imbal_hasil,
+                          master_proyek.tgl_mulai_proyek,
+                          master_proyek.deskripsi,
+                          master_proyek.complate,
+                          master_penerima_dana.nama,
+                          master_penerima_dana.nama_perusahaan");
+      $this->db->from("master_proyek");
+      $this->db->join("master_penerima_dana","master_penerima_dana.id_penerima_dana=master_proyek.id_penerima_dana");
+      $this->db->where("master_proyek.complate","1");
+      $this->db->where("master_proyek.id_proyek",$id);
+      $this->db->where("master_proyek.kode",$kode);
+      $qry = $this->db->get();
+      return $qry->row();
+    }
+
 
 }

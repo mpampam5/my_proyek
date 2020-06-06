@@ -98,7 +98,7 @@
                                 <?php if ($pr->status_penggalangan=="akan_datang"): ?>
                                   <span class="badge badge-warning">AKAN DATANG</span>
                                 <?php elseif($pr->status_penggalangan=="mulai"):?>
-                                  <span class="badge badge-info">MULAI PENGGALANGAN</span>
+                                  <span class="badge badge-info">SEDANG BERLANGSUNG</span>
                                 <?php elseif($pr->status_penggalangan=="terpenuhi"):?>
                                   <span class="badge badge-danger">TERPENUHI</span>
                                 <?php elseif($pr->status_penggalangan=="selesai"):?>
@@ -109,7 +109,7 @@
                                 <div class="col-lg-9">
                                     <p style="margin-bottom: 3px;">Dana Terkumpul</p>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 text-right">
                                     <h5 style="margin-bottom: 0px;"><?=$persen?>%</h5>
                                 </div>
                                 <div class="col-lg-12">
@@ -150,7 +150,7 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            <a href="<?=site_url("read/".$pr->id_proyek."/".$pr->kode."/pendanaan-".url_title($pr->title,"dash"))?>" class="read-more text-color-primary font-weight-semibold text-2">Lihat Selengkapnya <i class="fas fa-angle-right position-relative top-1 ml-1"></i></a>
+                            <a href="<?=site_url("penggalangan-dana/read/".$pr->id_proyek."/".$pr->kode."/pendanaan-".url_title($pr->title,"dash"))?>" class="read-more text-color-primary font-weight-semibold text-2">Lihat Selengkapnya <i class="fas fa-angle-right position-relative top-1 ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a href="<?= base_url() ?>listbisnis" class="btn btn-outline btn-primary">Lihat Semua Penggalangan <i class="fas fa-angle-right position-relative top-1 ml-1"></i></a>
+            <a href="<?= site_url("penggalangan-dana") ?>" class="btn btn-outline btn-primary">Lihat Semua Penggalangan <i class="fas fa-angle-right position-relative top-1 ml-1"></i></a>
         </div>
     </div>
 

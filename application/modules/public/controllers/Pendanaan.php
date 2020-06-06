@@ -23,7 +23,7 @@ class Pendanaan extends Pbl{
         $config = array();
         $config["base_url"] = "#";
         $config["total_rows"] = $this->model->count_all();
-        $config["per_page"] = 6;
+        $config["per_page"] = 9;
         $config["uri_segment"] = 3;
         $config["use_page_numbers"] = TRUE;
 
@@ -56,6 +56,91 @@ class Pendanaan extends Pbl{
        'data'   => $this->model->fetch_data($config["per_page"], $start)
       );
       echo json_encode($output);
+  }
+
+  function get_detail($id,$kode,$title = "")
+  {
+    if ($row = $this->model->get_detail($id,$kode)) {
+      $this->template->set_title("Pendanaan #$kode. $row->title");
+      $data['dt'] = $row;
+      $this->template->view("content/pendanaan/detail",$data);
+    }
+  }
+
+  function simulasi_act($id, $kode)
+  {
+    if ($this->input->is_ajax_request()) {
+      $this->load->library('form_validation');
+      $json = array('success'=>false, 'alert'=>array(), 'data' => null);
+      $this->form_validation->set_rules("nominal","*&nbsp;","trim|xss_clean|numeric|required");
+      $this->form_validation->set_rules("tanggal","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("akhir_penggalangan","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("durasi_proyek","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_rules("imbal_hasil","*&nbsp;","trim|xss_clean|required");
+      $this->form_validation->set_error_delimiters('<span class="error text-danger" style="font-size:11px">','</span>');
+      if ($this->form_validation->run()) {
+        $tanggal = date('Y-m-d',strtotime($this->input->post('tanggal')));
+        $nominal = $this->input->post("nominal");
+        $akhir_penggalangan = $this->input->post("akhir_penggalangan");
+        $priode = $this->input->post("durasi_proyek");
+        $imbal_hasil_post = $this->input->post("imbal_hasil");
+        $selisih_hari = selisih_hari($akhir_penggalangan,$tanggal);
+
+        $penggalangan = (master_config("FINANCIAL-PED") / 100) * $nominal ;
+        $hsl_penggalangan =  $penggalangan * $selisih_hari;
+
+        $profit_bulan = (master_config("FINANCIAL-DB") / 100) * $nominal;
+        $profit_bulan_pertama = $profit_bulan + $hsl_penggalangan;
+        $imbal_hasil = ($imbal_hasil_post / 100) * $nominal;
+
+        $hasil_durasi = $profit_bulan * $priode;
+
+        $dana_pokok_imbal_hasil = $nominal + $imbal_hasil + $hasil_durasi + $hsl_penggalangan;
+
+        $output = '';
+        $output .='<p>Simulasi Imbal Hasil</p>
+                  <table class="table table-bordered">
+                    <tr>
+                      <th>Tgl Pendanaan</th>
+                      <th>Jumlah Dana</th>
+                      <th>Jumlah Hari</th>
+                      <th>Penggalangan</th>
+                      <th>Bulan 1</th>
+                      <th>Pembayaran Bulan 1</th>
+                      <th>Bulan 2 - akhir</th>
+                      <th>Sisa Imbal Hasil</th>
+                    </tr>
+
+                    <tr>
+                      <td>'.date('d/m/Y',strtotime($tanggal)).'</td>
+                      <td>'.format_rupiah($nominal).'</td>
+                      <td class="text-center">'.$selisih_hari.'</td>
+                      <td>'.format_rupiah($hsl_penggalangan).'</td>
+                      <td>'.format_rupiah($profit_bulan).'</td>
+                      <td>'.format_rupiah($profit_bulan_pertama).'</td>';
+
+                if ($priode > 1) {
+                  $output .='<td>'.format_rupiah($profit_bulan).'</td>';
+                }else {
+                  $output .='<td class="text-center"> - </td>';
+                }
+                $output .='<td>'.format_rupiah($imbal_hasil).'</td>
+                    </tr>
+                  </table>
+                  <p class="text-right" style="font-weight:bold">Total Imbal Hasil dan Dana Pokok : Rp.'.format_rupiah($dana_pokok_imbal_hasil).'</p>';
+
+        $json['data'] = $output;
+        $json['success'] =  true;
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
+
+
+      echo json_encode($json);
+    }
   }
 
 }

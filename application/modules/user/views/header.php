@@ -124,6 +124,12 @@
             <div class="left side-menu">
 
                 <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="">
+                        <!--<a href="index.html" class="logo text-center">Fonik</a>-->
+                        <a href="<?=site_url()?>" class="logo"><img src="<?=base_url()?>_template/usrp/images/logo.png" height="20" alt="logo"></a>
+                    </div>
+                </div>
 
 
                 <div class="sidebar-inner slimscrollleft">

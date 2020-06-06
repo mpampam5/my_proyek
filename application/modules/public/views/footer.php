@@ -32,6 +32,20 @@
 </footer>
 </div>
 
+<div class="modal animated fadeInUp delay-30s" id="modalGue" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
 <!-- Vendor -->
 
 <script src="<?= base_url() ?>_template/public/vendor/jquery.appear/jquery.appear.min.js"></script>
@@ -40,6 +54,7 @@
 <!-- <script src="<?= base_url() ?>_template/public/vendor/popper/umd/popper.min.js"></script> -->
 <script src="<?= base_url() ?>_template/public/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>_template/public/vendor/common/common.min.js"></script>
+
 <!-- <script src="<?= base_url() ?>_template/public/vendor/jquery.validation/jquery.validate.min.js"></script> -->
 <!-- <script src="<?= base_url() ?>_template/public/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script> -->
 <!-- <script src="<?= base_url() ?>_template/public/vendor/jquery.gmap/jquery.gmap.min.js"></script> -->
@@ -74,6 +89,24 @@
 		ga('send', 'pageview');
 	</script>
 	 -->
+
+   <script type="text/javascript">
+   $(document).ready(function(){
+     $("#modalGue").on("show.bs.modal", function () {
+     $('body').css('overflow', 'hidden');
+   }).on("hide.bs.modal", function () {
+     $('body').css('overflow', 'auto');
+   });
+     $(".fancy").fancybox();
+     $('.rupiah').mask('00.000.000.000', {reverse: true});
+   });
+
+     $('#modalGue').on('hide.bs.modal', function () {
+         setTimeout(function(){
+             $('#modalTitle, #modalContent , #modalFooter').html('');
+           }, 500);
+        });
+   </script>
 
 </body>
 

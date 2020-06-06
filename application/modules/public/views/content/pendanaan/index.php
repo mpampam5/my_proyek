@@ -15,7 +15,7 @@
   <section class="page-header page-header-modern page-header-background page-header-background-sm overlay overlay-color-primary overlay-show overlay-op-8 mb-5" style="background-image: url(img/page-header/page-header-elements.jpg);">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12  p-static order-2 row">
+				<div class="col-md-12 p-static order-2 row">
           <div class="col-lg-4">
             <img src="<?=base_url()?>_template/files/pendanaan.svg" width="100%" alt="">
           </div>
@@ -32,7 +32,7 @@
 
   <div class="container mb-5">
     <div class="row">
-      <div class="col-md-11 mx-auto">
+      <div class="col-md-12 mx-auto">
           <h3 class="text-primary">Semua Penggalangan Dana</h3>
           <div  style="overflow-x:auto!important">
             <div class="btn-group" id="filters" role="group" aria-label="Basic example">

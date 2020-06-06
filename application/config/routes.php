@@ -72,3 +72,7 @@ $route["page-not-found"] = "public/pages/error404";
 $route["penggalangan-dana"] = "public/pendanaan/get_pendanaan";
 $route["penggalangan-dana/page"] = "public/pendanaan/paging";
 $route["penggalangan-dana/page/(:num)"] = "public/pendanaan/paging/$1";
+
+$route["penggalangan-dana/read/(:num)/(:any)/(:any)"] = "public/pendanaan/get_detail/$1/$2/$3";
+
+$route["penggalangan-dana/simulasi/(:num)/(:any)"] = "public/pendanaan/simulasi_act/$1/$2";

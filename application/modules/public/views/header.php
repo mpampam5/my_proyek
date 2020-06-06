@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>_template/public/vendor/rs-plugin/css/settings.css">
     <link rel="stylesheet" href="<?= base_url() ?>_template/public/vendor/rs-plugin/css/layers.css">
     <link rel="stylesheet" href="<?= base_url() ?>_template/public/vendor/rs-plugin/css/navigation.css">
+    <link rel="stylesheet" href="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.css">
 
     <!-- Demo CSS -->
 
@@ -56,8 +57,15 @@
 
     <!-- Head Libs -->
     <script src="<?= base_url() ?>_template/public/vendor/jquery/jquery.min.js"></script>
+    <script src="<?=base_url()?>_template/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
     <!-- <script src="<?= base_url() ?>_template/public/vendor/modernizr/modernizr.min.js"></script> -->
 
+    <style media="screen">
+    body.modal-open{
+            overflow: visible!important;
+            position: fixed;
+        }
+    </style>
 </head>
 
 <body class="loading-overlay-showing" data-plugin-page-transition data-loading-overlay data-plugin-options="{'hideDelay': 500}">
@@ -127,17 +135,24 @@
                                     </button>
                                 </div>
                                 <div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2">
-                                    <div class="header-nav-feature header-nav-features-search d-inline-flex">
-                                        <a href="<?=site_url("user/login")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Masuk</a>
-                                    </div>
+                                <?php if (!$this->session->userdata("login_user_status")): ?>
+                                      <div class="header-nav-feature header-nav-features-search d-inline-flex">
+                                          <a href="<?=site_url("user/login")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Masuk</a>
+                                      </div>
+                                      <div class="header-nav-feature header-nav-features-search d-inline-flex ml-">
+                                          <a href="<?=site_url("user/register")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Daftar</a>
+                                      </div>
+                                  <?php else: ?>
                                     <div class="header-nav-feature header-nav-features-search d-inline-flex ml-">
-                                        <a href="<?=site_url("user/register")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Daftar</a>
+                                        <a href="<?=site_url("user/dashboard")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Dashboard</a>
                                     </div>
-                                    <!-- <div class="header-nav-feature header-nav-features-search d-inline-flex ml-">
-                                        <a href="#" class="header-nav-features-toggle" data-focus="headerSearch"><button type="button" class="btn btn-outline btn-rounded btn-primary mb-2">Primary <i class="fas fa-search header-nav-top-icon"></i></button> </a>
-                                    </div> -->
 
-                                </div>
+                                    <div class="header-nav-feature header-nav-features-search d-inline-flex ml-">
+                                        <a href="<?=site_url("user/login/logout")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Logout</a>
+                                    </div>
+                                <?php endif; ?>
+                              </div>
+
                             </div>
                         </div>
                     </div>
