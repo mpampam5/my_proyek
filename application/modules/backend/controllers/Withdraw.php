@@ -81,32 +81,41 @@ function action()
         if ($this->form_validation->run()) {
           $id_act = dec_url($this->input->post("id_act"));
           if ($row = $this->model->get_detail_model($id_act)) {
-            //update
-            $update = array('status' => $this->input->post('status_approved',true),
-                            'keterangan' => $this->input->post('keterangan',true),
-                            'acc_by' => "admin",
-                            'acc_by_id' => sess("id_user"),
-                            'acc_at' => date('Y-m-d H:i:s'),
-                          );
 
-            $this->model->get_update("withdraw",$update,["id_withdraw"=>$id_act]);
+            //update
+            if (balance_user($row->id_pendana) >= $row->nominal) {
+              $status = $this->input->post('status_approved',true);
+              }else {
+                $status = "cancel";
+              }
+              $update = array('status' => $status,
+                              'keterangan' => $this->input->post('keterangan',true),
+                              'acc_by' => "admin",
+                              'acc_by_id' => sess("id_user"),
+                              'acc_at' => date('Y-m-d H:i:s'),
+                            );
+
+              $this->model->get_update("withdraw",$update,["id_withdraw"=>$id_act]);
+              $json['alert'] = "process successfully";
+
+
 
 
             // set report mutasi
-            if ($this->input->post('status_approved',true)=="approved") {
-              $report = array('id_pendana' => $row->id_pendana,
-                              'type' => "withdraw",
-                              'id_transaksi' => $row->id_withdraw,
-                              'kd_transaksi' => $row->code ,
-                              'debit' => $row->nominal,
-                              'saldo' => $this->balance->init($row->id_pendana),
-                              'deskripsi' => "Withdraw [".$row->code."] berhasil",
-                              'created_at' => date('Y-m-d H:i:s'),
-                              );
-              $this->model->get_insert("report_mutasi",$report);
-            }
+            // if ($this->input->post('status_approved',true)=="approved") {
+            //   $report = array('id_pendana' => $row->id_pendana,
+            //                   'type' => "withdraw",
+            //                   'id_transaksi' => $row->id_withdraw,
+            //                   'kd_transaksi' => $row->code ,
+            //                   'debit' => $row->nominal,
+            //                   'saldo' => $this->balance->init($row->id_pendana),
+            //                   'deskripsi' => "Withdraw [".$row->code."] berhasil",
+            //                   'created_at' => date('Y-m-d H:i:s'),
+            //                   );
+            //   $this->model->get_insert("report_mutasi",$report);
+            // }
 
-            $json['alert'] = "process successfully";
+
           }else {
             $json['alert'] = "process error";
           }

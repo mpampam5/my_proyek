@@ -5,7 +5,7 @@
 
         <div class="col-md-11 mx-auto">
           <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="row">
                 <div class="col-md-12 col-xl-12 animated fadeInRight delay-3s">
                   <div class="card m-b-10">
@@ -13,32 +13,41 @@
                         <a href="<?=site_url("backend/withdraw")?>" class="btn btn-md btn-secondary btn-block"><i class="fa fa-file"></i> Daftar withdraw</a>
                         <hr>
                         <?php if ($dt->status=="process"){ ?>
-                          <form class="m-t-10" action="<?=site_url("backend/withdraw/action")?>" id="form">
-
-                            <input type="hidden" name="id_act" id="id_act" value="<?=enc_url($dt->id_withdraw)?>">
-
-                            <div class="form-group">
-                              <label for="">Status</label>
-                              <select class="form-control" name="status_approved" id="status_approved">
-                                <option value="">-- Pilih --</option>
-                                <option value="approved">Approved</option>
-                                <option value="cancel">Cancel</option>
-                              </select>
+                          <?php if (balance_user($dt->id_pendana) < $dt->nominal): ?>
+                            <div class="alert alert-danger" role="alert">
+                              <strong><i class="fa fa-info-circle"></i> Warning</strong>
+                              <p>Ada tidak dapat mengapprove permintaan withdraw user di karenakan saldo user tidak mencukupi.</p>
                             </div>
+                          <?php endif; ?>
+                            <form class="m-t-10" action="<?=site_url("backend/withdraw/action")?>" id="form">
 
-                            <div class="form-group">
-                              <label for="">Keterangan</label>
-                              <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Approved/Cancel" rows="2" cols="80"></textarea>
-                            </div>
+                              <input type="hidden" name="id_act" id="id_act" value="<?=enc_url($dt->id_withdraw)?>">
 
-                            <div class="form-group">
-                              <label for="">Password Akun</label>
-                              <input type="password" class="form-control" id="password_admin" name="password_admin" placeholder="*****">
-                            </div>
+                              <div class="form-group">
+                                <label for="">Status</label>
+                                <select class="form-control" name="status_approved" id="status_approved">
+                                  <option value="">-- Pilih --</option>
+                                  <?php if (balance_user($dt->id_pendana) > $dt->nominal): ?>
+                                  <option value="approved">Approved</option>
+                                  <?php endif; ?>
+                                  <option value="cancel">Cancel</option>
+                                </select>
+                              </div>
 
-                            <button type="submit" class="btn btn-md btn-block btn-success" id="submit" name="button">Proses</button>
+                              <div class="form-group">
+                                <label for="">Keterangan</label>
+                                <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Approved/Cancel" rows="2" cols="80"></textarea>
+                              </div>
 
-                          </form>
+                              <div class="form-group">
+                                <label for="">Password Akun</label>
+                                <input type="password" class="form-control" id="password_admin" name="password_admin" placeholder="*****">
+                              </div>
+
+                              <button type="submit" class="btn btn-md btn-block btn-success" id="submit" name="button">Proses</button>
+
+                            </form>
+
                         <?php }else { ?>
                           <h6>Execution :</h6>
                           <ul style="list-style:none;padding-left:0!important;font-size:12px;">
@@ -55,7 +64,7 @@
               </div>
             </div>
 
-            <div class="col-lg-9">
+            <div class="col-lg-8">
               <div class="row">
                 <div class="col-md-12 col-xl-4 animated fadeInRight delay-3s">
                   <div class="card m-b-10 text-center">

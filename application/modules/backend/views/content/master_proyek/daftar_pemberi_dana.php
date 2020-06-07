@@ -17,6 +17,7 @@
           <div class="card m-b-10">
             <div class="mb-2 card-body text-muted">
               <h4 class="header-title">Pendanaan <b class="text-info"> <?=$dt->kode?></b>. <?=$dt->title?></h4>
+              <a href="<?=site_url("backend/master_proyek/export_pemberi_dana/".enc_url($dt->id_proyek))?>" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-excel"></i> Export Excel</a>
               <div class="row mt-4">
                 <div class="col-lg-12 text-center">
                   <div class="row">
@@ -67,7 +68,7 @@
                     <th>Penggalangan</th>
                     <th>Data Pendana</th>
                     <th>Jumlah Paket</th>
-                    <th>Setara Dengan (Rp)</th>
+                    <th>Jumlah Pendanaan (Rp)</th>
                     <th>#</th>
                   </tr>
                 </thead>

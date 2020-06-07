@@ -241,6 +241,14 @@ class Master_proyek extends Backend{
      }
    }
 
+   function export_pemberi_dana($id_proyek=null)
+   {
+     if ($row = $this->model->get_detail_model(dec_url($id_proyek))) {
+       $data['dt'] = $row;
+       $this->template->view("content/master_proyek/export_pemberi_dana",$data,false);
+     }
+   }
+
 
    function get_progres_proyek($id_proyek=null)
    {
@@ -447,10 +455,24 @@ function get_dividen($id_penggalangan_dana_proyek = null, $id_pendana = null , $
 {
   if ($row = $this->model->get_dividen($id_penggalangan_dana_proyek, $id_pendana, $id_proyek)) {
       $dt['prs'] = $row;
+      $dt['id_penggalangan_dana_proyek']  = $id_penggalangan_dana_proyek;
       $dt['id_proyek']  = $id_proyek;
       $dt['id_pendana'] = $id_pendana;
+      $dt['kode'] = $kode;
       $this->template->set_title("Detail Dividen Pada Proyek #$kode");
       $this->template->view("content/master_proyek/detail_dividen",$dt);
+  }
+}
+
+function export_dividen($id_penggalangan_dana_proyek = null, $id_pendana = null , $id_proyek = null, $kode = null)
+{
+  if ($row = $this->model->get_dividen($id_penggalangan_dana_proyek, $id_pendana, $id_proyek)) {
+      $dt['prs'] = $row;
+      $dt['id_penggalangan_dana_proyek']  = $id_penggalangan_dana_proyek;
+      $dt['id_proyek']  = $id_proyek;
+      $dt['id_pendana'] = $id_pendana;
+      $dt['kode'] = $kode;
+      $this->template->view("content/master_proyek/export_dividen",$dt,false);
   }
 }
 
@@ -527,6 +549,13 @@ function simulasi_act($id, $kode)
 
     echo json_encode($json);
   }
+}
+
+
+function export()
+{
+  $data['dt'] = $this->model->get_export();
+  $this->load->view("content/master_proyek/export",$data);
 }
 
 

@@ -17,7 +17,7 @@
 </style>
 
 <?php
-  $total_dana = $dt->harga_paket * $dt->jumlah_paket; //dana di butuhkan
+  $total_dana = $dt->dana_dibutuhkan; //dana di butuhkan
   $dana_terkumpul = $this->proyek->total_dana_terkumpul($dt->id_proyek);
   $persen = cari_persen($total_dana,$dana_terkumpul);
  ?>

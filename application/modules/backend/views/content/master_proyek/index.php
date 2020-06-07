@@ -52,7 +52,7 @@
                   <div class="col-sm-12">
                     <button class="btn btn-primary btn-sm" id="btn-search" type="button"><i class="fa fa-search"></i> Filter Search</button>
                     <button type="button" id="reload"  name="button" class="btn btn-warning btn-sm"><i class="fa fa-refresh"></i> Reload</button>
-                    <button type="button" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> Export Excell</button>
+                    <a href="<?=site_url("backend/master_proyek/export")?>" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> Export Excell</a>
                     <a href="<?=site_url("backend/master_proyek/add")?>" class="btn btn-info btn-sm"><i class="fa fa-file"></i> Tambah Proyek</a>
                   </div>
                 </div>
@@ -60,7 +60,6 @@
 
               <hr>
 
-              <!-- <h4 class="mt-0 header-title"><?=ucfirst($title)?></h4> -->
               <table class="table table-bordered" id="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead style="background:#dadada">
                   <tr>

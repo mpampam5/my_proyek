@@ -14,6 +14,8 @@
                   </td>
                 </tr>
               </table>
+
+              <a href="<?=site_url("backend/master_proyek/export_dividen/".$id_penggalangan_dana_proyek."/".$id_pendana."/".$id_proyek."/".$kode)?>" target="_blank" class="btn btn-sm btn-success mt-3">Export Excel</a>
               <hr>
               <div class="table-responsive">
                 <table class="table table-bordered">

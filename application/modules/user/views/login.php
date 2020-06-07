@@ -60,8 +60,9 @@
 
                             <div class="form-group m-t-10 mb-0 row">
                                 <div class="col-12 m-t-20">
-                                    <p class="font-14 text-muted mb-1">Baca <a href="#" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
-                                    <p class="font-14 text-muted">Belum punya akun ? <a href="<?=site_url("user/register")?>" class="font-500 font-14 text-primary font-secondary"> Register </a> </p>
+                                  <p class="font-14 text-muted mb-1">Lupa Password ? <a href="#" class="font-500 font-14 text-primary font-secondary"> Reset Password </a> </p>
+                                  <p class="font-14 text-muted mb-1">Belum punya akun ? <a href="<?=site_url("user/register")?>" class="font-500 font-14 text-primary font-secondary"> Register </a> </p>
+                                    <p class="font-14 text-muted mb-1">Baca <a href="<?=site_url("pages/aturan-dan-ketentuan")?>" class="font-500 font-14 text-primary font-secondary">aturan & ketentuan</a> yang berlaku.</p>
                                 </div>
                             </div>
                         </form>
@@ -71,7 +72,7 @@
             </div>
 
             <div class="m-t-40 text-center">
-                <p>© <?=date('Y')?>. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                <p>© <?=date('Y')?>. <i class="mdi mdi-heart text-danger"></i> <?=config_system("title")?></p>
             </div>
         </div>
 

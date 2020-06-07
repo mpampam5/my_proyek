@@ -63,10 +63,15 @@ class Usrp extends CI_Controller{
       if (!$this->session->userdata("login_user_status")) {
           redirect(site_url("user/login"),"refresh");
       }else {
-        $this->load->helper(array("public","user","sct"));
-        $this->load->library(array("user/Template","user/balance_user","form_validation","security","user_agent"));
-        if (profile('pin_transaksi') == null) {
-          redirect(site_url("user/pin"),"refresh");
+        $this->load->helper(array("public"));
+        if (config_system("maintenance",'status') == "1") {
+            redirect(site_url("maintenance"));
+        }else {
+          $this->load->helper(array("user","sct"));
+          $this->load->library(array("user/Template","user/balance_user","form_validation","security","user_agent"));
+          if (profile('pin_transaksi') == null) {
+            redirect(site_url("user/pin"),"refresh");
+          }
         }
       }
     }

@@ -148,7 +148,7 @@
                                     </div>
 
                                     <div class="header-nav-feature header-nav-features-search d-inline-flex ml-">
-                                        <a href="<?=site_url("user/login/logout")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Logout</a>
+                                        <a href="<?=site_url("user/login/logout/3")?>" class="btn btn-outline btn-rounded btn-primary btn-sm">Logout</a>
                                     </div>
                                 <?php endif; ?>
                               </div>

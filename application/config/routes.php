@@ -76,3 +76,5 @@ $route["penggalangan-dana/page/(:num)"] = "public/pendanaan/paging/$1";
 $route["penggalangan-dana/read/(:num)/(:any)/(:any)"] = "public/pendanaan/get_detail/$1/$2/$3";
 
 $route["penggalangan-dana/simulasi/(:num)/(:any)"] = "public/pendanaan/simulasi_act/$1/$2";
+
+$route["maintenance"] = "public/maintenance";
