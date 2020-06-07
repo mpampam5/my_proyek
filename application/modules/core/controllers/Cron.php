@@ -11,6 +11,12 @@ class Cron extends CI_Controller{
     $this->load->model("Cron_model","model");
   }
 
+  //// QUOTES ////
+  //// SELAMAT BERAKTIFITAS AYA' , SEMOGA HARINYA MENYENANGKAN !!!
+  //// *** SEMANGAT ANAK MUDA!!! :) :)
+  //// JANGAN RINDU, BERAT... WKWKKWKWKWKWKWKWKWKKWKWKWKKWKKWKWKWKWK
+
+
 
   // maintenance akun user jam 23.57 setiap hari
   function maintenance_on()
@@ -56,7 +62,7 @@ class Cron extends CI_Controller{
           $data_3 = array('status' => null);
           $this->model->get_update("trans_profit",$data_3,['id_proyek' => $row->id_proyek]);
           //tambah aktivitas pendanaan
-          $keterangan = 'Dana yang terkumpul pada proyek <i>#'.$row->kode.'</i> telah di kembalikan pada masing-masing pendana karena, <i>'.$data['keterangan'].'</i>. (Pengembalian otomatis oleh system)';
+          $keterangan = 'Dana yang terkumpul pada proyek <i>#'.$row->kode.'</i> telah di kembalikan pada masing-masing pendana karena, dana yang terkumpul di bawah '.master_config("FINANCIAL-PD").'% <i>'.$data['keterangan'].'</i>. (Pengembalian otomatis oleh system)';
           aktivitas_pendanaan($keterangan);
 
         }else {

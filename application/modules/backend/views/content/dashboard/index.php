@@ -139,7 +139,7 @@
                         <div class="card m-b-30">
                             <div class="card-body">
                                 <h4 class="mt-0 m-b-15 header-title">Aktivitas Pendanaan</h4>
-                                <a href="#" class="float-right btn btn-sm btn-primary">Lihat semua aktivitas pendanaan</a>
+                                <a href="<?=site_url("backend/aktivitas_pendanaan")?>" class="float-right btn btn-sm btn-primary">Lihat semua aktivitas pendanaan</a>
                                 <ol class="activity-feed mb-0 mt-4">
                                   <?php foreach ($aktivitas_pendanaan->result() as $row): ?>
                                     <li class="feed-item">
@@ -150,6 +150,21 @@
                                 </ol>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                      <h4 class="header-title">Info</h4>
+                      <div class="row">
+                        <div class="col-sm-12 alert alert-info" role="alert">
+                          <strong>Pengembalian Modal Pendana</strong>
+                          <p>Pengembalian modal pendana di lakukan secara manual & otomatis pada system. Pengembalian dana dengan manual dapat di lakukan sebelum pembagian dividen berlangsung. </p>
+                        </div>
+
+                        <div class="col-sm-12 alert alert-info" role="alert">
+                          <strong>System maintenance</strong>
+                          <p>Pada saat system maintenance, halaman user tidak dapat di akses, tetapi halaman public tetap bisa di akses. maintenance otomatis di lakukan system pada jam 23:57 dan kembali di matikan pada jam 02:00 dini hari (berlaku tiap hari). maintenance juga dapat di lakukan dengan manual pada menu <b>Pengaturan >> Pengaturan Umum</b></p>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <!-- end row -->
