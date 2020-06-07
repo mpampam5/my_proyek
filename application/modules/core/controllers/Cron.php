@@ -6,7 +6,8 @@ class Cron extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    $this->load->helper(array("public"));
+    $this->load->helper(array("public","proyek"));
+    $this->load->library("proyek");
     $this->load->model("Cron_model","model");
   }
 
@@ -30,21 +31,85 @@ class Cron extends CI_Controller{
     $this->db->where("complate","0");
     $this->db->delete("master_proyek");
 
-    $tgl = "2020-09-06";
+    $tgl = date("Y-m-d");
 
+    $qry = $this->db->get_where("master_proyek",["complate" => "1", "tgl_mulai_proyek" => $tgl]);
+    if ($qry->num_rows() > 0) {
+      foreach ($qry->result() as $row) {
+        $total_dana = $row->dana_dibutuhkan; //dana di butuhkan
+        $dana_terkumpul = $this->proyek->total_dana_terkumpul($row->id_proyek);
+        $persen = cari_persen($total_dana,$dana_terkumpul);
+        if ($persen < master_config("FINANCIAL-PD")) {
+          //update data master proyek
+          $data = array('keterangan'  => $this->input->post("keterangan",true),
+                        'status'      => "unapproved",
+                        'acc_by_id'   => sess("id_user"),
+                        'acc_at'      => date("Y-m-d H:i:s")
+                        );
+          $this->model->get_update("master_proyek",$data,['id_proyek' => $row->id_proyek]);
 
-    
-    //update status proyek mulai penggalangan
-    $this->model->get_update("master_proyek",['status_penggalangan'=>'mulai'], ['complate'=>"1","status"=>"publish","mulai_penggalangan" => $tgl]);
-    //update status pembagian dividen mulai
-    $this->model->get_update("master_proyek",['status_penggalangan'=>'selesai','status_pembagian_dividen'=>'mulai'], ['complate'=>"1","status"=>"publish","tgl_mulai_proyek" => $tgl]);
+          // update data trans_penggalangan dana
+          $data_2 = array('status' => "dikembalikan");
+          $this->model->get_update("trans_penggalangan_dana",$data_2,['id_proyek' => $row->id_proyek]);
 
+          // update data profit/dividen
+          $data_3 = array('status' => null);
+          $this->model->get_update("trans_profit",$data_3,['id_proyek' => $row->id_proyek]);
+          //tambah aktivitas pendanaan
+          $keterangan = 'Dana yang terkumpul pada proyek <i>#'.$row->kode.'</i> telah di kembalikan pada masing-masing pendana karena, <i>'.$data['keterangan'].'</i>. (Pengembalian otomatis oleh system)';
+          aktivitas_pendanaan($keterangan);
 
-    //update pembagian dividen pada table trans_profit
-    $this->model->get_update("trans_profit",['status' => 1], ["status"=> null,"waktu_pembagian" => $tgl]);
-    //update status pembagian dividen selesai
-    $this->model->get_update("master_proyek",['status_pembagian_dividen'=>'selesai'], ['complate'=>"1","status"=>"publish","tgl_selesai_proyek" => $tgl]);
+        }else {
+          //update status pembagian dividen mulai
+          $this->model->get_update("master_proyek",['status_penggalangan'=>'selesai','status_pembagian_dividen'=>'mulai'], ["id_proyek" => $row->id_proyek]);
+          //tambah aktivitas pendanaan
+          $keterangan = "Pembagian Dividen ke pendana pada Proyek <i>#$row->kode</i> telah di mulai.";
+          aktivitas_pendanaan($keterangan);
+        }
+      }
+    }
 
+  }
+
+  //set jam 12:30
+  //pembagian DIVIDEN
+  function execute_2()
+  {
+    $tgl = date("Y-m-d");
+
+    $qry = $this->db->query("SELECT
+                            trans_profit.id_trans_profit,
+                            trans_profit.id_trans_pendanaan_proyek,
+                            trans_profit.waktu_pembagian,
+                            trans_profit.status,
+                            trans_penggalangan_dana.status
+                            FROM
+                            trans_profit
+                            INNER JOIN trans_penggalangan_dana ON trans_penggalangan_dana.id_penggalangan_dana_proyek = trans_profit.id_trans_pendanaan_proyek
+                            WHERE trans_penggalangan_dana.status = 'approved'
+                            AND
+                            waktu_pembagian = '$tgl'");
+    if ($qry->num_rows() > 0) {
+      foreach ($qry->result() as $row) {
+        $this->model->get_update("trans_profit",["status" => 1], ["id_trans_profit" => $row->id_trans_profit]);
+      }
+    }
+  }
+
+  //set jam 12:30
+  //pembagian set proyek selesai (pembagian dividen selesai)
+  function execute_3()
+  {
+    $tgl = date("Y-m-d");
+
+    $qry = $this->db->get_where("master_proyek",["complate" => "1", "tgl_selesai_proyek" => $tgl]);
+    if ($qry->num_rows() > 0) {
+      foreach ($qry->result() as $row) {
+        $this->model->get_update("master_proyek",["status_pembagian_dividen" => "selesai"], ["id_proyek" => $row->id_proyek]);
+        $keterangan = "Pembagian Dividen pada Proyek <i>#$row->kode</i> telah selesai.";
+        aktivitas_pendanaan($keterangan);
+      }
+    }
   }
 
 }

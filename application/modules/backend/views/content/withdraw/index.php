@@ -27,7 +27,7 @@
                   <td>
                     <button class="btn btn-primary" id="btn-search" type="button"><i class="fa fa-search"></i></button>
                     <button type="button" id="reload"  name="button" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
-                    <button type="button" class="btn btn-success">Export Excell</button>
+                    <a href="<?=site_url("backend/withdraw/export")?>" target="_blank" class="btn btn-success">Export Excell</a>
                   </td>
                 </tr>
               </table>

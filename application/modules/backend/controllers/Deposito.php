@@ -134,6 +134,14 @@ function _cek_status($str)
   }
 }
 
+function export()
+{
+  if ($row = $this->model->export_detail_model()) {
+    $data['dt'] = $row;
+    $this->template->view("content/deposito/export",$data,false);
+  }
+}
+
 
 
 

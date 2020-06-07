@@ -78,7 +78,7 @@ class Master_proyek extends Backend{
           }elseif ($dt->status_pembagian_dividen == "mulai") {
             $row[] = "<span class='badge badge-primary'>Mulai Pembagian</span>";
           }elseif ($dt->status_pembagian_dividen == "selesai") {
-            $row[] = "<span class='badge badge-danger'>Selesai</span>";
+            $row[] = "<span class='badge badge-primary'>Selesai</span>";
           }
 
 

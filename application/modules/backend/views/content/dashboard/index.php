@@ -139,7 +139,7 @@
                         <div class="card m-b-30">
                             <div class="card-body">
                                 <h4 class="mt-0 m-b-15 header-title">Aktivitas Pendanaan</h4>
-                                <a href="#" class="float-right badge badge-primary">Lihat semua aktivitas pendanaan</a>
+                                <a href="#" class="float-right btn btn-sm btn-primary">Lihat semua aktivitas pendanaan</a>
                                 <ol class="activity-feed mb-0 mt-4">
                                   <?php foreach ($aktivitas_pendanaan->result() as $row): ?>
                                     <li class="feed-item">

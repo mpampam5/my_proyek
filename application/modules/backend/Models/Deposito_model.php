@@ -107,5 +107,30 @@ class Deposito_model extends MY_Model{
                       ->row();
     }
 
+    function export_detail_model()
+    {
+      return $this->db->select("deposito.id_deposito,
+                                deposito.code,
+                                deposito.id_pendana,
+                                deposito.nominal,
+                                deposito.kode_unik,
+                                deposito.nominal_acc,
+                                deposito.status,
+                                deposito.created_at,
+                                deposito.keterangan,
+                                deposito.id_rekening,
+                                deposito.acc_at,
+                                deposito.acc_by,
+                                deposito.acc_by_id,
+                                master_pendana.id_reg,
+                                master_pendana.nama,
+                                master_pendana.no_ktp,
+                                master_pendana.email")
+                      ->from("deposito")
+                      ->join("master_pendana","master_pendana.id_pendana = deposito.id_pendana")
+                      ->where("deposito.status !=","delete")
+                      ->get();
+    }
+
 
 }

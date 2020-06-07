@@ -66,6 +66,14 @@ class Withdraw extends Backend{
     }
   }
 
+  function export()
+  {
+    if ($row = $this->model->export_detail_model()) {
+      $data['dt'] = $row;
+      $this->template->view("content/withdraw/export",$data,false);
+    }
+  }
+
 
 
 

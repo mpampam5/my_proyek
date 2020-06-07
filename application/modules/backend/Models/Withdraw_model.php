@@ -104,4 +104,28 @@ class Withdraw_model extends MY_Model{
     }
 
 
+    function export_detail_model()
+    {
+      return $this->db->select("withdraw.id_withdraw,
+                                withdraw.`code`,
+                                withdraw.id_pendana,
+                                withdraw.nominal,
+                                withdraw.`status`,
+                                withdraw.created_at,
+                                withdraw.update_at,
+                                withdraw.keterangan,
+                                withdraw.acc_at,
+                                withdraw.acc_by,
+                                withdraw.acc_by_id,
+                                master_pendana.id_reg,
+                                master_pendana.no_ktp,
+                                master_pendana.nama,
+                                master_pendana.email")
+                      ->from("withdraw")
+                      ->join("master_pendana","master_pendana.id_pendana = withdraw.id_pendana")
+                      ->where("withdraw.`status` !=","delete")
+                      ->get();
+    }
+
+
 }
